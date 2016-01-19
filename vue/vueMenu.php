@@ -8,7 +8,7 @@ require_once __DIR__."/../modele/bean/Entreprise.php";
 
 class VueMenu{
 
-public function afficherPlanning(){
+public function afficherPlanningEtu(){
 		$util = new UtilitairePageHtml();
 		echo $util->genereBandeauApresConnexion();
 	?>
@@ -21,7 +21,70 @@ public function afficherPlanning(){
 	</head>
 	<body>
 	<div id="main">
-		Cette fonctionnalité n'est pas encore implémentée. Veuillez faire preuve de patience.
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace utilisateur créé à l'occasion des rencontres alternances du 1 avril 2016.
+
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés le 31 mars. 
+		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
+	</div>
+		<?php
+
+		echo $util->generePied();
+
+		?>
+	</body>
+	</html>
+
+	<?php
+	}
+
+public function afficherPlanningEnt(){
+		$util = new UtilitairePageHtml();
+		echo $util->genereBandeauApresConnexion();
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+	<div id="main">
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace utilisateur créé à l'occasion des rencontres alternances du 1 avril 2016.
+
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés le 31 mars.
+		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
+	</div>
+		<?php
+
+		echo $util->generePied();
+
+		?>
+	</body>
+	</html>
+
+	<?php
+	}
+
+public function afficherPlanningAdmin(){
+		$util = new UtilitairePageHtml();
+		echo $util->genereBandeauApresConnexion();
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+	<div id="main">
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace administrateur créé à l'occasion des rencontres alternances du 1 avril 2016.
+
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement n'ont toujours pas été générés. Ceux-ci seront à générer le 31 mars.
 	</div>
 		<?php
 
@@ -257,5 +320,172 @@ public function afficherComptes() {
 	<?php
 	}
 
+	public function afficherConfig() {
+
+		$util = new UtilitairePageHtml();
+		echo $util->genereBandeauApresConnexion();
+		$dao = new Dao();
+		$tabConfig = $dao->getConfiguration();
+		$heureDebutMatin = $tabConfig['heureDebutMatin'];
+		$heureDebutAprem = $tabConfig['heureDebutAprem'];
+		$nbCreneauxMatin = $tabConfig['nbCreneauxMatin'];
+		$nbCreneauxAprem = $tabConfig['nbCreneauxAprem'];
+		$dureeCreneau = $tabConfig['dureeCreneau'];
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+	<div id="main">
+		<br/><span class="categorie_profil">Configuration actuelle :</span>
+		<br/><br/>
+		<?php
+			echo'
+
+			Les emplois du temps débuteront le matin à : '.$heureDebutMatin.'.
+			<br/><br/>Les emplois du temps débuteront l\'après-midi à : '.$heureDebutAprem.'. 
+			<br/><br/>Il y aura '.$nbCreneauxMatin.' créneau(x) le matin et '.$nbCreneauxAprem.' l\'après-midi.
+			<br/><br/>Chaque créneau dure '.$dureeCreneau.' minutes.
+			';
+		?>
+
+		<br/><br/><span class="categorie_profil">Nouvelle configuration :</span>
+		<form action="index.php" method="POST">
+			<br/>
+			<label>Début de la matinée (format hh:mm) : </label><input type="text" name="heureDebutMatin"/>
+			<br/><br/>
+			<label>Nombre de créneaux dans la matinée : </label><input type="text" name="nbCreneauxMatin"/>
+			<br/><br/>
+			<label>Début de l'après-midi (format hh:mm) : </label><input type="text" name="heureDebutAprem"/>
+			<br/><br/>
+			<label>Nombre de créneaux dans l'après-midi : </label><input type="text" name="nbCreneauxAprem"/>
+			<br/><br/>
+			<label>Durée en minutes d'un créneau : </label><input type="text" name="dureeCreneau"/>
+			<br/><br/>
+			<input type="submit" name="changementConfig" value="Confirmer"/>
+		</form>
+	</div>
+		<?php
+
+		echo $util->generePied();
+
+		?>
+	</body>
+	</html>
+
+	<?php
+	}
+
+	public function afficherChoix(){
+		$util = new UtilitairePageHtml();
+		echo $util->genereBandeauApresConnexion();
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+	<div id="main">
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées la liste des entreprises proposant la formation de l'élève pour sélectionner des voeux. La sélection se fera par listes déroulantes.
+	</div>
+		<?php
+
+		echo $util->generePied();
+
+		?>
+	</body>
+	</html>
+
+	<?php
+	}
+
+	public function afficherEntreprises(){
+		$util = new UtilitairePageHtml();
+		echo $util->genereBandeauApresConnexion();
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+	<div id="main">
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées la liste des entreprises proposant la formation de l'élève. Chaque nom affiché sera un lien menant au profil de l'entreprise.
+	</div>
+		<?php
+
+		echo $util->generePied();
+
+		?>
+	</body>
+	</html>
+
+	<?php
+	}
+
+	public function afficherCompteEtu(){
+		$util = new UtilitairePageHtml();
+		echo $util->genereBandeauApresConnexion();
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+	<div id="main">
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées les données du compte étudiant. Celui-ci pourra les modifier.
+	</div>
+		<?php
+
+		echo $util->generePied();
+
+		?>
+	</body>
+	</html>
+
+	<?php
+	}
+
+	public function afficherAutres(){
+		$util = new UtilitairePageHtml();
+		echo $util->genereBandeauApresConnexion();
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+	<div id="main">
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées des informations statistiques.
+	</div>
+		<?php
+
+		echo $util->generePied();
+
+		?>
+	</body>
+	</html>
+
+	<?php
+	}
 }
 ?>

@@ -11,7 +11,7 @@ class Entreprise {
 	private $mailEnt;
 	private $nomContact;
 	private $prenomContact;
-	private $numTelContact;
+	private $numTelEnt;
 	private $codePostal;
 	private $villeEnt;
 	private $adresseEnt;
@@ -48,7 +48,7 @@ class Entreprise {
 		return $this->prenomContact;
 	}
 	public function getNumTelContact() {
-		return $this->numTelContact;
+		return $this->numTelEnt;
 	}
 	public function getCodePostal() {
 		return $this->codePostal;

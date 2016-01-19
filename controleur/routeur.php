@@ -36,22 +36,16 @@ class Routeur {
   // Traite une requête entrante
   public function routerRequete() {
 
-    if (isset($_GET['profil']) && isset($_GET['type'])) {
-      if ($_GET['type'] == "tmpEnt" || $_GET['type'] == "tmpEtu") {
-        if (isset($_SESSION['type_connexion'])) {
-          if ($_SESSION['type_connexion'] == "admin") {
+    if (isset($_GET['profil']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
             if ($_GET['type'] == "tmpEnt") {
-            $this->ctrlProfil->afficherProfil("entreprise",$this->dao->getTempEnt($_GET['profil']));
-            return;
-          }
-          if ($_GET['type'] == "tmpEtu") {
+              $this->ctrlProfil->afficherProfil("entreprise",$this->dao->getTempEnt($_GET['profil']));
+              return;
+            }
+            if ($_GET['type'] == "tmpEtu") {
             $this->ctrlProfil->afficherProfil("etudiant",$this->dao->getTempEtu($_GET['profil']));
             return;
-          }
-          }
-        }
-      }
-      if ($_GET['type'] == "Ent") {
+         }
+          if ($_GET['type'] == "Ent") {
             $this->ctrlProfil->afficherProfil("entreprise",$this->dao->getEnt($_GET['profil']));
             return;
           }
@@ -59,6 +53,26 @@ class Routeur {
             $this->ctrlProfil->afficherProfil("etudiant",$this->dao->getEtu($_GET['profil']));
             return;
           }
+    }
+
+    if (isset($_POST['changementConfig'])) {
+      if ($_POST['heureDebutMatin'] != "") {
+        $this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      } 
+      if ($_POST['heureDebutAprem']  != "") {
+        $this->dao->editHeureDebutAprem($_POST['heureDebutAprem']);
+      } 
+      if ($_POST['nbCreneauxMatin'] != "") {
+        $this->dao->editNbCreneauxMatin($_POST['nbCreneauxMatin']);
+      } 
+      if ($_POST['nbCreneauxAprem'] != "") {
+        $this->dao->editNbCreneauxAprem($_POST['nbCreneauxAprem']);
+      } 
+      if ($_POST['dureeCreneau'] != "") {
+        $this->dao->editDureeCreneau($_POST['dureeCreneau']);
+      }
+      $this->ctrlMenu->afficherMenu(3);
+      return;
     }
 
     if (isset($_GET['error'])) {
@@ -102,10 +116,10 @@ class Routeur {
 
     if (isset($_GET['validation']) && isset($_GET['id']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
       if ($_SESSION['type_connexion'] == "admin") {
-        if ($_GET['type'] = "tmpEtu") {
+        if ($_GET['type'] == "tmpEtu") {
           $this->dao->validerEtudiant($_GET['id']);
         }
-        elseif ($_GET['type'] == "tmpEnt") {
+        if ($_GET['type'] == "tmpEnt") {
           $this->dao->validerEntreprise($_GET['id']);
         }
         header('Location:index.php?choix=ok&menu=2');
@@ -118,7 +132,7 @@ class Routeur {
         if ($_GET['type'] == "Etu") {
           $this->dao->gelerEtudiant($_GET['id']);
         }
-        elseif ($_GET['type'] == "Ent") {
+        if ($_GET['type'] == "Ent") {
           $this->dao->gelerEntreprise($_GET['id']);
         }
         header('Location:index.php?choix=ok&menu=2');
@@ -159,13 +173,19 @@ class Routeur {
   	}
 
   	if (isset($_GET['inscriptionEtu'])) {
-  		$this->ctrlInscriptionEtu->inscriptionEtu();
-  		return;
+      $date = getdate();
+      if ($date['mday'] > 30 && $date['mon'] >2) {
+        $this->ctrlInscriptionEtu->inscriptionEtu();
+        return;
+      }
   	}
 
   	if (isset($_GET['inscriptionEnt'])) {
-  		$this->ctrlInscriptionEnt->inscriptionEnt();
-  		return;
+      $date = getdate();
+      if ($date['mday'] > 17 && $date['mon'] >2) {
+        $this->ctrlInscriptionEtu->inscriptionEnt();
+        return;
+      }
   	}
 
     if (isset($_GET['choix']) && isset($_SESSION['type_connexion']) && isset($_GET['menu'])) {
@@ -174,7 +194,7 @@ class Routeur {
          $this->ctrlLost->genererLost();
          return;
       }
-      if ($_SESSION['type_connexion'] == "admin" && $_GET['menu'] > 3) {
+      if ($_SESSION['type_connexion'] == "admin" && $_GET['menu'] > 4) {
          $_SESSION['fail'] = "Êtes-vous perdu(e) ? Il semblerait qu'un imprévu<br/>soit arrivé. Refaites donc votre choix pour retrouver<br/>vos marques.";
          $this->ctrlLost->genererLost();
          return;

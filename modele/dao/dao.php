@@ -336,8 +336,8 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
 
   public function validerEntreprise($id) {
       $this->connexion();
-      $statement = $this->connexion->prepare('INSERT INTO entreprise(nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbPlaces,nbRepas,nbStands
-          mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) SELECT nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbPlaces,nbRepas,nbStands
+      $statement = $this->connexion->prepare('INSERT INTO entreprise(nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbPlaces,nbRepas,nbStands,
+          mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) SELECT nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbPlaces,nbRepas,nbStands,
           mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt FROM temp_entreprise WHERE IDEnt = '.$id.';');
       $statement->execute();
       $this->deconnexion();
@@ -362,8 +362,8 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
 
   public function gelerEntreprise($id) {
       $this->connexion();
-      $statement = $this->connexion->prepare('INSERT INTO temp_entreprise(nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbPlaces,nbRepas,nbStands
-          mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) SELECT nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbPlaces,nbRepas,nbStands
+      $statement = $this->connexion->prepare('INSERT INTO temp_entreprise(nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbPlaces,nbRepas,nbStands,
+          mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) SELECT nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbPlaces,nbRepas,nbStands,
           mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt FROM entreprise WHERE IDEnt = '.$id.';');
       $statement->execute();
       $this->deconnexion();
@@ -436,6 +436,54 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
       $statement->execute();
       $this->deconnexion();
       return $statement->fetchAll(PDO::FETCH_CLASS, "Entreprise");
+  }
+
+  public function getConfiguration() {
+     $this->connexion();
+      $statement = $this->connexion->prepare('SELECT * FROM scriptconfig;');
+      $statement->execute();
+      $this->deconnexion();
+      return $statement->fetch();
+  }
+
+  public function editHeureDebutMatin($new) {
+    $this->connexion();
+    $statement = $this->connexion->prepare("UPDATE scriptconfig SET heureDebutMatin='".$new."';");
+    $statement->execute();
+    $this->deconnexion();
+    return;
+  }
+
+  public function editHeureDebutAprem($new) {
+    $this->connexion();
+    $statement = $this->connexion->prepare("UPDATE scriptconfig SET heureDebutAprem='".$new."';");
+    $statement->execute();
+    $this->deconnexion();
+    return;
+  }
+
+  public function editNbCreneauxMatin($new) {
+    $this->connexion();
+    $statement = $this->connexion->prepare("UPDATE scriptconfig SET nbCreneauxMatin=".$new.";");
+    $statement->execute();
+    $this->deconnexion();
+    return;
+  }
+
+  public function editNbCreneauxAprem($new) {
+    $this->connexion();
+    $statement = $this->connexion->prepare("UPDATE scriptconfig SET nbCreneauxAprem=".$new.";");
+    $statement->execute();
+    $this->deconnexion();
+    return;
+  }
+
+  public function editDureeCreneau($new) {
+    $this->connexion();
+    $statement = $this->connexion->prepare("UPDATE scriptconfig SET dureeCreneau=".$new.";");
+    $statement->execute();
+    $this->deconnexion();
+    return;
   }
 
 }
