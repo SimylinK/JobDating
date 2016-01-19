@@ -622,6 +622,54 @@ public function ajoutFormation($typeFormation, $entPropose, $disponibilite) {
   }
 }
 
+
+
+  public function getDetails() {
+    $sortie = array('nbEtu' => 0, 'nbEnt' => 0, 'nbRepas' => 0);
+    $this->connexion();
+    $statement = $this->connexion->prepare("SELECT * FROM entreprise;");
+    $statement->execute();
+    $this->deconnexion();
+    $tab_temp = $statement->fetchAll();
+    $sortie['nbEnt'] = sizeof($tab_temp);
+    $this->connexion();
+    $statement = $this->connexion->prepare("SELECT * FROM etudiant;");
+    $statement->execute();
+    $this->deconnexion();
+    $tab_temp = $statement->fetchAll();
+    $sortie['nbEtu'] = sizeof($tab_temp);
+    $this->connexion();
+    $statement = $this->connexion->prepare("SELECT * FROM entreprise WHERE nbRepas > 0;");
+    $statement->execute();
+    $this->deconnexion();
+    $tab_temp = $statement->fetchAll();
+    $sortie['nbRepas'] = sizeof($tab_temp);
+    return $sortie;
+  }
+
+  public function getId($identifiant,$type) {
+    if ($type=="admin") {
+      return 0;
+    }
+    if ($type=="entreprise") {
+      $select = "IDEnt";
+    }
+    else {
+      $select = "IDEtu";
+    }
+    $this->connexion();
+    $statement = $this->connexion->prepare("SELECT ".$select." FROM ".$type.";");
+    $statement->execute();
+    $this->deconnexion();
+    $tab = $statement->fetch();
+    if ($type=="entreprise") {
+      return $tab['IDEnt'];
+    }
+    else {
+      return $tab['IDEtu'];
+    }
+  }
+
 }
 
 ?>
