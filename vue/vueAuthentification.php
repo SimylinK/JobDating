@@ -1,0 +1,58 @@
+<?php
+
+    
+require_once 'util/utilitairePageHtml.php';
+
+class VueAuthentification{
+
+
+
+public function genereVueAuthentification(){
+	$util = new UtilitairePageHtml();
+	echo $util->genereBandeauAvantConnexion();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+	<title></title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<div id="login">
+			<form method="POST" action="">
+				<table>
+					<tr>
+						<td><label>E-mail : </label></td>
+						<td><input type="text" name="identifiant"/><br/></td>
+					</tr>
+					<tr>
+						<td><label>Mot de passe : </label></td>
+						<td><input type="password" name="password"/<br/></td>
+					</tr>
+					<tr>
+						<th colspan="2"><br/><input type="submit" name="submit_login" value="Connexion"></td>
+					</tr>
+				</table>
+			</form>
+			
+			<table style="width: 80%; margin: auto; text-align: center;">
+				<tr>
+					<td><a href="index.php?oubliMdp=1">Mot de passe oublié ?</a></td>
+					<td><a href="index.php?inscriptionEtu=1">Inscription étudiant</a> <br/><br/> <a href="index.php?inscriptionEnt=1">Inscription entreprise</a></td>
+				</tr>
+			</table>
+
+	</div>
+	<?php
+
+	echo $util->generePied();
+
+	?>
+</body>
+</html>
+
+<?php
+}
+}
+?>
