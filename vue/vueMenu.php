@@ -394,7 +394,7 @@ public function afficherComptes() {
 	<body>
 	<div id="main">
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées la liste des entreprises proposant la formation de l'élève pour sélectionner des voeux. La sélection se fera par listes déroulantes.
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici sera affichée la liste des entreprises proposant la formation de l'élève pour sélectionner des voeux. La sélection se fera par listes déroulantes.
 	</div>
 		<?php
 
@@ -421,7 +421,7 @@ public function afficherComptes() {
 	<body>
 	<div id="main">
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées la liste des entreprises proposant la formation de l'élève. Chaque nom affiché sera un lien menant au profil de l'entreprise.
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici sera affichée la liste des entreprises proposant la formation de l'élève. Chaque nom affiché sera un lien menant au profil de l'entreprise.
 	</div>
 		<?php
 
@@ -449,6 +449,61 @@ public function afficherComptes() {
 	<div id="main">
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées les données du compte étudiant. Celui-ci pourra les modifier.
+	</div>
+		<?php
+
+		echo $util->generePied();
+
+		?>
+	</body>
+	</html>
+
+	<?php
+	}
+
+	public function afficherFormations(){
+		$util = new UtilitairePageHtml();
+		echo $util->genereBandeauApresConnexion();
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+	<div id="main">
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées les formations possibles de l'entreprise. Celle-ci pourra les modifier en respectant les contraintes de son compte.
+	</div>
+		<?php
+
+		echo $util->generePied();
+
+		?>
+	</body>
+	</html>
+
+	<?php
+	}
+
+
+	public function afficherCompteEnt(){
+		$util = new UtilitairePageHtml();
+		echo $util->genereBandeauApresConnexion();
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+	<div id="main">
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées les données du compte entreprise. Celle-ci pourra les modifier.
 	</div>
 		<?php
 
