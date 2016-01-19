@@ -32,7 +32,7 @@ class Dao
   }
 
   //méthode permettant la deconnexion du sgbd
-  public function deconnexion()
+  public function deconnexion()   
   {
    $this->connexion=null;
   }
@@ -484,6 +484,29 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
     $statement->execute();
     $this->deconnexion();
     return;
+  }
+
+  public function getDetails() {
+    $sortie = array('nbEtu' => 0, 'nbEnt' => 0, 'nbRepas' => 0);
+    $this->connexion();
+    $statement = $this->connexion->prepare("SELECT * FROM entreprise;");
+    $statement->execute();
+    $this->deconnexion();
+    $tab_temp = $statement->fetchAll();
+    $sortie['nbEnt'] = sizeof($tab_temp);
+    $this->connexion();
+    $statement = $this->connexion->prepare("SELECT * FROM etudiant;");
+    $statement->execute();
+    $this->deconnexion();
+    $tab_temp = $statement->fetchAll();
+    $sortie['nbEtu'] = sizeof($tab_temp);
+    $this->connexion();
+    $statement = $this->connexion->prepare("SELECT * FROM entreprise WHERE nbRepas > 0;");
+    $statement->execute();
+    $this->deconnexion();
+    $tab_temp = $statement->fetchAll();
+    $sortie['nbRepas'] = sizeof($tab_temp);
+    return $sortie;
   }
 
 }
