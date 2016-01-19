@@ -523,7 +523,13 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
     $statement = $this->connexion->prepare("SELECT ".$select." FROM ".$type.";");
     $statement->execute();
     $this->deconnexion();
-    $tab = $statement->fetchAll();
+    $tab = $statement->fetch();
+    if ($type=="entreprise") {
+      return $tab['IDEnt'];
+    }
+    else {
+      return $tab['IDEtu'];
+    }
   }
 
 }
