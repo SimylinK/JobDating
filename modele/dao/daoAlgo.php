@@ -133,6 +133,19 @@ public function getFormations($formation)  {
   }
 }
 
+public function getFormationsEntreprise($entreprise)  {
+
+  try {
+    $statement = $this->connexion->prepare('SELECT IDformation FROM formation where entPropose = "'.$entreprise.'";');
+    $statement->execute();
+    $tabResult = $statement->fetchAll();
+
+    return $tabResult;
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
+
 
 /* méthode qui permet de récupérer idFormation à partir d'une entreprise et d'un type de formation
 

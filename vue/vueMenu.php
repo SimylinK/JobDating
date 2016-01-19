@@ -1,6 +1,6 @@
 <?php
 
-    
+
 require_once 'util/utilitairePageHtml.php';
 require_once __DIR__."/../modele/dao/dao.php";
 require_once __DIR__."/../modele/bean/Etudiant.php";
@@ -24,10 +24,45 @@ public function afficherPlanningEtu(){
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace utilisateur créé à l'occasion des rencontres alternances du 1 avril 2016.
 
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés le 31 mars. 
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés le 31 mars.
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
 		<?php
+		//////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
+
+		//On génére l'emploi du temps
+    $dao = new Dao();
+    $tabConfig = $dao -> getConfiguration();
+    $tabForm = $dao -> getFormation();
+
+		?>
+    <!DOCTYPE html>
+  	<html>
+  	<head>
+  		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+  		<title></title>
+  		<meta charset="UTF-8">
+  	</head>
+  	<body>
+  	<div id="main">
+  	<br/>
+
+    <table id="tabPlanningEnt">
+
+		<tr>
+			<td colspan="7"> Planning </td>
+		</tr>
+		<tr>
+			<td colspan= <?php $tabConfig["nbCreneauxMatin"]?>> Matin </td>
+			<td colspan=<?php $tabConfig["nbCreneauxAprem"]?>> Après-midi </td>
+		</tr>
+
+		<?php
+			//Ici afficher table
+		?>
+		</table>
+
+    <?php
 
 		echo $util->generePied();
 
@@ -58,6 +93,48 @@ public function afficherPlanningEnt(){
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
 		<?php
+		//////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
+
+		//On génére l'emploi du temps
+    $dao = new Dao();
+    $tabConfig = $dao -> getConfiguration();
+		//Le 1 doit être l'id de l'entreprise connecté
+    $tabForm = $dao -> getFormationEntreprise(1);
+
+		?>
+    <!DOCTYPE html>
+  	<html>
+  	<head>
+  		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+  		<title></title>
+  		<meta charset="UTF-8">
+  	</head>
+  	<body>
+  	<div id="main">
+  	<br/>
+
+    <table id="tabPlanningEnt">
+
+		<tr>
+			<td colspan="7"> Planning </td>
+		</tr>
+		<tr>
+			<td colspan= <?php $tabConfig["nbCreneauxMatin"]?>> Matin </td>
+			<td colspan=<?php $tabConfig["nbCreneauxAprem"]?>> Après-midi </td>
+		</tr>
+
+		<?php
+			foreach ($tabForm as $formation) {
+				echo '<tr>
+					<td>'
+					.$formation["IDformation"].
+					'</td>
+				</tr>';
+			}
+		?>
+		</table>
+
+    <?php
 
 		echo $util->generePied();
 
@@ -87,6 +164,50 @@ public function afficherPlanningAdmin(){
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement n'ont toujours pas été générés. Ceux-ci seront à générer le 31 mars.
 	</div>
 		<?php
+    //////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
+
+
+
+    //On génére l'emploi du temps
+    $dao = new Dao();
+    $tabConfig = $dao -> getConfiguration();
+    $tabForm = $dao -> getFormation();
+
+    //Planning du point de vue des entreprises
+    ?>
+    <!DOCTYPE html>
+  	<html>
+  	<head>
+  		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+  		<title></title>
+  		<meta charset="UTF-8">
+  	</head>
+  	<body>
+  	<div id="main">
+  	<br/>
+
+    <table id="tabPlanningEnt">
+
+		<tr>
+			<td colspan="7"> Planning Entreprises </td>
+		</tr>
+		<tr>
+			<td colspan= <?php $tabConfig["nbCreneauxMatin"]?>> Matin </td>
+			<td colspan=<?php $tabConfig["nbCreneauxAprem"]?>> Après-midi </td>
+		</tr>
+
+		<?php
+			//Ici afficher table
+		?>
+		</table>
+
+    <?php
+
+    //Planning du point de vue des Etudiants
+
+
+
+
 
 		echo $util->generePied();
 
@@ -158,7 +279,7 @@ public function afficherComptes() {
 					.$etuTemp->getPrenomEtu().
 					'</td>
 					</td>
-					<td> 
+					<td>
 					<a href="mailto:'.$etuTemp->getMailEtu().'">'.$etuTemp->getMailEtu().'</a>
 					</td>
 					<td>'
@@ -252,7 +373,7 @@ public function afficherComptes() {
 					<td>'
 					.$entTemp->getNumTelContact().
 					'</td>
-					<td> 
+					<td>
 					<a href="mailto:'.$entTemp->getMailEnt().'">'.$entTemp->getMailEnt().'</a>
 					</td>
 					<td>
@@ -278,7 +399,7 @@ public function afficherComptes() {
 					<td>'
 					.$entTemp->getNumTelContact().
 					'</td>
-					<td> 
+					<td>
 					<a href="mailto:'.$entTemp->getMailEnt().'">'.$entTemp->getMailEnt().'</a>
 					</td>
 					<td>
@@ -347,7 +468,7 @@ public function afficherComptes() {
 			echo'
 
 			Les emplois du temps débuteront le matin à : '.$heureDebutMatin.'.
-			<br/><br/>Les emplois du temps débuteront l\'après-midi à : '.$heureDebutAprem.'. 
+			<br/><br/>Les emplois du temps débuteront l\'après-midi à : '.$heureDebutAprem.'.
 			<br/><br/>Il y aura '.$nbCreneauxMatin.' créneau(x) le matin et '.$nbCreneauxAprem.' l\'après-midi.
 			<br/><br/>Chaque créneau dure '.$dureeCreneau.' minutes.
 			';

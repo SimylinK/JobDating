@@ -6,16 +6,16 @@ require_once("AccesTableException.php");
 /* Dans un path, utiliser '\..'' remonte d'un dossier. Sous windows
  */
 class Dao
-{  
-  
+{
+
   private $connexion;
 
- 
- 
+
+
  // 	permet d'ouvrir une connexion avec le sgbd
- 
+
  // il suffit de remplacer x par les informations qui vous concernent.
-  public function connexion() 
+  public function connexion()
   {
     try
       {
@@ -36,12 +36,12 @@ class Dao
   {
    $this->connexion=null;
   }
-	
+
   /* méthode qui permet d'obtenir un mot de passe dans la base associé à un certain login
 il faut d'abord ouvrir une connexion au niveau du sgbd
-ensuite soumettre la requête adéquate 
-fermer la connexion 
-renvoyer le résultat obtenu 
+ensuite soumettre la requête adéquate
+fermer la connexion
+renvoyer le résultat obtenu
 
 postconditions:
 une exception de type ConnexionException est levée s'il y a un problème lors de la connexion au sgbd
@@ -57,9 +57,9 @@ sinon null est renvoyé
     $statement = $this->connexion->prepare('SELECT mdpEtu FROM etudiant WHERE mailEtu="'.$login.'";');
     $statement->execute();
     $statementBis = $this->connexion->prepare('SELECT mdpEnt FROM entreprise WHERE mailEnt="'.$login.'";');
-    $statementBis->execute();  
+    $statementBis->execute();
     $statementTer = $this->connexion->prepare('SELECT * FROM identificationadmin WHERE emailadmin="'.$login.'";');
-    $statementTer->execute();  
+    $statementTer->execute();
     $this->deconnexion();
     $tabResult = $statement->fetch();
     $tabResultBis = $statementBis->fetch();
@@ -75,18 +75,18 @@ sinon null est renvoyé
     }
     return NULL;
   }
-  
-  
+
+
 
  /* méthode qui permet de vérifier si un login donné correspond bien au mot de passe passé en paramètre
   les mots de passe ont été cryptés dans la base avec crypt() en php.
- 
+
  postconditions:
- 
+
  une exception de type ConnexionException est levée s'il y a un problème lors de la connexion au sgbd
 une exception de type AccesTableException est levée s'il y a un problème lors de la soumission de la requête
 
-si aucune exception n'est levée, 
+si aucune exception n'est levée,
 si le login est associé à un mot de passe dans la table la valeur true est renvoyée, false sinon
 */
   public function verifieMotDePasse($login, $password)  {
@@ -145,6 +145,7 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
     return FALSE;
   }
 
+
   public function ajoutEtudiant() {
   		$this->connexion();
         $statement = $this->connexion->prepare('SELECT mailEtu from temp_etudiant WHERE mailEtu="'.$_POST['email'].'";');
@@ -193,7 +194,7 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
         $mailEtu = $_POST['email'];
         $mdpEtu = crypt($_POST['password']);
         $this->connexion();
-        $statement = $this->connexion->prepare('INSERT INTO temp_etudiant (nomEtu,prenomEtu,mailEtu,mdpEtu,numtelEtu,formationEtu) 
+        $statement = $this->connexion->prepare('INSERT INTO temp_etudiant (nomEtu,prenomEtu,mailEtu,mdpEtu,numtelEtu,formationEtu)
           VALUES ("'.$nomEtu.'","'.$prenomEtu.'","'.$mailEtu.'","'.$mdpEtu.'","'.$numtelEtu.'","'.$formationEtu.'");');
         $statement->execute();
         $this->deconnexion();
@@ -290,6 +291,8 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
         $this->deconnexion();
         return true;
   }
+
+//Pour les tables etudiants et entreprises
 
   public function getAllEtudiantsTemp() {
     $this->connexion();
@@ -438,12 +441,26 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
       return $statement->fetchAll(PDO::FETCH_CLASS, "Entreprise");
   }
 
+//Pour la table scriptconfig
   public function getConfiguration() {
      $this->connexion();
       $statement = $this->connexion->prepare('SELECT * FROM scriptconfig;');
       $statement->execute();
       $this->deconnexion();
       return $statement->fetch();
+  }
+
+  public function getNbCreneaux()  {
+    try {
+      $statement = $this->connexion->prepare('SELECT nbCreneauxMatin, nbCreneauxAprem FROM scriptconfig;');
+      $statement->execute();
+      $tabResult = $statement->fetch();
+      $ret[0] = $tabResult['nbCreneauxMatin'];
+      $ret[1] = $tabResult['nbCreneauxAprem'];
+      return $ret;
+    } catch (TableAccesException $e) {
+      print($e -> getMessage());
+    }
   }
 
   public function editHeureDebutMatin($new) {
@@ -485,6 +502,125 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
     $this->deconnexion();
     return;
   }
+
+
+
+
+  public function getEtudiants($formation)  {
+
+    try {
+      $statement = $this->connexion->prepare('SELECT IDEtu, listeChoixEtu, nomEtu FROM etudiant WHERE formationEtu = "'.$formation.'";');
+      $statement->execute();
+      $tabResult = $statement->fetchAll();
+      return $tabResult;
+    } catch (TableAccesException $e) {
+      print($e -> getMessage());
+    }
+  }
+
+//Pour la table Entreprise
+
+public function getEntreprises()  {
+
+  try {
+    $statement = $this->connexion->prepare('SELECT IDEnt, typeCreneau, formationsRecherchees, nbPlaces FROM entreprise;');
+    $statement->execute();
+    $tabResult = $statement->fetchAll();
+
+    return $tabResult;
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
+
+/////////////////////ATTENTION depuis la table entreprise////////////////////
+public function getEntreprisesEntreprise($formation)  {
+
+  try {
+    $statement = $this->connexion->prepare('SELECT IDEnt, nomEnt, typeCreneau, formationsRecherchees, nbPlaces FROM entreprise;');
+    $statement->execute();
+    $tabResult = $statement->fetchAll();
+
+    $ret = array();
+    foreach ($tabResult as $entreprise) {
+      $form = explode ( "," , $entreprise["formationsRecherchees"]);
+      if(in_array('Informatique', $form)) {
+        $ret[] = $entreprise;
+      }
+    }
+    return $ret;
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
+
+//Pour la table fomration
+
+public function getFormations($formation)  {
+
+  try {
+    $statement = $this->connexion->prepare('SELECT IDformation, entPropose, disponibilite FROM formation where typeFormation = "'.$formation.'";');
+    $statement->execute();
+    $tabResult = $statement->fetchAll();
+
+    return $tabResult;
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
+
+public function getFormationsEntreprise($entreprise)  {
+
+  try {
+    $statement = $this->connexion->prepare('SELECT IDformation FROM formation where entPropose = "'.$entreprise.'";');
+    $statement->execute();
+    $tabResult = $statement->fetchAll();
+
+    return $tabResult;
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
+
+public function getIDFormation($formation, $entreprise)  {
+
+  try {
+    $statement = $this->connexion->prepare('SELECT IDformation FROM formation WHERE typeFormation = "'.$formation.'" AND entPropose = "'.$entreprise.'";');
+    $statement->execute();
+    $tabResult = $statement->fetch();
+
+    $ret = $tabResult['IDformation'];
+
+    return $ret;
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
+
+//Pour la table scriptconfig
+
+
+//Pour la table creneau
+public function ajoutCreneau($numCreneau, $IDformation, $etudiant) {
+  try {
+    $statement = $this->connexion->prepare('INSERT INTO creneau VALUES ("'.$numCreneau.'", "00:00:00", "00:00:00", "'.$IDformation.'",  "'.$etudiant.'");');
+    $statement->execute();
+
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
+
+//Pour la table formation
+public function ajoutFormation($typeFormation, $entPropose, $disponibilite) {
+  try {
+    $statement = $this->connexion->prepare('INSERT INTO formation VALUES (NULL, "'.$typeFormation.'", "'.$entPropose.'", " ", "'.$disponibilite.'");');
+    $statement->execute();
+
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
 
 }
 
