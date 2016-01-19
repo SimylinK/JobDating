@@ -509,6 +509,23 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
     return $sortie;
   }
 
+  public function getId($identifiant,$type) {
+    if ($type=="admin") {
+      return 0;
+    }
+    if ($type=="entreprise") {
+      $select = "IDEnt";
+    }
+    else {
+      $select = "IDEtu";
+    }
+    $this->connexion();
+    $statement = $this->connexion->prepare("SELECT ".$select." FROM ".$type.";");
+    $statement->execute();
+    $this->deconnexion();
+    $tab = $statement->fetchAll();
+  }
+
 }
 
 ?>

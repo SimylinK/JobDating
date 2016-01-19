@@ -206,7 +206,8 @@ class Routeur {
   	if (isset($_POST['submit_login'])) {
   		$this->dao->connexion();
       if($this->dao->verifieMotDePasse($_POST['identifiant'],$_POST['password'])) {
-        $_SESSION['type_connexion'] = $this->dao->getTypeUtilisateur($_POST['identifiant']);
+         $_SESSION['type_connexion'] = $this->dao->getTypeUtilisateur($_POST['identifiant']);
+         $_SESSION['idUser'] = $this->dao->getId($_POST['identifiant'],$_SESSION['type_connexion']);
          $this->ctrlMenu->afficherMenu(1);
          return;
       }
