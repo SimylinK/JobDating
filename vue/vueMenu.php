@@ -171,7 +171,7 @@ public function afficherPlanningAdmin(){
     //On génére l'emploi du temps
     $dao = new Dao();
     $tabConfig = $dao -> getConfiguration();
-    $tabForm = $dao -> getFormation();
+    $tabForm = $dao -> getFormations();
 
     //Planning du point de vue des entreprises
     ?>
