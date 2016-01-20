@@ -30,6 +30,25 @@ public function afficherFormulaireEtu(){
 		</p>
 		<br/>
 		<p>
+			<script type="text/javascript">
+				function VerifSubmit()	
+				{
+				var passw = document.getElementById("passw");
+				var passwBis = document.getElementById("passwBis");
+					if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(document.getElementById("mail").value))
+					  {  
+					    return true;
+					  } 
+					  else {
+					  	alert("L\'adresse email n'est pas correcte !")  ;
+					 	return false;
+					  }  	
+					 if (passw.value != passwBis.value) {
+							alert('Les mots de passe ne coïncident pas.');
+					        return false;
+					}
+				}
+			</script>
 			<form action="index.php" method="post" onSubmit="return VerifSubmit();">
 				<!-- Prenom-->
 				<label for="prenom"/> Prénom <span name="obligatoire">*</span>
@@ -93,23 +112,7 @@ public function afficherFormulaireEtu(){
 				<input type="hidden" name="inscription" value="etudiant"/>
 				<input type="submit" name="valid_inscription_etu"/>
 			</form>
-			<script type="text/javascript">
-				VerifSubmit = function()
-				{
-				var passw = document.getElementById("passw");
-				var passwBis = document.getElementById("passwBis");
-					if (passw.value != passwBis.value) {
-							alert('Les mots de passe ne coïncident pas.');
-					        return false;
-					}
-					if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById("mail")))  ;
-					  {  
-					    return true;
-					  }  
-					  alert("L\'adresse email n'est pas correcte !")  ;
-					  return false;
-				}
-			</script>
+
 		</p>
 	</div>
 	<div style="text-align: center;">
