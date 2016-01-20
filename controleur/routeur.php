@@ -182,8 +182,8 @@ class Routeur {
 
   	if (isset($_GET['inscriptionEnt'])) {
       $date = getdate();
-      if ($date['mday'] < 18 && $date['mon'] <3) {
-        $this->ctrlInscriptionEtu->inscriptionEnt();
+      if ($date['mday'] < 31 && $date['mon'] <3) {
+        $this->ctrlInscriptionEnt->inscriptionEnt();
         return;
       }
   	}
