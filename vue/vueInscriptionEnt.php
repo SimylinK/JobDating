@@ -179,7 +179,9 @@ public function afficherFormulaireEnt(){
 				        sbmt.disabled = true;
 				    }
 				} 
-				VerifSubmit = function()
+			</script>
+			<script>
+			VerifSubmit = function()
 				{
 				var nb_repas = document.getElementById("nb_repas");
 				var checkboxRepas = document.getElementById("checkbox_repas");
@@ -196,12 +198,14 @@ public function afficherFormulaireEnt(){
 							alert('Les mots de passe ne coïncident pas.');
 					        return false;
 					}
-					if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById("mail")))  ;
+					if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(document.getElementById("mail").value))
 					  {  
 					    return true;
-					  }  
-					  alert("L\'adresse email n'est pas correcte !")  ;
-					  return false;
+					  } 
+					  else {
+					  	alert("L\'adresse email n'est pas correcte !")  ;
+					 	return false;
+					  } 
 				}
 			</script>
 		</p>

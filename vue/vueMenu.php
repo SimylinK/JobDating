@@ -172,7 +172,7 @@ public function afficherPlanningAdmin(){
     $dao = new Dao();
     $tabConfig = $dao -> getConfiguration();
 		$tabEnt = $dao -> getAllEntreprises();
-
+    $tabForm = $dao -> getFormations();
 
     //Planning du point de vue des entreprises
     ?>
@@ -763,15 +763,15 @@ public function afficherComptes() {
 		<!-- IMPORTANT : demande de génération des emplois du temps -->
 		<?php
 		$date = getdate();
-		if ($date['mday'] > 30 && $date['mon'] >2) {
-			echo '<form method="POST" action="index.php" onclick="return confirm("Attention ! Cette action utilisera les données courantes pour générer les emplois
+		// if ($date['mday'] > 30 && $date['mon'] >2) {
+			echo '<form method="POST" action="indexAlgo.php" onclick="return confirm("Attention ! Cette action utilisera les données courantes pour générer les emplois
 				du temps ! Veuillez vérifier toutes vos données avant de continuer.");">
 			<input type="submit" value="Générer les emplois du temps" name="startGeneration">
 			</form>';
-		}
-		else {
-			echo 'La génération des emplois du temps sera disponible à partir du 31 mars inclus.';
-		}
+		// }
+		// else {
+		// 	echo 'La génération des emplois du temps sera disponible à partir du 31 mars inclus.';
+		// }
 		?>
 
 	</div>

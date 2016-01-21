@@ -174,7 +174,7 @@ class Routeur {
 
   	if (isset($_GET['inscriptionEtu'])) {
       $date = getdate();
-      if ($date['mday'] > 30 && $date['mon'] >2) {
+      if ($date['mday'] < 31 && $date['mon'] <3) {
         $this->ctrlInscriptionEtu->inscriptionEtu();
         return;
       }
@@ -182,8 +182,8 @@ class Routeur {
 
   	if (isset($_GET['inscriptionEnt'])) {
       $date = getdate();
-      if ($date['mday'] > 17 && $date['mon'] >2) {
-        $this->ctrlInscriptionEtu->inscriptionEnt();
+      if ($date['mday'] < 31 && $date['mon'] <3) {
+        $this->ctrlInscriptionEnt->inscriptionEnt();
         return;
       }
   	}

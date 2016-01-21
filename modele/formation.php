@@ -30,14 +30,12 @@ class Formation {
     if($this -> periode == "journee") {
       // une personne pour une formation
       if($this -> nbForm == 1 && $this -> nbPers == 1){
-        echo"Test1";
         $dao -> ajoutFormation($this -> form[0], $this -> IDent, "journee");
         $this -> ArrayForm[] = array($this -> form[0], $this -> IDent, "", "journee");
       }
       // k*nbForm = k*nbPers
       else if($this -> nbForm == $this -> nbPers){
         foreach ($this -> form as $value) {
-          echo"Test2";
           $dao -> ajoutFormation($value, $this -> IDent, "journee");
           $this -> ArrayForm[] = array($value, $this -> IDent, "", "journee");
         }
@@ -46,10 +44,8 @@ class Formation {
       else if(($this -> nbForm / $this -> nbPers) == 2){
         $cpt = 0;
         for ($i=0; $i < $this -> nbPers; $i++) {
-          echo"Test3";
           $dao -> ajoutFormation($this -> form[$cpt], $this -> IDent, "matin");
           $this -> ArrayForm[] = array($this -> form[$cpt], $this -> IDent, "", "matin");
-          echo"Test4";
           $dao -> ajoutFormation($this -> form[$cpt+1], $this -> IDent, "apres_midi");
           $this -> ArrayForm[] = array($this -> form[$cpt+1], $this -> IDent, "", "apres_midi");
           $cpt += 2;
@@ -60,14 +56,11 @@ class Formation {
         $cpt = 0;
         for ($i=0; $i < ($this -> nbForm % $this -> nbPers); $i++) {
           $this -> ArrayForm[] = array($this -> form[$cpt], $this -> IDent, "", "matin");
-          echo"Test4";
           $dao -> ajoutFormation($this -> form[$cpt], $this -> IDent, "matin");
           $this -> ArrayForm[] = array($this -> form[$cpt+1], $this -> IDent, "", "apres_midi");
-          echo"Test5";
           $dao -> ajoutFormation($this -> form[$cpt+1], $this -> IDent, "apres_midi");
           $cpt += 2;
         }
-        echo"Test6";
         $dao -> ajoutFormation($this -> form[$cpt], $this -> IDent, "journee");
         $this -> ArrayForm[] = array($this -> form[$cpt], $this -> IDent, "", "journee");
       }
@@ -77,7 +70,6 @@ class Formation {
         for ($i=0; $i < ceil($this -> nbPers/$this -> nbForm); $i++) {
           foreach ($this -> form as $value) {
             if($cpt > 0){
-              echo"Test7";
               $dao -> ajoutFormation($value, $this -> IDent, "journee");
               $this -> ArrayForm[] = array($value, $this -> IDent, "", "journee");
             }
@@ -98,7 +90,6 @@ class Formation {
       for ($i=0; $i < ceil($this -> nbPers/$this -> nbForm); $i++) {
         foreach ($this -> form as $value) {
           if($cpt > 0){
-            echo"Test8";
             $dao -> ajoutFormation($value, $this -> IDent, $this -> periode);
             $this -> ArrayForm[] = array($value, $this -> IDent, "", $this -> periode);
           }
@@ -108,6 +99,35 @@ class Formation {
     }
     $dao-> deconnexion();
     return $this -> ArrayForm;
+  }
+
+
+  public function afficherForm() {
+    echo "<table border=1px >
+    <tr>
+      <td style='text-align:center' colspan=2>
+        Formation
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Nom de la formation
+      </td>
+      <td>
+        Periode de la journée
+      </td>
+    </tr>";
+    foreach ($this -> ArrayForm as $formation) {
+      echo "<tr>";
+        echo "<td>";
+          echo $formation[0];
+        echo "</td>";
+        echo "<td>";
+          echo $formation[3];
+        echo "</td>";
+      echo "</tr>";
+    }
+    echo "</table>";
   }
 }
 ?>
