@@ -242,7 +242,7 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
       }
         echo"<br/>";
     }*/
-    $dao=new daoAlgo();
+    $dao=new dao();
     $dao->connexion();
     echo"<br/><br/>";
 

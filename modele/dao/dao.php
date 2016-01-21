@@ -563,7 +563,7 @@ public function getEntreprisesParFormation($formation) {
     $this->connexion();
     $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt ="'.$tabResult[$i]['entPropose'].'";');
     $statement->execute();
-    array_push($sortie,$statement->fetchAll(PDO::FETCH_CLASS,"Entreprise");
+    array_push($sortie,$statement->fetchAll(PDO::FETCH_CLASS,"Entreprise"));
   }
   $this->deconnexion();
   return $sortie;
@@ -645,6 +645,18 @@ public function getIDFormation($formation, $entreprise)  {
 
 
 //Pour la table creneau
+public function supprimerCreneau() {
+  try {
+    $this->connexion();
+    $statement = $this->connexion->prepare('DELETE FROM creneau;');
+    $statement->execute();
+    $this->deconnexion();
+
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
+
 public function ajoutCreneau($numCreneau, $IDformation, $etudiant) {
   try {
     $statement = $this->connexion->prepare('INSERT INTO creneau VALUES ("'.$numCreneau.'", "00:00:00", "00:00:00", "'.$IDformation.'",  "'.$etudiant.'");');

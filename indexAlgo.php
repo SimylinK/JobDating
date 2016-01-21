@@ -1,9 +1,11 @@
 <?php
 
 require 'modele/algo.php';
-require 'modele/dao/daoAlgo.php';
+require 'modele/dao/dao.php';
 
-$dao=new daoAlgo();
+$dao=new dao();
+
+$dao -> supprimerCreneau();
 $dao->connexion();
 
 //////////////////////////?????????????????
