@@ -171,7 +171,8 @@ public function afficherPlanningAdmin(){
     //On génére l'emploi du temps
     $dao = new Dao();
     $tabConfig = $dao -> getConfiguration();
-    $tabForm = $dao -> getFormation();
+		$tabEnt = $dao -> getAllEntreprises();
+
 
     //Planning du point de vue des entreprises
     ?>
@@ -185,19 +186,106 @@ public function afficherPlanningAdmin(){
   	<body>
   	<div id="main">
   	<br/>
+		<style>
 
+		#tabPlanningEnt {
+			background-color: #f2f2f2;
+			margin-left: -40%;
+			border-style : solid;
+			border-width : 1 px;
+			border-collapse: collapse;
+			text-align: center;
+
+		}
+		#tabPlanningEnt tr td {
+			border-style : solid;
+			border-width : 1px;
+			border-collapse: collapse;
+		}
+
+		</style>
     <table id="tabPlanningEnt">
 
 		<tr>
-			<td colspan="7"> Planning Entreprises </td>
+				<?php
+				$tmp = $tabConfig["nbCreneauxMatin"] + $tabConfig["nbCreneauxAprem"] + 2;
+				echo'<td colspan= '.$tmp.'> Planning Entreprises </td>';
+				?>
 		</tr>
 		<tr>
-			<td colspan= <?php $tabConfig["nbCreneauxMatin"]?>> Matin </td>
-			<td colspan=<?php $tabConfig["nbCreneauxAprem"]?>> Après-midi </td>
+			<td colspan= 1> Entreprise </td>
+			<?php
+			echo'<td colspan= '.$tabConfig["nbCreneauxMatin"].'> Matin </td>';
+			echo'<td colspan= 1> Pause midi </td>';
+			echo'<td colspan= '.$tabConfig["nbCreneauxAprem"].'> Après-midi </td>';
+			?>
 		</tr>
 
 		<?php
-			//Ici afficher table
+		//Les horaires
+		echo'<tr>';
+		$duree = $tabConfig["dureeCreneau"];
+		$heureString = $tabConfig["heureDebutMatin"];
+		$heureString = explode(':', $heureString);
+		$heure = $heureString[0];
+		$min = $heureString[1];
+		echo'<td> Horaires</td>';
+		for($i = 0; $i < 15; $i++) {
+			if ($i == 6) {
+				echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+				$heureString = $tabConfig["heureDebutAprem"];
+				$heureString = explode(':', $heureString);
+				$heure = $heureString[0];
+				$min = $heureString[1];
+			} else {
+				echo'<td>' . $heure . ' : ';
+				if ($min == 0)
+					echo '00';
+				else
+					echo $min;
+				echo'</td>';
+
+				$min += $duree;
+				if($min == 60) {
+					$min = 0;
+					$heure++;
+				}
+			}
+
+
+		}
+		echo'</tr>';
+
+
+
+
+
+		foreach ($tabEnt as $ent) {
+			$tabForm = $dao -> getFormationsEntreprise($ent -> getID());
+
+
+
+		foreach ($tabForm as $form) {
+			echo '<tr>
+			<td>'
+			.$ent -> getnomEnt().
+			'</td>';
+			for($i = 0; $i < $tabConfig['nbCreneauxMatin'] + $tabConfig['nbCreneauxAprem']; $i++) {
+				if ($i == 6) {
+					echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+				}
+				echo '
+				<td>'
+				.
+				$dao -> getNomEtudiant($dao -> getCreneau($i, $form['IDformation'])).
+				'</td> ';
+			}
+		}
+			echo '</tr>';
+	}
+
+
+
 		?>
 		</table>
 

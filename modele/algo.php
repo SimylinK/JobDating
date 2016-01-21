@@ -269,7 +269,7 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
           //  echo '$c : ' . $c . "<br/>";
           //  echo 'formation : ' . $this -> Formations[$cmp] . "<br/>";
           //  echo 'etudiant : ' . $this -> Etudiants[$Etu] . "<br/>";
-          //  $dao -> ajoutCreneau($c, $this -> Formations[$cmp], $this -> Etudiants[$Etu]);
+            $dao -> ajoutCreneau($c, $this -> Formations[$cmp], $this -> Etudiants[$Etu]);
             echo $this -> Etudiants[$Etu];
           } else {
             echo "______ ";//case vide avec 10 caracteres

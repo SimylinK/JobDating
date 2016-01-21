@@ -448,6 +448,7 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
       $statement->execute();
       $this->deconnexion();
       return $statement->fetch();
+      
   }
 
   public function getNbCreneaux()  {
@@ -518,6 +519,21 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
     }
   }
 
+  public function getNomEtudiant($IDEtu)  {
+
+    try {
+      $statement = $this->connexion->prepare('SELECT nomEtu FROM etudiant WHERE IDEtu = "'.$IDEtu.'";');
+      $statement->execute();
+      if ($result = $statement->fetch()) {
+        return $result['nomEtu'];
+      } else {
+        return "-----------";
+      }
+    } catch (TableAccesException $e) {
+      print($e -> getMessage());
+    }
+  }
+
 //Pour la table Entreprise
 
 public function getEntreprises()  {
@@ -554,7 +570,7 @@ public function getEntreprisesEntreprise($formation)  {
   }
 }
 
-//Pour la table fomration
+//Pour la table formation
 
 public function getFormations($formation)  {
 
@@ -572,6 +588,7 @@ public function getFormations($formation)  {
 public function getFormationsEntreprise($entreprise)  {
 
   try {
+    $this->connexion();
     $statement = $this->connexion->prepare('SELECT IDformation FROM formation where entPropose = "'.$entreprise.'";');
     $statement->execute();
     $tabResult = $statement->fetchAll();
@@ -597,8 +614,6 @@ public function getIDFormation($formation, $entreprise)  {
   }
 }
 
-//Pour la table scriptconfig
-
 
 //Pour la table creneau
 public function ajoutCreneau($numCreneau, $IDformation, $etudiant) {
@@ -606,6 +621,22 @@ public function ajoutCreneau($numCreneau, $IDformation, $etudiant) {
     $statement = $this->connexion->prepare('INSERT INTO creneau VALUES ("'.$numCreneau.'", "00:00:00", "00:00:00", "'.$IDformation.'",  "'.$etudiant.'");');
     $statement->execute();
 
+  } catch (TableAccesException $e) {
+    print($e -> getMessage());
+  }
+}
+
+public function getCreneau($numeroCreneau, $idFormation)  {
+
+  try {
+    $statement = $this->connexion->prepare('SELECT idEtudiant FROM creneau WHERE numeroCreneau = "'.$numeroCreneau.'" AND idFormation = "'.$idFormation.'";');
+    $statement->execute();
+    if ($tabResult = $statement->fetch()) {
+      $ret = $tabResult['idEtudiant'];
+    } else {
+      $ret = False;
+    }
+    return $ret;
   } catch (TableAccesException $e) {
     print($e -> getMessage());
   }
