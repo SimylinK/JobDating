@@ -33,50 +33,6 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
     $this -> LiensEntrCren = $c_LiensEntrCren;
     $this -> Formations = $c_Formations;
     $this -> nbCreneaux = $c_nbCreneaux;
-    /*
-    //On créé les créneaux supplémentaires pour les entreprises, et $LiensEntrCren
-    $nbCreneaux = 0;
-    $tmp = $c_Creneaux;
-    foreach ($tmp as $element) {
-      $vide = True;
-      $maxValue = 1;
-      foreach ($element as $value) {
-        if($value >= 1){
-          $vide = False;
-        }
-        if($value > 1 && $value > $maxValue) {
-          $maxValue = $value;
-        }
-      }
-      $tmpLien = array();
-      //On s'occupe de $indLiensEntrCren
-      if($vide){
-        $tmpLien[] = 0;
-        $nbCreneaux++;
-      } else {
-        $tmpLien[] = $maxValue;
-        for ($i = 0; $i < $maxValue; $i++) {
-          $tmpLien[] = $nbCreneaux;
-          $nbCreneaux++;
-        }
-      }
-      $this -> LiensEntrCren[] = $tmpLien;
-
-
-      for($i = 0; $i < $maxValue; $i ++){
-        $array = array();
-        foreach ($element as $value) {
-          if($value > 0){
-            $array[] = 1;
-            $value = $value -1;
-          } else {
-            $array[] = 0;
-          }
-        }
-        $this -> Creneaux[]=$array;
-      }
-    }
-    */
   }
 
   function appli() {
@@ -101,11 +57,6 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
   function initEchiquier(){
     //On regarde la taille que doit avoir l'échiquier
     $taille = 0;
-    /*for($l = 0; $l < sizeof($this -> Entreprises); $l++) {
-      $taille += $this -> LiensEntrCren[$l][0];
-      if ($this -> LiensEntrCren[$l][0] == 0)
-        $taille++;
-    }*/
 
     foreach ($this -> Entreprises as $IDent) {
       $taille += $this -> LiensEntrCren[$IDent][0];
@@ -192,130 +143,24 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
   }
 
   function afficheEchiquier() { //Affichage en html, tableau
-    /*for($l = 0; $l < 7; $l++) { //les numeros des etudiants
-      for($c = 0; $c < 10; $c++) {
-        $Etu = $this -> Echiquier[$l][$c];
-        if($Etu != 0) {
-          echo  $this -> Echiquier[$l][$c] ." &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-        } else {
-          echo  $this -> Echiquier[$l][$c] ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-        }
-      }
-    echo"<br/>";
-    }
-
-    for ($l = 0; $l < 15; $l++) { // Nombre de choix satisfaits pour chaque etudiant
-      echo $this -> satisfait[$l].", ";
-    }
-
-    echo "<br/>";
-
-    //Affichage du planning complet
-    for ($l = 0; $l < 7; $l++) {
-      echo $this -> Entreprises[$l+1] ."&nbsp;&nbsp;&nbsp;&nbsp;";
-      for($c = 0; $c < 10; $c++) {
-        $Etu = $this -> Echiquier[$l][$c];
-        if ($Etu != 0) { // nom de l'etudiant
-          echo $this -> Etudiants[$Etu];
-        } else {
-          echo "           ";//case vide avec 10 caracteres
-        }
-      }
-      echo"<br/>";
-    }
-    echo"<br/><br/>";
-
-
-    //Affichage avec créneaux
-    for($e = 0; $e < sizeof($this -> Entreprises); $e++) {
-      echo $this -> Entreprises[$e+1] ."&nbsp;&nbsp;&nbsp;&nbsp;";
-
-
-      for($c = 0; $c < $this -> nbCreneaux; $c++) {
-        $Etu = $this -> Echiquier[$e][$c];
-        if ($Etu != 0) { // nom de l'etudiant
-
-          echo $this -> Etudiants[$Etu];
-        } else {
-          echo "______ ";//case vide avec 10 caracteres
-        }
-      }
-        echo"<br/>";
-    }*/
     $dao=new dao();
     $dao->connexion();
-    echo"<br/><br/>";
-
-    echo"<table>";
     $cmp = 0;
     //for($l = 0; $l < sizeof($this -> Entreprises); $l++) {
     foreach ($this-> Entreprises as $IDent) {
       for ($e = 1; $e <= $this -> LiensEntrCren[$IDent][0]; $e++) {
-        echo"<tr>";
-
-        echo"<td>";
-        echo $this -> Formations[$cmp];
-        echo"</td>";
-
-        echo"<td>";
-        echo $IDent;
-        echo"</td>";
-
         for($c = 0; $c < $this -> nbCreneaux; $c++) {
 
           $Etu = $this -> Echiquier[$this -> LiensEntrCren[$IDent][$e]][$c];
-          echo"<td>";
           if ($Etu != 0) { // nom de l'etudiant
-          //  echo '$c : ' . $c . "<br/>";
-          //  echo 'formation : ' . $this -> Formations[$cmp] . "<br/>";
-          //  echo 'etudiant : ' . $this -> Etudiants[$Etu] . "<br/>";
             $dao -> ajoutCreneau($c, $this -> Formations[$cmp], $this -> Etudiants[$Etu]);
-            echo $this -> Etudiants[$Etu];
-          } else {
-            echo "______ ";//case vide avec 10 caracteres
           }
-          echo" </td>";
         }
-
-        echo"</tr>";
         $cmp++;
       }
     }
-    echo"</table>";
-
-    echo"<br/><br/>";
     $dao -> deconnexion();
-
-    /*
-    echo"<table>";
-    for($etu = 0; $etu < sizeof($this -> Etudiants); $etu++) {
-        echo"<tr>";
-        echo"<td>";
-        echo $this -> Etudiants[$etu];
-        echo"</td>";
-        for($c = 0; $c < $this -> nbCreneaux; $c++) {
-          $tmp = "______";
-          for($ent = 0; $ent < sizeof($this -> LiensEntrCren); $ent++) {
-            for ($ent_cre = 1; $ent_cre <= $this ->  LiensEntrCren[$ent][0]; $ent_cre++) {
-              $etu_test = $this -> Echiquier[$this -> LiensEntrCren[$ent][$ent_cre]][$c];
-
-              if ($etu_test == $etu) { // nom de l'etudiant
-                $tmp = $this -> Entreprises[$ent];
-              }
-            }
-          }
-          echo"<td>";
-          echo $tmp;
-          echo" </td>";
-        }
-
-        echo"</tr>";
-    }
-    echo"</table>";*/
   }
-
-
-
 }
 
 ?>

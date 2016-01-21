@@ -209,12 +209,13 @@ public function afficherPlanningAdmin(){
 
 		<tr>
 				<?php
-				$tmp = $tabConfig["nbCreneauxMatin"] + $tabConfig["nbCreneauxAprem"] + 2;
+				$tmp = $tabConfig["nbCreneauxMatin"] + $tabConfig["nbCreneauxAprem"] + 3;
 				echo'<td colspan= '.$tmp.'> Planning Entreprises </td>';
 				?>
 		</tr>
 		<tr>
 			<td colspan= 1> Entreprise </td>
+			<td colspan= 1> Formation </td>
 			<?php
 			echo'<td colspan= '.$tabConfig["nbCreneauxMatin"].'> Matin </td>';
 			echo'<td colspan= 1> Pause midi </td>';
@@ -223,14 +224,17 @@ public function afficherPlanningAdmin(){
 		</tr>
 
 		<?php
-		//Les horaires
+
 		echo'<tr>';
+		echo'<td> </td>';
+		echo'<td> </td>';
+		//Les horaires
 		$duree = $tabConfig["dureeCreneau"];
 		$heureString = $tabConfig["heureDebutMatin"];
 		$heureString = explode(':', $heureString);
 		$heure = $heureString[0];
 		$min = $heureString[1];
-		echo'<td> Horaires</td>';
+
 		for($i = 0; $i < 15; $i++) {
 			if ($i == 6) {
 				echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
@@ -270,7 +274,11 @@ public function afficherPlanningAdmin(){
 			echo '<tr>
 			<td>'
 			.$ent -> getnomEnt().
+			'</td>
+			<td>'
+			.$form['typeFormation'].
 			'</td>';
+			;
 			for($i = 0; $i < $tabConfig['nbCreneauxMatin'] + $tabConfig['nbCreneauxAprem']; $i++) {
 				if ($i == 6) {
 					echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';

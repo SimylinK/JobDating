@@ -36,6 +36,12 @@ class Routeur {
   // Traite une requête entrante
   public function routerRequete() {
 
+    if(isset($_POST['startGeneration']) && isset($_SESSION['type_connexion'])){
+      $this -> dao -> generatePlanning();
+      $this -> ctrlMenu -> afficherMenu(1);
+      return;
+    }
+
     if (isset($_GET['profil']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
             if ($_GET['type'] == "tmpEnt") {
               $this->ctrlProfil->afficherProfil("entreprise",$this->dao->getTempEnt($_GET['profil']));
@@ -251,30 +257,6 @@ class Routeur {
         return;
   	}
 
-  	if (isset($_POST['submit_new_formation'])) {
-  		/*
-			TODO
-			Accès à la BDD
-			Ajouter une formation à l'entreprise donnée
-			$this->ctrlMenu->afficherMenu(2);
-  		*/
-		$_SESSION['fail'] = "Cette fonctionnalité n'est pas encore<br/>implémentée. Nous nous excusons pour cela<br/>et vous demanderons de bien vouloir faire<br/>preuve de patience.";
-        $this->ctrlLost->genererLost();
-        return;
-  	}
-
-  	if (isset($_POST['delete_formation'])) {
-  		/*
-			TODO
-			Accès à la BDD
-			Suppression
-			$this->ctrlMenu->afficherMenu(2);
-  		*/
-		$_SESSION['fail'] = "Cette fonctionnalité n'est pas encore<br/>implémentée. Nous nous excusons pour cela<br/>et vous demanderons de bien vouloir faire<br/>preuve de patience.";
-        $this->ctrlLost->genererLost();
-        return;
-  	}
-
   	if (isset($_POST['edition_compte'])) {
   		/*
 			TODO
@@ -286,31 +268,7 @@ class Routeur {
         return;
   	}
 
-  	if (isset($_POST['suppression_compte'])) {
-  		/*
-			TODO
-			Demander confirmation de la suppression par mdp
-  		*/
-		$_SESSION['fail'] = "Cette fonctionnalité n'est pas encore<br/>implémentée. Nous nous excusons pour cela<br/>et vous demanderons de bien vouloir faire<br/>preuve de patience.";
-        $this->ctrlLost->genererLost();
-        return;
-  	}
 
-  	if (isset($_POST['confirmation_suppression_compte'])) {
-  		/*
-			TODO
-			Désactiver le compte
-			Détruire la session
-  		*/
-		$_SESSION['fail'] = "Cette fonctionnalité n'est pas encore<br/>implémentée. Nous nous excusons pour cela<br/>et vous demanderons de bien vouloir faire<br/>preuve de patience.";
-        $this->ctrlLost->genererLost();
-        return;
-  	}
-    if(isset($_POST['startGeneration']) && isset($_SESSION['type_connexion'])){
-      if($_SESSION['type_connexion'] == 'admin'){
-        $this -> dao -> generatePlanning();
-      }
-    }
     $this->ctrlAuthentification->authentification();
   }
 

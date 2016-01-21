@@ -2,7 +2,7 @@
 
 require_once("ConnexionException.php");
 require_once("AccesTableException.php");
-require_once("../algo.php");
+require_once(__DIR__."/../algo.php");
 
 /* Dans un path, utiliser '\..'' remonte d'un dossier. Sous windows
 */
@@ -625,7 +625,7 @@ class Dao
 
           try {
             $this->connexion();
-            $statement = $this->connexion->prepare('SELECT IDformation FROM formation where entPropose = "'.$entreprise.'";');
+            $statement = $this->connexion->prepare('SELECT IDformation, typeFormation FROM formation where entPropose = "'.$entreprise.'";');
             $statement->execute();
             $tabResult = $statement->fetchAll();
             $this->deconnexion();
