@@ -448,17 +448,35 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
       $statement->execute();
       $this->deconnexion();
       return $statement->fetch();
-
   }
 
   public function getNbCreneaux()  {
     try {
+      $this->connexion();
       $statement = $this->connexion->prepare('SELECT nbCreneauxMatin, nbCreneauxAprem FROM scriptconfig;');
       $statement->execute();
       $tabResult = $statement->fetch();
       $ret[0] = $tabResult['nbCreneauxMatin'];
       $ret[1] = $tabResult['nbCreneauxAprem'];
+      $this->deconnexion();
       return $ret;
+    } catch (TableAccesException $e) {
+      print($e -> getMessage());
+    }
+  }
+
+   public function getNomEtudiant($IDEtu)  {
+
+    try {
+      $this->connexion();
+      $statement = $this->connexion->prepare('SELECT nomEtu FROM etudiant WHERE IDEtu = "'.$IDEtu.'";');
+      $statement->execute();
+      $this->deconnexion();
+      if ($result = $statement->fetch()) {
+        return $result['nomEtu'];
+      } else {
+        return "-----------";
+      }
     } catch (TableAccesException $e) {
       print($e -> getMessage());
     }
@@ -522,21 +540,6 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
     }
   }
 
-  public function getNomEtudiant($IDEtu)  {
-
-    try {
-      $statement = $this->connexion->prepare('SELECT nomEtu FROM etudiant WHERE IDEtu = "'.$IDEtu.'";');
-      $statement->execute();
-      if ($result = $statement->fetch()) {
-        return $result['nomEtu'];
-      } else {
-        return "-----------";
-      }
-    } catch (TableAccesException $e) {
-      print($e -> getMessage());
-    }
-  }
-
 //Pour la table Entreprise
 
 public function getEntreprises()  {
@@ -563,7 +566,7 @@ public function getEntreprisesParFormation($formation) {
     $this->connexion();
     $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt ="'.$tabResult[$i]['entPropose'].'";');
     $statement->execute();
-    array_push($sortie,$statement->fetchAll(PDO::FETCH_CLASS,"Entreprise");
+    array_push($sortie,$statement->fetchAll(PDO::FETCH_CLASS,"Entreprise"));
   }
   $this->deconnexion();
   return $sortie;
@@ -574,6 +577,7 @@ public function getFormationEtudiant($id) {
   $statement = $this->connexion->prepare('SELECT formationEtu FROM etudiant WHERE IDEtu ="'.$id.'";');
   $statement->execute();
   $result = $statement->fetch();
+  $this->deconnexion();
   return $result['IDEtu'];
 }
 
@@ -581,6 +585,7 @@ public function getFormationEtudiant($id) {
 public function getEntreprisesEntreprise($formation)  {
 
   try {
+    $this->connexion();
     $statement = $this->connexion->prepare('SELECT IDEnt, nomEnt, typeCreneau, formationsRecherchees, nbPlaces FROM entreprise;');
     $statement->execute();
     $tabResult = $statement->fetchAll();
@@ -592,13 +597,14 @@ public function getEntreprisesEntreprise($formation)  {
         $ret[] = $entreprise;
       }
     }
+    $this->deconnexion();
     return $ret;
   } catch (TableAccesException $e) {
     print($e -> getMessage());
   }
 }
 
-//Pour la table formation
+//Pour la table fomration
 
 public function getFormations($formation)  {
 
@@ -607,7 +613,7 @@ public function getFormations($formation)  {
     $statement = $this->connexion->prepare('SELECT IDformation, entPropose, disponibilite FROM formation where typeFormation = "'.$formation.'";');
     $statement->execute();
     $tabResult = $statement->fetchAll();
-
+  $this->deconnexion();
     return $tabResult;
   } catch (TableAccesException $e) {
     print($e -> getMessage());
@@ -621,7 +627,7 @@ public function getFormationsEntreprise($entreprise)  {
     $statement = $this->connexion->prepare('SELECT IDformation FROM formation where entPropose = "'.$entreprise.'";');
     $statement->execute();
     $tabResult = $statement->fetchAll();
-
+    $this->deconnexion();
     return $tabResult;
   } catch (TableAccesException $e) {
     print($e -> getMessage());
@@ -631,25 +637,30 @@ public function getFormationsEntreprise($entreprise)  {
 public function getIDFormation($formation, $entreprise)  {
 
   try {
+    $this->connexion();
     $statement = $this->connexion->prepare('SELECT IDformation FROM formation WHERE typeFormation = "'.$formation.'" AND entPropose = "'.$entreprise.'";');
     $statement->execute();
     $tabResult = $statement->fetch();
 
     $ret = $tabResult['IDformation'];
-
+    $this->deconnexion();
     return $ret;
   } catch (TableAccesException $e) {
     print($e -> getMessage());
   }
 }
 
+//Pour la table scriptconfig
+
 
 //Pour la table creneau
 public function ajoutCreneau($numCreneau, $IDformation, $etudiant) {
   try {
+    $this->connexion();
     $statement = $this->connexion->prepare('INSERT INTO creneau VALUES ("'.$numCreneau.'", "00:00:00", "00:00:00", "'.$IDformation.'",  "'.$etudiant.'");');
     $statement->execute();
-
+    $this->deconnexion();
+    return;
   } catch (TableAccesException $e) {
     print($e -> getMessage());
   }
@@ -658,6 +669,7 @@ public function ajoutCreneau($numCreneau, $IDformation, $etudiant) {
 public function getCreneau($numeroCreneau, $idFormation)  {
 
   try {
+    $this->connexion();
     $statement = $this->connexion->prepare('SELECT idEtudiant FROM creneau WHERE numeroCreneau = "'.$numeroCreneau.'" AND idFormation = "'.$idFormation.'";');
     $statement->execute();
     if ($tabResult = $statement->fetch()) {
@@ -665,6 +677,7 @@ public function getCreneau($numeroCreneau, $idFormation)  {
     } else {
       $ret = False;
     }
+    $this->deconnexion();
     return $ret;
   } catch (TableAccesException $e) {
     print($e -> getMessage());
@@ -674,9 +687,10 @@ public function getCreneau($numeroCreneau, $idFormation)  {
 //Pour la table formation
 public function ajoutFormation($typeFormation, $entPropose, $disponibilite) {
   try {
+    $this->connexion();
     $statement = $this->connexion->prepare('INSERT INTO formation VALUES (NULL, "'.$typeFormation.'", "'.$entPropose.'", " ", "'.$disponibilite.'");');
     $statement->execute();
-
+    $this->deconnexion();
   } catch (TableAccesException $e) {
     print($e -> getMessage());
   }
