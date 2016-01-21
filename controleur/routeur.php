@@ -58,16 +58,16 @@ class Routeur {
     if (isset($_POST['changementConfig'])) {
       if ($_POST['heureDebutMatin'] != "") {
         $this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
-      } 
+      }
       if ($_POST['heureDebutAprem']  != "") {
         $this->dao->editHeureDebutAprem($_POST['heureDebutAprem']);
-      } 
+      }
       if ($_POST['nbCreneauxMatin'] != "") {
         $this->dao->editNbCreneauxMatin($_POST['nbCreneauxMatin']);
-      } 
+      }
       if ($_POST['nbCreneauxAprem'] != "") {
         $this->dao->editNbCreneauxAprem($_POST['nbCreneauxAprem']);
-      } 
+      }
       if ($_POST['dureeCreneau'] != "") {
         $this->dao->editDureeCreneau($_POST['dureeCreneau']);
       }
@@ -85,7 +85,7 @@ class Routeur {
       if ($_POST['inscription'] == "etudiant") {
         if ($this->dao->ajoutEtudiant()) {
         	$this->ctrlConfirmationInscription->genereVueConfirmationInscription();
-        	return; 
+        	return;
         }
         else {
         	$_SESSION['fail'] = "Une autre personne du même nom ou utilisant cette<br/>adresse email semble déjà inscrite.<br/>Veuillez réessayer avec une autre adresse ou<br/>vérifiez que vous n'êtes pas déjà inscrit.";
@@ -111,7 +111,7 @@ class Routeur {
       	$_SESSION['fail'] = "Êtes-vous perdu(e) ? Il semblerait qu'un imprévu<br/>soit arrivé. Refaites donc votre choix pour retrouver<br/>vos marques.";
         $this->ctrlLost->genererLost();
         return;
-      } 
+      }
     }
 
     if (isset($_GET['validation']) && isset($_GET['id']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
@@ -306,6 +306,11 @@ class Routeur {
         $this->ctrlLost->genererLost();
         return;
   	}
+    if(isset($_POST['startGeneration']) && isset($_SESSION['type_connexion'])){
+      if($_SESSION['type_connexion'] == 'admin'){
+        $this -> dao -> generatePlanning();
+      }
+    }
     $this->ctrlAuthentification->authentification();
   }
 

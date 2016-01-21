@@ -6,7 +6,7 @@ require 'modele/dao/dao.php';
 $dao=new dao();
 
 $dao -> supprimerCreneau();
-$dao->connexion();
+$dao -> connexion();
 
 //////////////////////////?????????????????
 $arrayNbCreneaux = $dao -> getNbCreneaux();
