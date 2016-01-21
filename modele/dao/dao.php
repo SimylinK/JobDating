@@ -448,7 +448,7 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
       $statement->execute();
       $this->deconnexion();
       return $statement->fetch();
-      
+
   }
 
   public function getNbCreneaux()  {
@@ -575,6 +575,7 @@ public function getEntreprisesEntreprise($formation)  {
 public function getFormations($formation)  {
 
   try {
+    $this->connexion();
     $statement = $this->connexion->prepare('SELECT IDformation, entPropose, disponibilite FROM formation where typeFormation = "'.$formation.'";');
     $statement->execute();
     $tabResult = $statement->fetchAll();

@@ -172,7 +172,8 @@ public function afficherPlanningAdmin(){
     $dao = new Dao();
     $tabConfig = $dao -> getConfiguration();
 		$tabEnt = $dao -> getAllEntreprises();
-    $tabForm = $dao -> getFormations();
+		/////////////////////ATTENTION DONNEE MAGIQUE
+    $tabForm = $dao -> getFormations("Informatique");
 
     //Planning du point de vue des entreprises
     ?>
