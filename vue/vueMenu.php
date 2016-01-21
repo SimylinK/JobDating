@@ -618,6 +618,8 @@ public function afficherComptes() {
 	}
 
 	public function afficherEntreprises(){
+		$dao = new Dao();
+		$tabEntreprises = $dao->getEntreprisesParFormation($dao->getFormationEtudiant($_SESSION['idUser']));
 		$util = new UtilitairePageHtml();
 		echo $util->genereBandeauApresConnexion();
 	?>
@@ -630,8 +632,24 @@ public function afficherComptes() {
 	</head>
 	<body>
 	<div id="main">
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici sera affichée la liste des entreprises proposant la formation de l'élève. Chaque nom affiché sera un lien menant au profil de l'entreprise.
+		<br/><br/><span style="categorie_profil">Liste des entreprises recherchant votre formation :</span><br/><br/>
+
+		<?php
+
+			if (sizeof($tabEntreprises) > 0) {
+
+				foreach ($tabEntreprises as $entreprise) {
+					echo '<a href="index.php?profil='.$entreprise->getID().'&type=Ent">'.$entreprise->getNomEnt().'</a><br/><br/>';
+				}
+
+			}
+			else {
+				echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Actuellement, aucune entreprise ne propose de formation correspondante à la votre.';
+			}
+
+		?>
+
+
 	</div>
 		<?php
 

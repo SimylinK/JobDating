@@ -501,6 +501,7 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
     $statement = $this->connexion->prepare("UPDATE scriptconfig SET dureeCreneau=".$new.";");
     $statement->execute();
     $this->deconnexion();
+
     return;
   }
 
@@ -510,9 +511,11 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
   public function getEtudiants($formation)  {
 
     try {
+      $this->connexion();
       $statement = $this->connexion->prepare('SELECT IDEtu, listeChoixEtu, nomEtu FROM etudiant WHERE formationEtu = "'.$formation.'";');
       $statement->execute();
       $tabResult = $statement->fetchAll();
+      $this->deconnexion();
       return $tabResult;
     } catch (TableAccesException $e) {
       print($e -> getMessage());
@@ -539,14 +542,39 @@ si le login est associé à un mot de passe dans la table la valeur true est ren
 public function getEntreprises()  {
 
   try {
+    $this->connexion();
     $statement = $this->connexion->prepare('SELECT IDEnt, typeCreneau, formationsRecherchees, nbPlaces FROM entreprise;');
     $statement->execute();
     $tabResult = $statement->fetchAll();
-
+    $this->deconnexion();
     return $tabResult;
   } catch (TableAccesException $e) {
     print($e -> getMessage());
   }
+}
+
+public function getEntreprisesParFormation($formation) {
+  $this->connexion();
+  $statement = $this->connexion->prepare('SELECT entPropose FROM formation WHERE typeFormation ="'.$formation.'";');
+  $statement->execute();
+  $tabResult = $statement->fetchAll();
+  $sortie = array();
+  for ($i = 0; $i < sizeof($tabResult); $i++) {
+    $this->connexion();
+    $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt ="'.$tabResult[$i]['entPropose'].'";');
+    $statement->execute();
+    array_push($sortie,$statement->fetchAll(PDO::FETCH_CLASS,"Entreprise");
+  }
+  $this->deconnexion();
+  return $sortie;
+}
+
+public function getFormationEtudiant($id) {
+  $this->connexion();
+  $statement = $this->connexion->prepare('SELECT formationEtu FROM etudiant WHERE IDEtu ="'.$id.'";');
+  $statement->execute();
+  $result = $statement->fetch();
+  return $result['IDEtu'];
 }
 
 /////////////////////ATTENTION depuis la table entreprise////////////////////
