@@ -96,7 +96,7 @@ public function afficherFormulaireEnt(){
 				<!-- Nombre alternant -->
 				<label for="NbAlternants"/> Pouvez-vous indiquer le nombre d'alternants (pour chaque formation) que vous envisagez de recruter ? </span>
 				<br/>
-				<input type="text" name="NbAlternants"/>
+				<input type="number" name="NbAlternants" min="1" max="10"/>
 				<br/><br/>
 				<!-- Nombre de personnes
 				<label for="NbPersonnes"/> Afin d'organiser au mieux le planning, merci de nous indiquer le nombre de personnes de votre entreprise présentes pour mener les entretiens. <span name="obligatoire">*</span>
@@ -116,7 +116,7 @@ public function afficherFormulaireEnt(){
 				<!-- Nombre stand -->
 				<label for="NbStand"/> Pouvez-vous indiquer combien d'étudiants dont vous pourrez faire passer en entretien en simultané ? <span name="obligatoire">*</span>
 				<br/>
-				<input type="text" name="NbStand" required/>
+				<input type="number" name="NbStand" min="1" max="10" required/>
 				<br/><br/>
 				<!-- Déjeuner ?-->
 				<input type="checkbox" name="dejeuner" value="dejeuner_ok" id="checkbox_repas"/><span>Vous souhaitez déjeuner sur place.</span>
