@@ -83,7 +83,6 @@ public function afficherProfil($type,$profil){
 		<br/><br/>
 		<span class="categorie_profil">Nombre de stands en simultané :</span> '.$profil->getNbStands().'
 		<br/><br/>
-		<span class="categorie_profil">Nombre de repas prévus :</span> '.$profil->getNbRepas().'
 		';
 	}
 
