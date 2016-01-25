@@ -81,6 +81,15 @@ class Routeur {
       return;
     }
 
+    //Les modifications de compte de l'entreprise
+    if (isset($_POST['modification_entreprise_nom'])) {
+      if ($_POST['nomSociete'] != "") {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      $this->ctrlMenu->afficherMenu(3);
+      return;
+    }
+
     if (isset($_GET['error'])) {
       $_SESSION['fail'] = "Êtes-vous perdu(e) ? Il semblerait qu'un imprévu<br/>soit arrivé. Refaites donc votre choix pour retrouver<br/>vos marques.";
       $this->ctrlLost->genererLost();

@@ -8,12 +8,11 @@ $dao=new dao();
 $dao -> supprimerCreneau();
 $dao -> connexion();
 
-//////////////////////////?????????????????
 $arrayNbCreneaux = $dao -> getNbCreneaux();
 $creneauMatin = $arrayNbCreneaux[0];
 $creneauAprem = $arrayNbCreneaux[1];
 $nbCreneaux = $creneauMatin + $creneauAprem;
-/////////////////////////????????????????
+
 
 $Etudiants = array();
 $Choix = array();

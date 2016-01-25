@@ -30,6 +30,8 @@ public function afficherPlanningEtu(){
 		<?php
 		//////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
 
+		/*
+
 		//On génére l'emploi du temps
     $dao = new Dao();
     $tabConfig = $dao -> getConfiguration();
@@ -70,7 +72,10 @@ public function afficherPlanningEtu(){
 	</body>
 	</html>
 
-	<?php
+*/
+
+	//<?php
+
 	}
 
 public function afficherPlanningEnt(){
@@ -95,6 +100,7 @@ public function afficherPlanningEnt(){
 		<?php
 		//////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
 
+		/*
 		//On génére l'emploi du temps
     $dao = new Dao();
     $tabConfig = $dao -> getConfiguration();
@@ -142,7 +148,9 @@ public function afficherPlanningEnt(){
 	</body>
 	</html>
 
-	<?php
+	*/
+
+	//<?php
 	}
 
 public function afficherPlanningAdmin(){
@@ -166,7 +174,7 @@ public function afficherPlanningAdmin(){
 		<?php
     //////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
 
-
+		/*
 
     //On génére l'emploi du temps
     $dao = new Dao();
@@ -312,7 +320,10 @@ public function afficherPlanningAdmin(){
 	</body>
 	</html>
 
-	<?php
+	*/
+
+
+	//<?php
 	}
 
 public function afficherComptes() {
@@ -728,7 +739,7 @@ public function afficherComptes() {
 	public function afficherCompteEnt(){
 		$util = new UtilitairePageHtml();
 		echo $util->genereBandeauApresConnexion();
-	?>
+	/*?>
 	<!DOCTYPE html>
 	<html>
 	<head>
@@ -749,8 +760,243 @@ public function afficherComptes() {
 	</body>
 	</html>
 
-	<?php
+
+
+	<?php*/
+	$dao = new Dao();
+	$id = $_SESSION['idUser'];
+	$tabprofil = $dao->getEnt($id);
+	$profil = $tabprofil[0];
+	$util = new UtilitairePageHtml();
+
+	$dispo = "";
+	if ($profil->getTypeCreneau() == "journee") {
+		$dispo = "Journée.";
 	}
+	if ($profil->getTypeCreneau() == "matin") {
+		$dispo = "Matinée.";
+	}
+	if ($profil->getTypeCreneau() == "apres_midi") {
+		$dispo = "Après-midi.";
+	}
+	echo '
+	<br/><br/>
+	<span class="categorie_profil">Nom de l\'entreprise :</span> '.$profil->getNomEnt().'
+	<br/><br/>
+	<span class="categorie_profil">Ville de l\'entreprise :</span> '.$profil->getVilleEnt().'
+	<br/><br/>
+	<span class="categorie_profil">Code Postal :</span> '.$profil->getCodePostal().'
+	<br/><br/>
+	<span class="categorie_profil">Adresse :</span> '.$profil->getAdresseEnt().'
+	<br/><br/>
+	<span class="categorie_profil">Disponibilité :</span> '.$dispo.'
+	<br/><br/>
+	<span class="categorie_profil">Nom du contact :</span> '.$profil->getPrenomContact().' '.$profil->getNomContact().'
+	<br/><br/>
+	<span class="categorie_profil">Email :</span> <a href="mailto:'.$profil->getMailEnt().'">'.$profil->getMailEnt().'</a>
+	<br/><br/>
+	<span class="categorie_profil">Téléphone :</span> '.$profil->getNumTelContact().'
+	<br/><br/>
+	<span class="categorie_profil">Recherche :</span> '.$profil->getFormationsRecherchees().' pour '.$profil->getNbPlaces().' recruteur(s) disponible(s).
+	<br/><br/>
+	<span class="categorie_profil">Nombre de stands en simultané :</span> '.$profil->getNbStands().'
+	<br/><br/>
+	<span class="categorie_profil">Nombre de repas prévus :</span> '.$profil->getNbRepas().'
+	';
+
+
+
+		//<!-- Nom -->
+		echo'<br></br></br></br>
+		----------------------------------------------------<br/><br/>
+
+		<h2>Pour effectuer des changements : </h2>
+
+		<form action="index.php" method="post" >
+
+			<label for="nomSociete"/> Nom de la société représentée
+			<br/>
+			<input type="text" name="nomSociete" value='.$profil->getNomEnt().'  required/>
+			<br/><br/>
+			<input type="submit" name="modification_entreprise_nom" id="submit"/>
+		</form>';
+		/*
+
+			<h2>Votre société</h2>
+
+			<h2>Vous recherchez :</h2>
+
+			<!-- Formation -->
+			<label for="formation"/> Quelle(s) formation(s) vous intéresse(nt) ? <span name="obligatoire">*</span>
+			<br/><br/>
+			<input type="checkbox" name="formation_LPI2P" value="LP I2P" onClick="EnableSubmit(this)">LP Innovations Produits Process (I2P)</option>
+			<br/>
+			<input type="checkbox" name="formation_LPIMOC" value="LP IMOC" onClick="EnableSubmit(this)">LP Industrialisation et Mise en Oeuvre des matériaux composites (IMOC)</option>
+			<br/>
+			<input type="checkbox" name="formation_LPLOGICAL" value="LP LOGIQUAL" onClick="EnableSubmit(this)">LP Logistique et qualité (LOGIQUAL)</option>
+			<br/>
+			<input type="checkbox" name="formation_LPEAS" value="LP EAS" onClick="EnableSubmit(this)">LP Electrohydraulique mobile et automatismes associés (EAS)</option>
+			<br/>
+			<input type="checkbox" name="formation_LPSEICOM" value="LP SEICOM" onClick="EnableSubmit(this)">LP Systèmes Electroniques et Informatiques Communicants (SEICOM)</option>
+			<br/>
+			<input type="checkbox" name="formation_LPIDEB" value="LP IDEB" onClick="EnableSubmit(this)">LP Intelligence et Distribution Electrique du Bâtiment (IDEB)</option>
+			<br/>
+			<input type="checkbox" name="formation_LPFICA" value="LP FICA" onClick="EnableSubmit(this)">LP Froid Industriel et Conditionnement d'Air (FICA)</option>
+			<br/>
+			<input type="checkbox" name="formation_DUTGEII" value="DUT GEII" onClick="EnableSubmit(this)">DUT 2ème année GEII : Génie Électrique et Informatique Industrielle</option>
+			<br/>
+			<input type="checkbox" name="formation_DUTINFO" value="DUT INFO" onClick="EnableSubmit(this)">DUT 2ème année Informatique</option>
+			<br/>
+			<input type="checkbox" name="formation_DUTGMP" value="DUT GMP" onClick="EnableSubmit(this)">DUT 2ème année Génie Mécanique et Productique</option>
+			<br/>
+			<input type="checkbox" name="formation_DUTSGM" value="DUT SGM" onClick="EnableSubmit(this)">DUT 2ème année Science et Génie des Matériaux</option>
+			<br/>
+			<input type="checkbox" name="formation_DCG" value="DCG" onClick="EnableSubmit(this)">Préparation Diplôme de Comptabilité et de Gestion (DCG)</option>
+			<br/><br/>
+
+			<span name="information">Pour plus d'informations sur nos formations : <a href="www.univ-nantes.fr/iutnantes">www.univ-nantes.fr/iutnantes</a> </span>
+			<br/><br/>
+			Emplacement de l'entreprise :
+			<br/><br/>
+			<!-- Ville -->
+			<label for="ville"/> Ville <span name="obligatoire">*</span>
+			<br/>
+			<input type="text" name="ville"/>
+			<br/><br/>
+			<!-- Code Postal -->
+			<label for="codePostal"/> Code Postal <span name="obligatoire">*</span>
+			<br/>
+			<input type="text" name="codePostal"/>
+			<br/><br/>
+			<!-- Adresse -->
+			<label for="adresse"/> Adresse <span name="obligatoire">*</span>
+			<br/>
+			<input type="text" name="adresse"/>
+			<br/><br/>
+
+			<!-- Nombre alternant -->
+			<label for="NbAlternants"/> Pouvez-vous indiquer le nombre d'alternants (pour chaque formation) que vous envisagez de recruter ? </span>
+			<br/>
+			<input type="text" name="NbAlternants"/>
+			<br/><br/>
+			<!-- Nombre de personnes
+			<label for="NbPersonnes"/> Afin d'organiser au mieux le planning, merci de nous indiquer le nombre de personnes de votre entreprise présentes pour mener les entretiens. <span name="obligatoire">*</span>
+			<br/>
+			<input type="text" name="NbPersonnes" required/>
+			<br/><br/> -->
+			<!-- Disponibilité-->
+			<label for="disponibilite"/> Veuillez indiquer vos disponibilités : <span name="obligatoire">*</span>
+			<br/>
+			<select name="disponibilite" required>
+				<option value=""/>
+				<option value="matin">Matin</option>
+				<option value="apres_midi">Après-midi</option>
+				<option value="journee">Journée</option>
+			</select>
+			<br/><br/>
+			<!-- Nombre stand -->
+			<label for="NbStand"/> Pouvez-vous indiquer combien d'étudiants dont vous pourrez faire passer en entretien en simultané ? <span name="obligatoire">*</span>
+			<br/>
+			<input type="text" name="NbStand" required/>
+			<br/><br/>
+			<!-- Déjeuner ?-->
+			<input type="checkbox" name="dejeuner" value="dejeuner_ok" id="checkbox_repas"/><span>Vous souhaitez déjeuner sur place.</span>
+			<br/><br/>
+			<!-- Nombre déjeuners -->
+			<label for="NbRepas"/> Si oui, pouvez-vous indiquer le nombre de repas à prévoir ?
+			<br/>
+			<input type="text" name="NbRepas" id="nb_repas"/>
+			<br/><br/>
+
+
+
+			<h2>Personne à contacter :</h2>
+			<span> Pour la mise en place de cette journée. </span>
+			<br/><br/>
+			<!-- Nom -->
+			<label for="nom"/> Nom <span name="obligatoire">*</span>
+			<br/>
+			<input type="text" name="nom" required/>
+			<br/><br/>
+			<!-- Prenom-->
+			<label for="prenom"/> Prénom <span name="obligatoire">*</span>
+			<br/>
+			<input type="text" name="prenom" required/>
+			<br/><br/>
+			<!-- Telephone -->
+			<label for="tel"/> Numéro de téléphone (sans espace. Ex : 0610203040)<span name="obligatoire">*</span>
+			<br/>
+			<input type="text" name="tel" required/>
+			<br/><br/>
+			<!--  Adresse email-->
+			<label for="email"/> Email (il sera utilité pour l'authentification sur le site)<span name="obligatoire">*</span>
+			<br/>
+			<input type="text" name="email" id="mail" required/>
+			<br/><br/>
+			<!--  Mdp -->
+			<label for="password"/> Mot de passe (il sera utilité pour l'authentification sur le site)<span name="obligatoire">*</span>
+			<br/>
+			<input type="password" name="password" id="passw" required/>
+			<br/><br/>
+			<!--  Mdp bis-->
+			<label for="passwordBis"/> Veuillez réécrire le mot de passe<span name="obligatoire">*</span>
+			<br/>
+			<input type="password" name="passwordBis" id="passwBis" equired/>
+			<br/><br/>
+			<input type="hidden" name="inscription" value="entreprise"/>
+			<input type="submit" name="valid_inscription_ent" id="submit" disabled/>
+		</form>
+		<script type="text/javascript">
+			EnableSubmit = function(val)
+			{
+					var sbmt = document.getElementById("submit");
+
+					if (val.checked == true)
+					{
+							sbmt.disabled = false;
+					}
+					else
+					{
+							sbmt.disabled = true;
+					}
+			}
+		</script>
+		<script>
+		VerifSubmit = function()
+			{
+			var nb_repas = document.getElementById("nb_repas");
+			var checkboxRepas = document.getElementById("checkbox_repas");
+			var passw = document.getElementById("passw");
+			var passwBis = document.getElementById("passwBis");
+				if (checkboxRepas.checked == true) {
+						if (nb_repas.value == '' || nb_repas.value == null)
+						{
+							alert('Vous n\'avez pas précisé combien de repas seront à prévoir.');
+								return false;
+						}
+				}
+				if (passw.value != passwBis.value) {
+						alert('Les mots de passe ne coïncident pas.');
+								return false;
+				}
+				if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(document.getElementById("mail").value))
+					{
+						return true;
+					}
+					else {
+						alert("L\'adresse email n'est pas correcte !")  ;
+					return false;
+					}
+			}
+		</script>
+	</p>
+*/}
+
+
+
+
+
+	/////////////////////∕FINFINFINFINFINFIFNIFNIFNFINFINFINFINFINFINFIFNFNIFNIFINFINFINFINFIFNIFN///////////////////////////
 
 	public function afficherAutres(){
 		$util = new UtilitairePageHtml();
