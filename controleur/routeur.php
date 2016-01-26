@@ -81,9 +81,65 @@ class Routeur {
       return;
     }
 
+
     //Les modifications de compte de l'entreprise
-    if (isset($_POST['modification_entreprise_nom'])) {
+
+    if (isset($_POST['modification_entreprise_organistaion'])) {
+      if ($_POST['disponibiliteSociete'] != "") {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      if ($_POST['nbStandsSociete'] != 0) {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      if ($_POST['nbRepasSociete'] >= 0) {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      $this->ctrlMenu->afficherMenu(3);
+      return;
+    }
+    if (isset($_POST['modification_entreprise_formations'])) {
+
+      if(isset($_POST['formation'])) {
+        $stringFormations = "";
+        $forms = $_POST['formation'];
+        foreach ($forms as $form){
+          $stringFormations = $stringFormations . $form . ",";
+        }
+      }
+
+
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+
+      $this->ctrlMenu->afficherMenu(3);
+      return;
+    }
+    if (isset($_POST['modification_entreprise_informations'])) {
       if ($_POST['nomSociete'] != "") {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      if ($_POST['villeSociete'] != "") {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      if ($_POST['codePostalSociete'] != 0) {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      if ($_POST['adresseSociete'] != "") {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      $this->ctrlMenu->afficherMenu(3);
+      return;
+    }
+    if (isset($_POST['modification_entreprise_contact'])) {
+      if ($_POST['nomContactSociete'] != "") {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      if ($_POST['prenomContactSociete'] != "") {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      if ($_POST['emailSociete'] != "") {
+        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+      }
+      if ($_POST['numTelSociete'] != 0) {
         //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
       }
       $this->ctrlMenu->afficherMenu(3);

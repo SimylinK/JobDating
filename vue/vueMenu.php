@@ -812,14 +812,114 @@ public function afficherComptes() {
 
 		<h2>Pour effectuer des changements : </h2>
 
-		<form action="index.php" method="post" >
+		<style>
+		#tabModifEnt tr td{
+    padding: 15px;
+    border: 1px solid navy;
+		}
+		</style>
 
-			<label for="nomSociete"/> Nom de la société représentée
-			<br/>
-			<input type="text" name="nomSociete" value='.$profil->getNomEnt().'  required/>
-			<br/><br/>
-			<input type="submit" name="modification_entreprise_nom" id="submit"/>
+		<form action="index.php" method="post" >
+		<TABLE id="tabModifEnt">
+	  	<CAPTION> Organisation </CAPTION>
+	  	<TR>
+	 			<TD> <label for="disponibiliteSociete"/> Disponibilité
+				<br/>
+				<select required name="disponibiliteSociete"/>
+					<option value=""disabled selected>Sélectionnez un horaire</option>
+					<option value="matin">Matin</option>
+					<option value="apres_midi">Après-midi</option>
+					<option value="journee">Journée</option>
+				</select>
+				<br/>
+				<label for="nbStandsSociete"/> Nombre d\'entretiens en simultanés
+				<br/>
+				<input required type="text" name="nbStandsSociete" value='.$profil->getNbStands().' >
+				<br/>
+				<label for="nbRepasSociete"/> Nombre de repas prévus
+				<br/>
+				<input required type="text" name="nbRepasSociete" value='.$profil->getNbRepas().' >
+	 			<TD> 	<input type="submit" name="modification_entreprise_organistaion" value="confirmer"/> </TD>
+		</TABLE>
+		</form></br>
+
+		<form action="index.php" method="post" >
+		<TABLE id="tabModifEnt">
+	  	<CAPTION> Formations recherchées </CAPTION>
+	  	<TR>
+	 			<TD> <input type="checkbox" name="formation[]" id="formation" value="LP I2P">
+				 LP Innovations Produits Process (I2P)<br/>
+    		<input type="checkbox" name="formation[]" id="formation" value="LP LOGIQUAL">
+				LP Industrialisation et Mise en Oeuvre des matériaux composites (IMOC)<br/>
+    		<input type="checkbox" name="formation[]" id="formation" value="LP LOGIQUAL">
+				LP Logistique et qualité (LOGIQUAL)<br/>
+    		<input type="checkbox" name="formation[]" id="formation" value="LP EAS">
+				LP Electrohydraulique mobile et automatismes associés (EAS)<br/>
+    		<input type="checkbox" name="formation[]" id="formation" value="LP SEICOM">
+				LP Systèmes Electroniques et Informatiques Communicants (SEICOM)<br/>
+    		<input type="checkbox" name="formation[]" id="formation" value="LP IDEB">
+				LP Intelligence et Distribution Electrique du Bâtiment (IDEB)<br/>
+    		<input type="checkbox" name="formation[]" id="formation" value="LP FICA">
+				LP Froid Industriel et Conditionnement d\'Air (FICA)<br/>
+				<input type="checkbox" name="formation[]" id="formation" value="DUT GEII">
+				DUT 2ème année GEII : Génie Électrique et Informatique Industrielle<br/>
+				<input type="checkbox" name="formation[]" id="formation" value="DUT INFO">
+				DUT 2ème année Informatique<br/>
+				<input type="checkbox" name="formation[]" id="formation" value="DUT GMP">
+				DUT 2ème année Génie Mécanique et Productique<br/>
+				<input type="checkbox" name="formation[]" id="formation" value="DUT SGM">
+				DUT 2ème année Science et Génie des Matériaux<br/>
+	 			<TD> 	<input type="submit" name="modification_entreprise_formations" value="confirmer"/> </TD>
+		</TABLE>
+		</form></br>
+
+		<form action="index.php" method="post" >
+		<TABLE id="tabModifEnt">
+	  	<CAPTION> Informations sur la société </CAPTION>
+	  	<TR>
+	 			<TD> <label for="nomSociete"/> Nom
+				<br/>
+				<input required type="text" name="nomSociete" value='.$profil->getNomEnt().'  >
+				<label for="villeSociete"/> Ville
+				<br/>
+				<input required type="text" name="villeSociete" value='.$profil->getVilleEnt().' >
+				<br/>
+				<label for="codePostalSociete"/> Code postal
+				<br/>
+				<input required type="text" name="codePostalSociete" value='.$profil->getCodePostal().' >
+				<br/>
+				<label for="adresseSociete"/> Adresse
+				<br/>
+				<input required type="text" name="adresseSociete" value='.$profil->getAdresseEnt().' > </TD>
+	 			<TD> 	<input type="submit" name="modification_entreprise_informations" value="confirmer"/> </TD>
+		</TABLE>
+		</form>
+		<br/>
+
+		<form action="index.php" method="post" >
+		<TABLE id="tabModifEnt">
+	  	<CAPTION> Contacts </CAPTION>
+	  	<TR>
+	 			<TD> <label for="nomContactSociete"/> Nom du contact
+				<br/>
+				<input required type="text" name="nomContactSociete" value='.$profil->getNomContact().' >
+				<br/>
+				<label for="prenomContactSociete"/> Prénom du contact
+				<br/>
+				<input required type="text" name="prenomContactSociete" value='.$profil->getPrenomContact().' >
+				<br/>
+				<label for="emailSociete"/> Email
+				<br/>
+				<input required type="text" name="emailSociete" value='.$profil->getMailEnt().' >
+				<br/>
+				<label for="numTelSociete"/> Téléphone
+				<br/>
+				<input required type="text" name="numTelSociete" value='.$profil->getNumTelContact().' > </TD>
+	 			<TD> 	<input type="submit" name="modification_entreprise_contact" value="confirmer"/> </TD>
+		</TABLE>
 		</form>';
+
+
 		/*
 
 			<h2>Votre société</h2>
