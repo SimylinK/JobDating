@@ -940,14 +940,14 @@ class Dao
         $this->deconnexion();
         return;
       }
-      public function editMdpEntreprise($id,$new) {
+      public function editMdpEntreprise($id,$new,$old) {
         $this->connexion();
         $statement = $this->connexion->prepare('SELECT mailEnt FROM entreprise WHERE IDEnt ='.$id.';');
         $statement->execute();
         $this->deconnexion();
         $result = $statement->fetch();
         $login = $result['mailEnt'];
-        if (verifieMotDePasse($login, $old)) {
+        if ($this -> verifieMotDePasse($login, $old)) {
           $this->connexion();
           $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
           $statement->execute();
@@ -955,7 +955,7 @@ class Dao
           return;
         }
         else {
-          echo '<script>alert("Le mot de passe est inchangé : le mot de passe actuel ne correspond pas.");</script>';
+          echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
           return;
         }
       }

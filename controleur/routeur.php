@@ -140,6 +140,14 @@ class Routeur {
       $this->ctrlMenu->afficherMenu(3);
       return;
     }
+    if (isset($_POST['modification_entreprise_motdepasse'])) {
+      if ($_POST['mdpActuel'] != "" && $_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
+        && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
+          $this -> dao -> editMdpEntreprise(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
+      }
+      $this->ctrlMenu->afficherMenu(3);
+      return;
+    }
 
     if (isset($_GET['error'])) {
       $_SESSION['fail'] = "Êtes-vous perdu(e) ? Il semblerait qu'un imprévu<br/>soit arrivé. Refaites donc votre choix pour retrouver<br/>vos marques.";
