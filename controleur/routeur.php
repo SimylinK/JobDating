@@ -83,64 +83,59 @@ class Routeur {
 
 
     //Les modifications de compte de l'entreprise
-
     if (isset($_POST['modification_entreprise_organistaion'])) {
       if ($_POST['disponibiliteSociete'] != "") {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editTypeCreneauEntreprise(($_SESSION['idUser']), $_POST['disponibiliteSociete']);
       }
       if ($_POST['nbStandsSociete'] != 0) {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editNbStandsEntreprise(($_SESSION['idUser']), $_POST['nbStandsSociete']);
       }
       if ($_POST['nbRepasSociete'] >= 0) {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editNbRepasEntreprise(($_SESSION['idUser']), $_POST['nbRepasSociete']);
       }
       $this->ctrlMenu->afficherMenu(3);
       return;
     }
     if (isset($_POST['modification_entreprise_formations'])) {
-
       if(isset($_POST['formation'])) {
         $stringFormations = "";
         $forms = $_POST['formation'];
         foreach ($forms as $form){
           $stringFormations = $stringFormations . $form . ",";
         }
+        $this -> dao -> editFormationsRechercheesEntreprise(($_SESSION['idUser']), $stringFormations);
       }
-
-
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
-
       $this->ctrlMenu->afficherMenu(3);
       return;
     }
     if (isset($_POST['modification_entreprise_informations'])) {
       if ($_POST['nomSociete'] != "") {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editNomEntreprise(($_SESSION['idUser']), $_POST['nomSociete']);
       }
       if ($_POST['villeSociete'] != "") {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editVilleEntreprise(($_SESSION['idUser']), $_POST['villeSociete']);
       }
       if ($_POST['codePostalSociete'] != 0) {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editCPEntreprise(($_SESSION['idUser']), $_POST['codePostalSociete']);
       }
       if ($_POST['adresseSociete'] != "") {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editAdresseEntreprise(($_SESSION['idUser']), $_POST['adresseSociete']);
       }
       $this->ctrlMenu->afficherMenu(3);
       return;
     }
     if (isset($_POST['modification_entreprise_contact'])) {
       if ($_POST['nomContactSociete'] != "") {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editNomContactEntreprise(($_SESSION['idUser']), $_POST['nomContactSociete']);
       }
       if ($_POST['prenomContactSociete'] != "") {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editPrenomContactEntreprise(($_SESSION['idUser']), $_POST['prenomContactSociete']);
       }
       if ($_POST['emailSociete'] != "") {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editMailEntreprise(($_SESSION['idUser']), $_POST['emailSociete']);
       }
       if ($_POST['numTelSociete'] != 0) {
-        //$this->dao->editHeureDebutMatin($_POST['heureDebutMatin']);
+        $this -> dao -> editTelephoneEntreprise(($_SESSION['idUser']), $_POST['numTelSociete']);
       }
       $this->ctrlMenu->afficherMenu(3);
       return;
