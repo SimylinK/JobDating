@@ -839,5 +839,108 @@ class Dao
 
           $this -> deconnexion();
         }
+
+
+        /*
+          Nom entreprise
+          Ville
+          CP
+          Adresse
+          Dispo
+          nom contact
+          prenom contact
+          email
+          téléphone
+          recherche
+          nb stands
+          nb repas
+          mdp
+        */
+      public function editNomEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET nomEnt='".$new."' WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editVilleEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET villeEnt='".$new."' WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;        
+      }
+      public function editCPEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET codePostal=".$new." WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editAdresseEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET adresseEnt='".$new."' WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editNomContactEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET nomContact='".$new."' WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editPrenomContactEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET prenomContact='".$new."' WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editMailEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET mailEnt='".$new."' WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editTelephoneEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET numTelEnt='".$new."' WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editFormationsRechercheesEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editNbStandsEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands=".$new." WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editNbRepasEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET nbRepas=".$new." WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editMdpEntreprise($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+
+
       }
       ?>
