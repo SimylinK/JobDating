@@ -1,6 +1,6 @@
 <?php
 
-    
+
 require_once 'util/utilitairePageHtml.php';
 
 class VueInscriptionEnt{
@@ -31,15 +31,15 @@ public function afficherFormulaireEnt(){
 			* Obligatoire
 		</p>
 		<p>
-			<form action="index.php" method="post" onSubmit="return VerifSubmit();">
+			<form name ="inscriptionEnt" action="index.php" method="post" onSubmit="return VerifSubmit();">
 				<!-- Participation-->
 				<input type="checkbox" name="engagement" required/>Vous souhaitez participer à cette journée de "rencontres alternance". <span name="obligatoire">*</span>
 				<br/><br/>
 				<!-- Nom -->
 				<label for="nomSociete"/> Nom de la société représentée<span name="obligatoire">*</span>
 				<br/>
-				<input type="text" name="nomSociete" required/>
-				<br/><br/>
+				<input type="text" name="nomSociete" onblur="verifString(this, 'messageNom', '20')" required/>
+        <p id="messageNom" style="color:red"></p>
 
 				<h2>Votre société</h2>
 
@@ -80,18 +80,18 @@ public function afficherFormulaireEnt(){
 				<!-- Ville -->
 				<label for="ville"/> Ville <span name="obligatoire">*</span>
 				<br/>
-				<input type="text" name="ville"/>
-				<br/><br/>
+				<input type="text" name="ville" onblur="verifString(this, 'messageVille', '20')" required/>
+        <p id="messageVille" style="color:red"></p>
 				<!-- Code Postal -->
 				<label for="codePostal"/> Code Postal <span name="obligatoire">*</span>
 				<br/>
-				<input type="text" name="codePostal"/>
-				<br/><br/>
+				<input type="text" name="codePostal" onblur="verifCodePostal(this, 'messageCP')" required/>
+        <p id="messageCP" style="color:red"></p>
 				<!-- Adresse -->
 				<label for="adresse"/> Adresse <span name="obligatoire">*</span>
 				<br/>
-				<input type="text" name="adresse"/>
-				<br/><br/>
+				<input type="text" name="adresse" onblur="verifString(this, 'messageAdresse', '30')" required/>
+        <p id="messageAdresse" style="color:red"></p>
 
 				<!-- Nombre alternant -->
 				<label for="NbAlternants"/> Pouvez-vous indiquer le nombre d'alternants (pour chaque formation) que vous envisagez de recruter ? </span>
@@ -124,8 +124,9 @@ public function afficherFormulaireEnt(){
 				<!-- Nombre déjeuners -->
 				<label for="NbRepas"/> Si oui, pouvez-vous indiquer le nombre de repas à prévoir ?
 				<br/>
-				<input type="text" name="NbRepas" id="nb_repas"/>
-				<br/><br/>
+				<input type="text" name="NbRepas" id="nb_repas" onblur="verifNombre(this, 'messageNbRepas', '3')"/>
+        <p id="messageNbRepas" style="color:red"></p>
+				<br/>
 
 
 
@@ -135,23 +136,23 @@ public function afficherFormulaireEnt(){
 				<!-- Nom -->
 				<label for="nom"/> Nom <span name="obligatoire">*</span>
 				<br/>
-				<input type="text" name="nom" required/>
-				<br/><br/>
+				<input type="text" name="nom" onblur="verifString(this, 'messageNomContact', '20')" required/>
+        <p id="messageNomContact" style="color:red"></p>
 				<!-- Prenom-->
 				<label for="prenom"/> Prénom <span name="obligatoire">*</span>
 				<br/>
-				<input type="text" name="prenom" required/>
-				<br/><br/>
+				<input type="text" name="prenom" onblur="verifString(this, 'messagePrenomContact', '20')" required/>
+        <p id="messagePrenomContact" style="color:red"></p>
 				<!-- Telephone -->
 				<label for="tel"/> Numéro de téléphone (sans espace. Ex : 0610203040)<span name="obligatoire">*</span>
 				<br/>
-				<input type="text" name="tel" required/>
-				<br/><br/>
+				<input type="text" name="tel" onblur="verifTelephone(this, 'messageTel')" required/>
+        <p id="messageTel" style="color:red"></p>
 				<!--  Adresse email-->
 				<label for="email"/> Email (il sera utilité pour l'authentification sur le site)<span name="obligatoire">*</span>
 				<br/>
-				<input type="text" name="email" id="mail" required/>
-				<br/><br/>
+				<input type="text" name="email" id="mail" onblur="verifEmail(this, 'messageEmail')" required/>
+        <p id="messageEmail" style="color:red"></p>
 				<!--  Mdp -->
 				<label for="password"/> Mot de passe (il sera utilité pour l'authentification sur le site)<span name="obligatoire">*</span>
 				<br/>
@@ -160,11 +161,108 @@ public function afficherFormulaireEnt(){
 				<!--  Mdp bis-->
 				<label for="passwordBis"/> Veuillez réécrire le mot de passe<span name="obligatoire">*</span>
 				<br/>
-				<input type="password" name="passwordBis" id="passwBis" equired/>
+				<input type="password" name="passwordBis" id="passwBis" onblur="verifMdp('messageMdp')" required/>
+        <p id="messageMdp" style="color:red"></p>
 				<br/><br/>
 				<input type="hidden" name="inscription" value="entreprise"/>
 				<input type="submit" name="valid_inscription_ent" id="submit" disabled/>
 			</form>
+
+      <!--Les scripts pour vérifier chaque case-->
+      <script>
+      //On surligne les cases non valides
+      function surligne(champ, erreur) {
+      if(erreur)
+        champ.style.backgroundColor = "#fba";
+      else
+        champ.style.backgroundColor = "";
+      }
+
+      function verifString(champ, txt, longMax) {
+        if(champ.value.length > longMax) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = longMax + " caractères maximum autorisé";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+      function verifNombre(champ, txt, longMax) {
+        if(champ.value.length > longMax || (!/^\d+$/.test(champ.value) && champ.value.length != 0)) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = "Un nombre de taille maximum " + longMax + " est attendu";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+      function verifCodePostal(champ, txt) {
+        if(champ.value.length != 5 || !/^\d+$/.test(champ.value)) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = "Le code postal doit être rentré au format 44000";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+      function verifTelephone(champ, txt) {
+        if(champ.value.length != 10 || !/^\d+$/.test(champ.value)) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = "Format invalide";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+
+      function verifEmail(champ, txt){
+        var reg = new RegExp('^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$', 'i');
+        if(!reg.test(champ.value)) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = "L'e-mail n'est pas valide.";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+      function verifMdp(txt){
+        var passw = document.getElementById("passw");
+				var passwBis = document.getElementById("passwBis");
+        if (passw.value != passwBis.value) {
+          surligne(passw, true);
+          surligne(passwBis, true);
+          document.getElementById(txt).innerHTML = "Les 2 valeurs sont différentes";
+          return true;
+        } else if (passw.value.length > 20 || passw.value.length < 5) {
+          surligne(passw, true);
+          surligne(passwBis, true);
+          document.getElementById(txt).innerHTML = "Le mot de passe doit faire 5 à 20 caractères";
+          return true;
+        } else {
+          surligne(passw, false);
+          surligne(passwBis, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+      </script>
+
+
 			<script type="text/javascript">
 				EnableSubmit = function(val)
 				{
@@ -178,7 +276,7 @@ public function afficherFormulaireEnt(){
 				    {
 				        sbmt.disabled = true;
 				    }
-				} 
+				}
 			</script>
 			<script>
 			VerifSubmit = function()
@@ -199,13 +297,13 @@ public function afficherFormulaireEnt(){
 					        return false;
 					}
 					if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(document.getElementById("mail").value))
-					  {  
+					  {
 					    return true;
-					  } 
+					  }
 					  else {
 					  	alert("L\'adresse email n'est pas correcte !")  ;
 					 	return false;
-					  } 
+					  }
 				}
 			</script>
 		</p>
@@ -214,6 +312,7 @@ public function afficherFormulaireEnt(){
 		<a href="index.php">Retour à la page d'accueil</a>
 	</div>
 	</div>
+
 	<?php
 
 	echo $util->generePied();
