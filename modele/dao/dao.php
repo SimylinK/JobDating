@@ -93,7 +93,7 @@ class Dao
   public function verifieMotDePasse($login, $password)  {
     $mdp_get = $this->getMotDePasse($login);
     $mdp_test = crypt($password,$mdp_get);
-    if ($mdp_test == $mdp_get) {
+    if ($mdp_test == $mdp_get && strpos($login, '"') !== FALSE && strpos($login, "'") !== FALSE) {
       return TRUE;
     }
     return FALSE;
