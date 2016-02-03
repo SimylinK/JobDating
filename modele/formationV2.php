@@ -63,6 +63,8 @@ class Formation {
     #   $crenAmD, $crenPmF = journee      #
     # # # # # # # # # # # # # # # # # # # #
 
+    # ajoutFormation(formation, IDentreprise, creneauDebut, creneauFin)
+
     #############################
     #          JOURNEE          #
     #############################
@@ -101,7 +103,7 @@ class Formation {
       }
       // si nbForm = 2*nbPers + k personne
       else if($this -> nbForm > $this -> nbPers){
-        $this -> testForm();
+        $this -> autreCas();
       }
       // si nbPers > nbForm
       else if(($this -> nbPers > $this -> nbForm)){
@@ -125,23 +127,13 @@ class Formation {
     #         AUTRE CAS         #
     #############################
     else {
-      // $cpt = $this -> nbPers;
-      // for ($i=0; $i < ceil($this -> nbPers/$this -> nbForm); $i++) {
-      //   foreach ($this -> form as $value) {
-      //     if($cpt > 0){
-      //       // $dao -> ajoutFormation($value, $this -> IDent, $this -> periode);
-      //       $this -> ArrayForm[] = array($value, $this -> IDent, "", $this -> periode);
-      //     }
-      //     $cpt --;
-      //   }
-      // }
-      $this -> testForm();
+      $this -> autreCas();
     }
-    // $dao-> deconnexion();
+    $dao-> deconnexion();
     return $this -> ArrayForm;
   }
 
-  public function testForm() {
+  public function autreCas() {
     $crenOrigin = 1;
     # calculnbCreneau #
     switch ($this -> periode) {

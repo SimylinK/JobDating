@@ -611,7 +611,7 @@ class Dao
 
           try {
             $this->connexion();
-            $statement = $this->connexion->prepare('SELECT IDformation, entPropose, disponibilite FROM formation where typeFormation = "'.$formation.'";');
+            $statement = $this->connexion->prepare('SELECT IDformation, entPropose, creneauDebut, creneauFin FROM formation where typeFormation = "'.$formation.'";');
             $statement->execute();
             $tabResult = $statement->fetchAll();
             $this->deconnexion();
@@ -698,10 +698,10 @@ class Dao
         }
 
         //Pour la table formation
-        public function ajoutFormation($typeFormation, $entPropose, $disponibilite) {
+        public function ajoutFormation($typeFormation, $entPropose, $creneauDebut, $creneauFin) {
           try {
             $this->connexion();
-            $statement = $this->connexion->prepare('INSERT INTO formation VALUES (NULL, "'.$typeFormation.'", "'.$entPropose.'", " ", "'.$disponibilite.'");');
+            $statement = $this->connexion->prepare('INSERT INTO formation VALUES (NULL, "'.$typeFormation.'", "'.$entPropose.'", " ", "'.$creneauDebut.'", "'.$creneauFin.'");');
             $statement->execute();
             $this->deconnexion();
           } catch (TableAccesException $e) {
@@ -801,7 +801,7 @@ class Dao
 
             $LiensEntrCren[$form["entPropose"]][0]++;
             $LiensEntrCren[$form["entPropose"]][$LiensEntrCren[$form["entPropose"]][0]] = $cmp;
-
+/*
             $tmp = array();
             switch ($form["disponibilite"]) {
               case 'matin':
@@ -829,6 +829,14 @@ class Dao
               }
               break;
             }
+            */
+            for ($i = 0; $i < $nbCreneaux; $i++) {
+              $tmp[] = 0;
+            }
+            for ($i = $creneauDebut; $i < $creneauFin; $i++) {
+              $tmp[$i] = 1;
+            }
+
             $Creneaux[] = $tmp;
             $cmp++;
           }
@@ -961,8 +969,6 @@ class Dao
       }
 
 
-
-     
       public function editNomEtudiant($id,$new) {
         $this->connexion();
         $statement = $this->connexion->prepare("UPDATE etudiant SET nomEtu='".$new."' WHERE IDEtu = ".$id.";");
@@ -998,6 +1004,7 @@ class Dao
         $this->deconnexion();
         return;
       }
+
       public function editMdpEtudiant($id,$new,$old) {
         $this->connexion();
         $statement = $this->connexion->prepare('SELECT mailEtu FROM etudiant WHERE IDEtu ='.$id.';');
