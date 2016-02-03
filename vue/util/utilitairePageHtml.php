@@ -93,7 +93,7 @@ private function itemsBandeauApresConnexion(){
 
 
 private function genereEnteteHtml(){
-header("Content-type: text/html; charset=utf-8");
+//header("Content-type: text/html; charset=utf-8");
 $entete="<!DOCTYPE html>";
 $entete.="<html>";
 $entete.="<head>";
@@ -102,7 +102,7 @@ $entete.='</head>
 <div id="haut_page">
         <a href="index.php"><img src="vue/img/bandeau-RAlt.png" style="width:100%;"/></a>
         <div id="date">
-            Vendredi<br/><span style="color:#5882FA;">1</span> Avril 2016
+            Vendredi<br/><span style="color:#5882FA;">3</span> Avril 2016
         </div>
 ';
 return $entete;
