@@ -33,6 +33,7 @@ public function afficherFormulaireEtu(){
 			<script type="text/javascript">
 				function VerifSubmit()	
 				{
+				html = html.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 				var passw = document.getElementById("passw");
 				var passwBis = document.getElementById("passwBis");
 					if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(document.getElementById("mail").value))

@@ -20,7 +20,7 @@ public function genereVueAuthentification(){
 </head>
 <body>
 	<div id="login">
-			<form method="POST" action="">
+			<form method="POST" action="index.php">
 				<table>
 					<tr>
 						<td><label>E-mail : </label></td>

@@ -1,3 +1,5 @@
+<?php session.cookie_httponly = True ?>
+
 <?php
 
 require_once 'controleurAuthentification.php';

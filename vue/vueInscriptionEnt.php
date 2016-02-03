@@ -281,6 +281,7 @@ public function afficherFormulaireEnt(){
 			<script>
 			VerifSubmit = function()
 				{
+				html = html.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 				var nb_repas = document.getElementById("nb_repas");
 				var checkboxRepas = document.getElementById("checkbox_repas");
 				var passw = document.getElementById("passw");
