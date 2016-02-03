@@ -28,53 +28,6 @@ public function afficherPlanningEtu(){
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
 		<?php
-		//////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
-
-		/*
-
-		//On génére l'emploi du temps
-    $dao = new Dao();
-    $tabConfig = $dao -> getConfiguration();
-    $tabForm = $dao -> getFormation();
-
-		?>
-    <!DOCTYPE html>
-  	<html>
-  	<head>
-  		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
-  		<title></title>
-  		<meta charset="UTF-8">
-  	</head>
-  	<body>
-  	<div id="main">
-  	<br/>
-
-    <table id="tabPlanningEnt">
-
-		<tr>
-			<td colspan="7"> Planning </td>
-		</tr>
-		<tr>
-			<td colspan= <?php $tabConfig["nbCreneauxMatin"]?>> Matin </td>
-			<td colspan=<?php $tabConfig["nbCreneauxAprem"]?>> Après-midi </td>
-		</tr>
-
-		<?php
-			//Ici afficher table
-		?>
-		</table>
-
-    <?php
-
-		echo $util->generePied();
-
-		?>
-	</body>
-	</html>
-
-*/
-
-	//<?php
 
 	}
 
@@ -98,59 +51,7 @@ public function afficherPlanningEnt(){
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
 		<?php
-		//////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
 
-		/*
-		//On génére l'emploi du temps
-    $dao = new Dao();
-    $tabConfig = $dao -> getConfiguration();
-		//Le 1 doit être l'id de l'entreprise connecté
-    $tabForm = $dao -> getFormationEntreprise(1);
-
-		?>
-    <!DOCTYPE html>
-  	<html>
-  	<head>
-  		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
-  		<title></title>
-  		<meta charset="UTF-8">
-  	</head>
-  	<body>
-  	<div id="main">
-  	<br/>
-
-    <table id="tabPlanningEnt">
-
-		<tr>
-			<td colspan="7"> Planning </td>
-		</tr>
-		<tr>
-			<td colspan= <?php $tabConfig["nbCreneauxMatin"]?>> Matin </td>
-			<td colspan=<?php $tabConfig["nbCreneauxAprem"]?>> Après-midi </td>
-		</tr>
-
-		<?php
-			foreach ($tabForm as $formation) {
-				echo '<tr>
-					<td>'
-					.$formation["IDformation"].
-					'</td>
-				</tr>';
-			}
-		?>
-		</table>
-
-    <?php
-
-		echo $util->generePied();
-
-		?>
-	</body>
-	</html>
-
-	*/
-
-	//<?php
 	}
 
 public function afficherPlanningAdmin(){
@@ -172,158 +73,7 @@ public function afficherPlanningAdmin(){
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement n'ont toujours pas été générés. Ceux-ci seront à générer le 31 mars.
 	</div>
 		<?php
-    //////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
 
-		/*
-
-    //On génére l'emploi du temps
-    $dao = new Dao();
-    $tabConfig = $dao -> getConfiguration();
-		$tabEnt = $dao -> getAllEntreprises();
-		/////////////////////ATTENTION DONNEE MAGIQUE
-    $tabForm = $dao -> getFormations("Informatique");
-
-    //Planning du point de vue des entreprises
-    ?>
-    <!DOCTYPE html>
-  	<html>
-  	<head>
-  		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
-  		<title></title>
-  		<meta charset="UTF-8">
-  	</head>
-  	<body>
-  	<div id="main">
-  	<br/>
-		<style>
-
-		#tabPlanningEnt {
-			background-color: #f2f2f2;
-			margin-left: -40%;
-			border-style : solid;
-			border-width : 1 px;
-			border-collapse: collapse;
-			text-align: center;
-
-		}
-		#tabPlanningEnt tr td {
-			border-style : solid;
-			border-width : 1px;
-			border-collapse: collapse;
-		}
-
-		</style>
-    <table id="tabPlanningEnt">
-
-		<tr>
-				<?php
-				$tmp = $tabConfig["nbCreneauxMatin"] + $tabConfig["nbCreneauxAprem"] + 3;
-				echo'<td colspan= '.$tmp.'> Planning Entreprises </td>';
-				?>
-		</tr>
-		<tr>
-			<td colspan= 1> Entreprise </td>
-			<td colspan= 1> Formation </td>
-			<?php
-			echo'<td colspan= '.$tabConfig["nbCreneauxMatin"].'> Matin </td>';
-			echo'<td colspan= 1> Pause midi </td>';
-			echo'<td colspan= '.$tabConfig["nbCreneauxAprem"].'> Après-midi </td>';
-			?>
-		</tr>
-
-		<?php
-
-		echo'<tr>';
-		echo'<td> </td>';
-		echo'<td> </td>';
-		//Les horaires
-		$duree = $tabConfig["dureeCreneau"];
-		$heureString = $tabConfig["heureDebutMatin"];
-		$heureString = explode(':', $heureString);
-		$heure = $heureString[0];
-		$min = $heureString[1];
-
-		for($i = 0; $i < 15; $i++) {
-			if ($i == 6) {
-				echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
-				$heureString = $tabConfig["heureDebutAprem"];
-				$heureString = explode(':', $heureString);
-				$heure = $heureString[0];
-				$min = $heureString[1];
-			} else {
-				echo'<td>' . $heure . ' : ';
-				if ($min == 0)
-					echo '00';
-				else
-					echo $min;
-				echo'</td>';
-
-				$min += $duree;
-				if($min == 60) {
-					$min = 0;
-					$heure++;
-				}
-			}
-
-
-		}
-		echo'</tr>';
-
-
-
-
-
-		foreach ($tabEnt as $ent) {
-			$tabForm = $dao -> getFormationsEntreprise($ent -> getID());
-
-
-
-		foreach ($tabForm as $form) {
-			echo '<tr>
-			<td>'
-			.$ent -> getnomEnt().
-			'</td>
-			<td>'
-			.$form['typeFormation'].
-			'</td>';
-			;
-			for($i = 0; $i < $tabConfig['nbCreneauxMatin'] + $tabConfig['nbCreneauxAprem']; $i++) {
-				if ($i == 6) {
-					echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
-				}
-				echo '
-				<td>'
-				.
-				$dao -> getNomEtudiant($dao -> getCreneau($i, $form['IDformation'])).
-				'</td> ';
-			}
-		}
-			echo '</tr>';
-	}
-
-
-
-		?>
-		</table>
-
-    <?php
-
-    //Planning du point de vue des Etudiants
-
-
-
-
-
-		echo $util->generePied();
-
-		?>
-	</body>
-	</html>
-
-	*/
-
-
-	//<?php
 	}
 
 public function afficherComptes() {
@@ -780,6 +530,13 @@ public function afficherComptes() {
 		$dispo = "Après-midi.";
 	}
 	echo '
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
 	<br/><br/>
 	<span class="categorie_profil">Nom de l\'entreprise :</span> '.$profil->getNomEnt().'
 	<br/><br/>
@@ -938,7 +695,9 @@ public function afficherComptes() {
 	 			<TD> 	<input type="submit" name="modification_entreprise_motdepasse" value="confirmer"/> </TD>
 		</TABLE>
 		</form>
-		<br/><br/><br/>';
+		<br/><br/><br/>
+		</html>';
+
 		echo $util->generePied();
 }
 
