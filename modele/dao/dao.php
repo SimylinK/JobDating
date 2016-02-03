@@ -93,7 +93,7 @@ class Dao
   public function verifieMotDePasse($login, $password)  {
     $mdp_get = $this->getMotDePasse($login);
     $mdp_test = crypt($password,$mdp_get);
-    if ($mdp_test == $mdp_get && strpos($login, '"') !== FALSE && strpos($login, "'") !== FALSE) {
+    if ($mdp_test == $mdp_get && strpos($login, '"') == FALSE) {
       return TRUE;
     }
     return FALSE;
@@ -950,6 +950,30 @@ class Dao
         if ($this -> verifieMotDePasse($login, $old)) {
           $this->connexion();
           $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
+          $statement->execute();
+          $this->deconnexion();
+          return;
+        }
+        else {
+          echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
+          return;
+        }
+      }
+
+
+
+     
+
+      public function editMdpEtudiant($id,$new,$old) {
+        $this->connexion();
+        $statement = $this->connexion->prepare('SELECT mailEtu FROM etudiant WHERE IDEtu ='.$id.';');
+        $statement->execute();
+        $this->deconnexion();
+        $result = $statement->fetch();
+        $login = $result['mailEtu'];
+        if ($this -> verifieMotDePasse($login, $old)) {
+          $this->connexion();
+          $statement = $this->connexion->prepare("UPDATE etudiant SET mdpEtu='".crypt($new)."' WHERE IDEtu = ".$id.";");
           $statement->execute();
           $this->deconnexion();
           return;

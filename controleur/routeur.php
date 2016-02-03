@@ -36,6 +36,16 @@ class Routeur {
   // Traite une requête entrante
   public function routerRequete() {
 
+    if (isset($_POST['submit_login'])) {
+      $this->dao->connexion();
+      if($this->dao->verifieMotDePasse($_POST['identifiant'],$_POST['password'])) {
+         $_SESSION['type_connexion'] = $this->dao->getTypeUtilisateur($_POST['identifiant']);
+         $_SESSION['idUser'] = $this->dao->getId($_POST['identifiant'],$_SESSION['type_connexion']);
+         $this->ctrlMenu->afficherMenu(1);
+         return;
+      }
+    }
+
     if(isset($_POST['startGeneration']) && isset($_SESSION['type_connexion'])){
       $this -> dao -> generatePlanning();
       $this -> ctrlMenu -> afficherMenu(1);
@@ -276,16 +286,6 @@ class Routeur {
       $this->ctrlMenu->afficherMenu($_GET['menu']);
       return;
     }
-
-  	if (isset($_POST['submit_login'])) {
-  		$this->dao->connexion();
-      if($this->dao->verifieMotDePasse($_POST['identifiant'],$_POST['password'])) {
-         $_SESSION['type_connexion'] = $this->dao->getTypeUtilisateur($_POST['identifiant']);
-         $_SESSION['idUser'] = $this->dao->getId($_POST['identifiant'],$_SESSION['type_connexion']);
-         $this->ctrlMenu->afficherMenu(1);
-         return;
-      }
-  	}
 
   	if (isset($_GET['deconnexion'])) {
   		session_destroy();
