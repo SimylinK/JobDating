@@ -970,8 +970,47 @@ class Dao
 
 
 
+<<<<<<< HEAD
 
 
+=======
+     
+      public function editNomEtudiant($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE etudiant SET nomEtu='".$new."' WHERE IDEtu = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editPrenomEtudiant($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE etudiant SET prenomEtu='".$new."' WHERE IDEtu = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editMailEtudiant($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE etudiant SET mailEtu='".$new."' WHERE IDEtu = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editTelephoneEtudiant($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE etudiant SET numtelEtu='".$new."' WHERE IDEtu = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+      public function editFormationEtudiant($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE etudiant SET formationEtu='".$new."' WHERE IDEtu = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+>>>>>>> d6d43e29e709f4c8d349aab4d5ceaecc22c189f5
       public function editMdpEtudiant($id,$new,$old) {
         $this->connexion();
         $statement = $this->connexion->prepare('SELECT mailEtu FROM etudiant WHERE IDEtu ='.$id.';');
