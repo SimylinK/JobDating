@@ -3,6 +3,7 @@
 require_once("ConnexionException.php");
 require_once("AccesTableException.php");
 require_once(__DIR__."/../algo.php");
+require_once(__DIR__."/../formationV2.php");
 
 /* Dans un path, utiliser '\..'' remonte d'un dossier. Sous windows
 */
@@ -289,6 +290,11 @@ class Dao
       mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) VALUES ("'.$nomEnt.'","'.$mdpEnt.'","'.$typeCreneau.'","'.$formationsRecherchees.'"
       ,'.$nbPlaces.','.$nbStands.','.$nbRepas.',"'.$mailEnt.'","'.$nomContact.'","'.$prenomContact.'","'.$numTelEnt.'","'.$codePostal.'","'.$villeEnt.'","'.$adresseEnt.'");');
       $statement->execute();
+      $this->deconnexion();
+      $idEnt = $this->getIdEntreprise($nomEnt);
+      $tabConfig = $this.getConfiguration();
+      $creationFormation = new Formation($idEnt, $formationsRecherchees, $nbStands, $disponibilite, $tabConfig['nbCreneauxMatin'], $tabConfig['nbCreneauxAprem']);
+      $creationFormation->createForm();
       $this->deconnexion();
       return true;
     }
@@ -630,6 +636,20 @@ class Dao
             $tabResult = $statement->fetchAll();
             $this->deconnexion();
             return $tabResult;
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
+
+        public function getIdEntreprise($entreprise)  {
+
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT IDEnt FROM entreprise where nomEnt = "'.$entreprise.'";');
+            $statement->execute();
+            $tabResult = $statement->fetch();
+            $this->deconnexion();
+            return $tabResult['idEnt'];
           } catch (TableAccesException $e) {
             print($e -> getMessage());
           }
