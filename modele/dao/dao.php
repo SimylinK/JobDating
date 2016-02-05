@@ -13,6 +13,79 @@ class Dao
   private $connexion;
 
 
+        # # # # # # # # # # # # # #
+        # SOMMAIRE  DES FONCTIONS #
+        # # # # # # # # # # # # # #
+
+  # connexion()
+  # deconnexion()
+  # getMotDePasse($login)
+  # verifieMotDePasse($login, $password)
+  # getTypeUtilisateur($login)
+  # estInscrit($login)
+  # ajoutEtudiant()
+  # ajoutEntreprise()
+  # getAllEtudiantsTemp()
+  # getAllEtudiants()
+  # getAllEntreprisesTemp()
+  # getAllEntreprises()
+  # validerEtudiant($id)
+  # validerEntreprise($id)
+  # gelerEtudiant($id)
+  # gelerEntreprise($id)
+  # supprimerEtu($id)
+  # supprimerEtuTemp($id)
+  # supprimerEnt($id)
+  # supprimerEntTemp($id)
+  # getEtu($id)
+  # getTempEtu($id)
+  # getEnt($id)
+  # getTempEnt($id)
+  # getConfiguration()
+  # getNbCreneaux()
+  # getNomEtudiant($IDEtu)
+  # editHeureDebutMatin($new)
+  # editHeureDebutAprem($new)
+  # editNbCreneauxMatin($new)
+  # editNbCreneauxAprem($new)
+  # editDureeCreneau($new)
+  # getEtudiants($formation)
+  # getEntreprises()
+  # getEntreprisesParFormation($formation)
+  # getFormationEtudiant($id)
+  # getEntreprisesEntreprise($formation) // depuis la table entreprise
+  # getFormations($formation) // pour la table formation
+  # getFormationsEntreprise($entreprise)
+  # getIdEntreprise($entreprise)
+  # getIDFormation($formation, $entreprise)
+  # supprimerCreneau()
+  # ajoutCreneau($numCreneau, $IDformation, $etudiant)
+  # getCreneau($numeroCreneau, $idFormation)
+  # ajoutFormation($typeFormation, $entPropose, $creneauDebut, $creneauFin)
+  # getDetails()
+  # getId($identifiant,$type)
+  # generatePlanning()
+  # editNomEntreprise($id,$new)
+  # editVilleEntreprise($id,$new)
+  # editCPEntreprise($id,$new)
+  # editAdresseEntreprise($id,$new)
+  # editNomContactEntreprise($id,$new)
+  # editPrenomContactEntreprise($id,$new)
+  # editMailEntreprise($id,$new)
+  # editTelephoneEntreprise($id,$new)
+  # editFormationsRechercheesEntreprise($id,$new)
+  # editTypeCreneauEntreprise($id,$new)
+  # editNbStandsEntreprise($id,$new)
+  # editNbRepasEntreprise($id,$new)
+  # editMdpEntreprise($id,$new,$old)
+  # editNomEtudiant($id,$new)
+  # editPrenomEtudiant($id,$new)
+  # editMailEtudiant($id,$new)
+  # editTelephoneEtudiant($id,$new)
+  # editFormationEtudiant($id,$new)
+  # editMdpEtudiant($id,$new,$old)
+
+
 
   // 	permet d'ouvrir une connexion avec le sgbd
 
@@ -821,35 +894,7 @@ class Dao
 
             $LiensEntrCren[$form["entPropose"]][0]++;
             $LiensEntrCren[$form["entPropose"]][$LiensEntrCren[$form["entPropose"]][0]] = $cmp;
-/*
-            $tmp = array();
-            switch ($form["disponibilite"]) {
-              case 'matin':
-              for ($i = 0; $i < $creneauMatin; $i++) {
-                $tmp[] = 1;
-              }
-              for ($i = 0; $i < $creneauAprem; $i++) {
-                $tmp[] = 0;
-              }
-              break;
 
-              case 'apres_midi':
-              for ($i = 0; $i < $creneauMatin; $i++) {
-                $tmp[] = 0;
-              }
-              for ($i = 0; $i < $creneauAprem; $i++) {
-                $tmp[] = 1;
-              }
-              break;
-
-              //Journee
-              default:
-              for ($i = 0; $i < $nbCreneaux; $i++) {
-                $tmp[] = 1;
-              }
-              break;
-            }
-            */
             for ($i = 0; $i < $nbCreneaux; $i++) {
               $tmp[] = 0;
             }
