@@ -177,11 +177,8 @@ class Formation {
   public static function afficherForm($listeFormations) { // array[nomFormation, creneauDebut, creneauFin]
     $dao = new Dao();
     $tabConfig = $dao -> getConfiguration();
-
     $classFormation = "Formation";
     ?>
-
-
     <!DOCTYPE html>
     <html>
     <head>
@@ -195,7 +192,7 @@ class Formation {
         <style>
         #tabFormation {
           background-color: #f2f2f2;
-          margin-left: -40%;
+          margin-left: 40%;
           border-style : solid;
           border-width : 1 px;
           border-collapse: collapse;
@@ -209,13 +206,13 @@ class Formation {
         </style>
         <table id="tabFormation">
           <tr>
-            echo'<td colspan=4> Formation </td>';
+            <td colspan=4> Formation </td>
           </tr>
           <tr>
             <td colspan= 1> Nom de la formation </td>
             <td colspan= 1> Debut </td>
-            <td colspan= 1> Fin </td>';
-            <td colspan= 1> Nombre d'entretiens </td>';
+            <td colspan= 1> Fin </td>
+            <td colspan= 1> Nombre d'entretiens </td>
           </tr>
 
           <?php
