@@ -627,7 +627,7 @@ public function afficherComptes() {
         var reg = new RegExp("^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$", "i");
         if(!reg.test(champ.value)) {
           surligne(champ, true);
-          document.getElementById(txt).innerHTML = "L"e-mail n"est pas valide.";
+          document.getElementById(txt).innerHTML = "L\'e-mail n\'est pas valide.";
           return true;
         } else {
           surligne(champ, false);
@@ -685,7 +685,7 @@ public function afficherComptes() {
 					if (checkboxRepas.checked == true) {
 					    if (nb_repas.value == "" || nb_repas.value == null)
 					    {
-					    	alert("Vous n\"avez pas précisé combien de repas seront à prévoir.");
+					    	alert("Vous n\'avez pas précisé combien de repas seront à prévoir.");
 					        return false;
 					    }
 					}
@@ -698,7 +698,7 @@ public function afficherComptes() {
 					    return true;
 					  }
 					  else {
-					  	alert("L\"adresse email n'est pas correcte !");
+					  	alert("L\'adresse email n'est pas correcte !");
 					 	return false;
 					  }
 				}
@@ -761,7 +761,7 @@ public function afficherComptes() {
     		<input type="checkbox" name="formation[]" id="formation" value="LP IDEB" onClick="EnableSubmit(this)">
 				LP Intelligence et Distribution Electrique du Bâtiment (IDEB)<br/>
     		<input type="checkbox" name="formation[]" id="formation" value="LP FICA" onClick="EnableSubmit(this)">
-				LP Froid Industriel et Conditionnement d\"Air (FICA)<br/>
+				LP Froid Industriel et Conditionnement d\'Air (FICA)<br/>
 				<input type="checkbox" name="formation[]" id="formation" value="DUT GEII" onClick="EnableSubmit(this)">
 				DUT 2ème année GEII : Génie Électrique et Informatique Industrielle<br/>
 				<input type="checkbox" name="formation[]" id="formation" value="DUT INFO" onClick="EnableSubmit(this)">

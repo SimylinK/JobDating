@@ -366,8 +366,6 @@ class Dao
       $this->deconnexion();
       $idEnt = $this->getIdEntreprise($nomEnt);
       $tabConfig = $this.getConfiguration();
-      $creationFormation = new Formation($idEnt, $formationsRecherchees, $nbStands, $disponibilite, $tabConfig['nbCreneauxMatin'], $tabConfig['nbCreneauxAprem']);
-      $creationFormation->createForm();
       $this->deconnexion();
       return true;
     }
@@ -427,7 +425,17 @@ class Dao
         $this->connexion();
         $statement = $this->connexion->prepare('DELETE FROM temp_entreprise WHERE IDEnt = '.$id.';');
         $statement->execute();
+        $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.$id.';');
+        $statement->execute();
+        $ent = $statement->fetchAll(PDO::FETCH_CLASS, "Entreprise");
         $this->deconnexion();
+        $tabConfig = $this->getConfiguration();
+        $idEnt = $id; 
+        $formationsRecherchees = $ent->getFormationsRecherchees();
+        $nbStands = $ent->getNbStands();
+        $disponibilite = $ent->getTypeCreneau();
+        $creationFormation = new Formation($idEnt, $formationsRecherchees, $nbStands, $disponibilite, $tabConfig['nbCreneauxMatin'], $tabConfig['nbCreneauxAprem']);
+        $creationFormation->createForm();
         return;
       }
 
@@ -452,6 +460,8 @@ class Dao
           $this->deconnexion();
           $this->connexion();
           $statement = $this->connexion->prepare('DELETE FROM entreprise WHERE IDEnt = '.$id.';');
+          $statement->execute();
+          $statement = $this->connexion->prepare('DELETE FROM formation WHERE entPropose = '.$id.';');
           $statement->execute();
           $this->deconnexion();
           return;
