@@ -422,13 +422,12 @@ class Dao
         mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) SELECT nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbPlaces,nbRepas,nbStands,
         mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt FROM temp_entreprise WHERE IDEnt = '.$id.';');
         $statement->execute();
-        $this->deconnexion();
-        $this->connexion();
         $statement = $this->connexion->prepare('DELETE FROM temp_entreprise WHERE IDEnt = '.$id.';');
         $statement->execute();
         $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.$id.';');
         $statement->execute();
-        $ent = $statement->fetchAll(PDO::FETCH_CLASS, "Entreprise");
+        $tabSortie = $statement->fetchAll(PDO::FETCH_CLASS, "Entreprise");
+        $ent = $tabSortie[0];
         $this->deconnexion();
         $tabConfig = $this->getConfiguration();
         $idEnt = $id;

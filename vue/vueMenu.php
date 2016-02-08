@@ -479,7 +479,7 @@ public function afficherComptes() {
 		$dao = new Dao();
 		$id = $_SESSION['idUser'];
 
-		$listeFormation = $ao -> getFormationsAffichage($id);
+		$listeFormation = $dao -> getFormationsAffichage($id);
 		$formation = "Formation";
 		$formation::afficherForm($listeFormation);
 
