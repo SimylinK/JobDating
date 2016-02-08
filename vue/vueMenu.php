@@ -481,7 +481,7 @@ public function afficherComptes() {
 
 		$listeFormation = $ao -> getFormationsAffichage($id);
 		$formation = "Formation";
-		$formation::afficherForm($listeFormation)
+		$formation::afficherForm($listeFormation);
 
 
 		echo $util->generePied();
