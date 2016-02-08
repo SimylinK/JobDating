@@ -627,7 +627,7 @@ public function afficherComptes() {
         var reg = new RegExp("^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$", "i");
         if(!reg.test(champ.value)) {
           surligne(champ, true);
-          document.getElementById(txt).innerHTML = "L"e-mail n"est pas valide.";
+          document.getElementById(txt).innerHTML = "L\'e-mail n\'est pas valide.";
           return true;
         } else {
           surligne(champ, false);
