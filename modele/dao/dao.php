@@ -55,6 +55,7 @@ class Dao
   # getFormationEtudiant($id)
   # getEntreprisesEntreprise($formation) // depuis la table entreprise
   # getFormations($formation) // pour la table formation
+  # getFormationsAffichage($entreprise)
   # getFormationsEntreprise($entreprise)
   # getIdEntreprise($entreprise)
   # getIDFormation($formation, $entreprise)
@@ -430,7 +431,7 @@ class Dao
         $ent = $statement->fetchAll(PDO::FETCH_CLASS, "Entreprise");
         $this->deconnexion();
         $tabConfig = $this->getConfiguration();
-        $idEnt = $id; 
+        $idEnt = $id;
         $formationsRecherchees = $ent->getFormationsRecherchees();
         $nbStands = $ent->getNbStands();
         $disponibilite = $ent->getTypeCreneau();
@@ -710,8 +711,20 @@ class Dao
           }
         }
 
-        public function getFormationsEntreprise($entreprise)  {
+        public function getFormationsAffichage($entreprise) {
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT typeFormation, creneauDebut, creneauFin FROM formation where entPropose = "'.$entreprise.'";');
+            $statement->execute();
+            $tabResult = $statement->fetchAll();
+            $this->deconnexion();
+            return $tabResult;
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
 
+        public function getFormationsEntreprise($entreprise)  {
           try {
             $this->connexion();
             $statement = $this->connexion->prepare('SELECT IDformation, typeFormation FROM formation where entPropose = "'.$entreprise.'";');

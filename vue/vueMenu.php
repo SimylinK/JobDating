@@ -476,6 +476,13 @@ public function afficherComptes() {
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées les formations possibles de l'entreprise. Celle-ci pourra les modifier en respectant les contraintes de son compte.
 	</div>
 		<?php
+		$dao = new Dao();
+		$id = $_SESSION['idUser'];
+
+		$listeFormation = $ao -> getFormationsAffichage($id);
+		$formation = "Formation";
+		$formation::afficherForm($listeFormation)
+
 
 		echo $util->generePied();
 
