@@ -564,7 +564,150 @@ public function afficherComptes() {
 
 
 		//<!-- Nom -->
-		echo'<br></br></br></br>
+		?>
+		<script>
+      //On surligne les cases non valides
+      function surligne(champ, erreur) {
+      if(erreur)
+        champ.style.backgroundColor = "#fba";
+      else
+        champ.style.backgroundColor = "";
+      }
+
+      function verifString(champ, txt, longMax) {
+        if(champ.value.length > longMax) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = longMax + " caractères maximum autorisé";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+      function verifNombre(champ, txt, longMax) {
+        if(champ.value.length > longMax || (!/^\d+$/.test(champ.value) && champ.value.length != 0)) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = "Un nombre de taille maximum " + longMax + " est attendu";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+      function verifCodePostal(champ, txt) {
+        if(champ.value.length != 5 || !/^\d+$/.test(champ.value)) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = "Le code postal doit être rentré au format 44000";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+      function verifTelephone(champ, txt) {
+        if(champ.value.length != 10 || !/^\d+$/.test(champ.value)) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = "Format invalide";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+
+      function verifEmail(champ, txt){
+        var reg = new RegExp("^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$", "i");
+        if(!reg.test(champ.value)) {
+          surligne(champ, true);
+          document.getElementById(txt).innerHTML = "L"e-mail n"est pas valide.";
+          return true;
+        } else {
+          surligne(champ, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+
+      function verifMdp(txt){
+        var passw = document.getElementById("passw");
+				var passwBis = document.getElementById("passwBis");
+        if (passw.value != passwBis.value) {
+          surligne(passw, true);
+          surligne(passwBis, true);
+          document.getElementById(txt).innerHTML = "Les 2 valeurs sont différentes";
+          return true;
+        } else if (passw.value.length > 20 || passw.value.length < 5) {
+          surligne(passw, true);
+          surligne(passwBis, true);
+          document.getElementById(txt).innerHTML = "Le mot de passe doit faire 5 à 20 caractères";
+          return true;
+        } else {
+          surligne(passw, false);
+          surligne(passwBis, false);
+          document.getElementById(txt).innerHTML = "";
+          return false;
+        }
+      }
+      </script>
+
+
+			<script type="text/javascript">
+				EnableSubmit = function(val)
+				{
+				    var sbmt = document.getElementById("submit");
+
+				    if (val.checked == true)
+				    {
+				        sbmt.disabled = false;
+				    }
+				    else
+				    {
+				        sbmt.disabled = true;
+				    }
+				}
+			</script>
+			<script>
+			VerifSubmit = function()
+				{
+				html = html.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+				var nb_repas = document.getElementById("nb_repas");
+				var checkboxRepas = document.getElementById("checkbox_repas");
+				var passw = document.getElementById("passw");
+				var passwBis = document.getElementById("passwBis");
+					if (checkboxRepas.checked == true) {
+					    if (nb_repas.value == "" || nb_repas.value == null)
+					    {
+					    	alert("Vous n\"avez pas précisé combien de repas seront à prévoir.");
+					        return false;
+					    }
+					}
+					if (passw.value != passwBis.value) {
+							alert("Les mots de passe ne coïncident pas.");
+					        return false;
+					}
+					if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(document.getElementById("mail").value))
+					  {
+					    return true;
+					  }
+					  else {
+					  	alert("L\"adresse email n"est pas correcte !")  ;
+					 	return false;
+					  }
+				}
+			</script>
+		<?php 
+		echo'
+			<!--Les scripts pour vérifier chaque case-->
+
+		<br></br></br></br>
 		----------------------------------------------------<br/><br/>
 
 		<h2>Pour effectuer des changements : </h2>
@@ -576,7 +719,7 @@ public function afficherComptes() {
 		}
 		</style>
 
-		<form action="index.php" method="post" >
+		<form action="index.php" method="post" onSubmit="return VerifSubmit();">
 		<TABLE id="tabModifEnt">
 	  	<CAPTION> Organisation </CAPTION>
 	  	<TR>
@@ -591,11 +734,12 @@ public function afficherComptes() {
 				<br/>
 				<label for="nbStandsSociete"/> Nombre d\'entretiens en simultanés
 				<br/>
-				<input required type="text" name="nbStandsSociete" value='.$profil->getNbStands().' >
+				<input required type="number" name="nbStandsSociete" min="1" max="10" value="'.$profil->getNbStands().'" >
 				<br/>
 				<label for="nbRepasSociete"/> Nombre de repas prévus
 				<br/>
-				<input required type="text" name="nbRepasSociete" value='.$profil->getNbRepas().' >
+				<input required type="text" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, "messageNbRepas", "3")">
+	 			<p id="messageNbRepas" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_organistaion" value="confirmer"/> </TD>
 		</TABLE>
 		</form></br>
@@ -604,27 +748,27 @@ public function afficherComptes() {
 		<TABLE id="tabModifEnt">
 	  	<CAPTION> Formations recherchées </CAPTION>
 	  	<TR>
-	 			<TD> <input type="checkbox" name="formation[]" id="formation" value="LP I2P">
+	 			<TD> <input type="checkbox" name="formation[]" id="formation" value="LP I2P" onClick="EnableSubmit(this)">
 				 LP Innovations Produits Process (I2P)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP LOGIQUAL">
+    		<input type="checkbox" name="formation[]" id="formation" value="LP LOGIQUAL" onClick="EnableSubmit(this)">
 				LP Industrialisation et Mise en Oeuvre des matériaux composites (IMOC)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP LOGIQUAL">
+    		<input type="checkbox" name="formation[]" id="formation" value="LP LOGIQUAL" onClick="EnableSubmit(this)">
 				LP Logistique et qualité (LOGIQUAL)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP EAS">
+    		<input type="checkbox" name="formation[]" id="formation" value="LP EAS" onClick="EnableSubmit(this)">
 				LP Electrohydraulique mobile et automatismes associés (EAS)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP SEICOM">
+    		<input type="checkbox" name="formation[]" id="formation" value="LP SEICOM" onClick="EnableSubmit(this)">
 				LP Systèmes Electroniques et Informatiques Communicants (SEICOM)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP IDEB">
+    		<input type="checkbox" name="formation[]" id="formation" value="LP IDEB" onClick="EnableSubmit(this)">
 				LP Intelligence et Distribution Electrique du Bâtiment (IDEB)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP FICA">
-				LP Froid Industriel et Conditionnement d\'Air (FICA)<br/>
-				<input type="checkbox" name="formation[]" id="formation" value="DUT GEII">
+    		<input type="checkbox" name="formation[]" id="formation" value="LP FICA" onClick="EnableSubmit(this)">
+				LP Froid Industriel et Conditionnement d\"Air (FICA)<br/>
+				<input type="checkbox" name="formation[]" id="formation" value="DUT GEII" onClick="EnableSubmit(this)">
 				DUT 2ème année GEII : Génie Électrique et Informatique Industrielle<br/>
-				<input type="checkbox" name="formation[]" id="formation" value="DUT INFO">
+				<input type="checkbox" name="formation[]" id="formation" value="DUT INFO" onClick="EnableSubmit(this)">
 				DUT 2ème année Informatique<br/>
-				<input type="checkbox" name="formation[]" id="formation" value="DUT GMP">
+				<input type="checkbox" name="formation[]" id="formation" value="DUT GMP" onClick="EnableSubmit(this)">
 				DUT 2ème année Génie Mécanique et Productique<br/>
-				<input type="checkbox" name="formation[]" id="formation" value="DUT SGM">
+				<input type="checkbox" name="formation[]" id="formation" value="DUT SGM" onClick="EnableSubmit(this)">
 				DUT 2ème année Science et Génie des Matériaux<br/>
 	 			<TD> 	<input type="submit" name="modification_entreprise_formations" value="confirmer"/> </TD>
 		</TABLE>
@@ -636,18 +780,22 @@ public function afficherComptes() {
 	  	<TR>
 	 			<TD> <label for="nomSociete"/> Nom
 				<br/>
-				<input required type="text" name="nomSociete" value='.$profil->getNomEnt().'  >
+				<input required type="text" name="nomSociete" value="'.$profil->getNomEnt().'" onblur="verifString(this, "messageNom", "20")">
+				<p id="messageNom" style="color:red"></p>
 				<label for="villeSociete"/> Ville
 				<br/>
-				<input required type="text" name="villeSociete" value='.$profil->getVilleEnt().' >
+				<input required type="text" name="villeSociete" value="'.$profil->getVilleEnt().'" onblur="verifString(this, "messageVille", "20")">
+				<p id="messageVille" style="color:red"></p>
 				<br/>
 				<label for="codePostalSociete"/> Code postal
 				<br/>
-				<input required type="text" name="codePostalSociete" value='.$profil->getCodePostal().' >
+				<input required type="text" name="codePostalSociete" value="'.$profil->getCodePostal().'" onblur="verifCodePostal(this, "messageCP")">
+				<p id="messageCP" style="color:red"></p>
 				<br/>
 				<label for="adresseSociete"/> Adresse
 				<br/>
-				<input required type="text" name="adresseSociete" value='.$profil->getAdresseEnt().' > </TD>
+				<input required type="text" name="adresseSociete" value="'.$profil->getAdresseEnt().'" onblur="verifString(this, "messageAdresse", "30")"> </TD>
+	 			<p id="messageAdresse" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_informations" value="confirmer"/> </TD>
 		</TABLE>
 		</form>
@@ -655,23 +803,27 @@ public function afficherComptes() {
 
 		<form action="index.php" method="post" >
 		<TABLE id="tabModifEnt">
-	  	<CAPTION> Contacts </CAPTION>
+	  	<CAPTION> Contact </CAPTION>
 	  	<TR>
 	 			<TD> <label for="nomContactSociete"/> Nom du contact
 				<br/>
-				<input required type="text" name="nomContactSociete" value='.$profil->getNomContact().' >
+				<input required type="text" name="nomContactSociete" value="'.$profil->getNomContact().'" onblur="verifString(this, "messageNomContact", "20")">
+				<p id="messageNomContact" style="color:red"></p>
 				<br/>
 				<label for="prenomContactSociete"/> Prénom du contact
 				<br/>
-				<input required type="text" name="prenomContactSociete" value='.$profil->getPrenomContact().' >
+				<input required type="text" name="prenomContactSociete" value="'.$profil->getPrenomContact().'" onblur="verifString(this, "messagePrenomContact", "20")" >
+				<p id="messagePrenomContact" style="color:red"></p>
 				<br/>
 				<label for="emailSociete"/> Email
+				<p id="messageEmail" style="color:red"></p>
 				<br/>
-				<input required type="text" name="emailSociete" value='.$profil->getMailEnt().' >
+				<input required type="text" name="emailSociete" value="'.$profil->getMailEnt().'" onblur="verifEmail(this, "messageEmail")">
 				<br/>
 				<label for="numTelSociete"/> Téléphone
 				<br/>
-				<input required type="text" name="numTelSociete" value='.$profil->getNumTelContact().' > </TD>
+				<input required type="text" name="numTelSociete" value="'.$profil->getNumTelContact().'" onblur="verifTelephone(this, "messageTel")"> </TD>
+	 			<p id="messageTel" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_contact" value="confirmer"/> </TD>
 		</TABLE>
 		</form>
@@ -690,13 +842,22 @@ public function afficherComptes() {
 				<input required type="password" name="mdpNouveau1">
 				<br/>
 				<label for="mdpNouveau2"/> Confirmez
+				 <p id="messageMdp" style="color:red"></p>
 				<br/>
-				<input required type="password" name="mdpNouveau2" > </TD>
+				<input required type="password" name="mdpNouveau2" onblur="verifMdp("messageMdp")"> </TD>
 	 			<TD> 	<input type="submit" name="modification_entreprise_motdepasse" value="confirmer"/> </TD>
 		</TABLE>
 		</form>
 		<br/><br/><br/>
-		</html>';
+		</html></body>
+<div id="bas_page">
+        <table style="width: 80%; margin: auto; text-align: center;">
+            <tr>
+            <td>IUT de Nantes - Site de la Fleuriaye</td>
+            <td>2 avenue du Prof Jean Rouxel - Carquefou</td>
+            <td>Tel : 02 28 09 20 00</td>
+            </tr>
+    </div></html>';
 
 		echo $util->generePied();
 }
