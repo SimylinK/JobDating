@@ -813,7 +813,7 @@ class Dao
         public function ajoutFormation($typeFormation, $entPropose, $creneauDebut, $creneauFin) {
           try {
             $this->connexion();
-            $statement = $this->connexion->prepare('INSERT INTO formation(typeFormation,entPropose, creneauDebut, creneauFin) VALUES ("'.$typeFormation.'", "'.$entPropose.'", "'.$creneauDebut.'", "'.$creneauFin.'");');
+            $statement = $this->connexion->prepare('INSERT INTO formation(typeFormation,entPropose, creneauDebut, creneauFin) VALUES ("'.$typeFormation.'", '.$entPropose.', '.$creneauDebut.', '.$creneauFin.');');
             $statement->execute();
             $this->deconnexion();
           } catch (TableAccesException $e) {
