@@ -647,9 +647,14 @@ class Dao
 
         public function getEntreprisesParFormation($formation) {
           $this->connexion();
-          $statement = $this->connexion->prepare('SELECT IDEnt,nomEnt FROM entreprise,formation WHERE formation.typeFormation ="'.$formation.'" AND entreprise.IDEnt = formation.entPropose;');
+          $statement = $this->connexion->prepare('SELECT entPropose FROM formation WHERE typeFormation="'.$formation.'";');
           $statement->execute();
-          $sortie = $statement->fetchAll();
+          $tabResult = $statement->fetchAll();
+          $sortie = array();
+          foreach ($tabResult as $id) {
+            $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.$id.';');
+            $sortie = $statement->fetch();
+          }
           $this->deconnexion();
           return $sortie;
         }
@@ -847,12 +852,14 @@ class Dao
           }
           if ($type=="entreprise") {
             $select = "IDEnt";
+            $mail = "mailEnt";
           }
           else {
             $select = "IDEtu";
+            $mail = "mailEtu";
           }
           $this->connexion();
-          $statement = $this->connexion->prepare("SELECT ".$select." FROM ".$type.";");
+          $statement = $this->connexion->prepare("SELECT ".$select." FROM ".$type." where ".$mail."='".$identifiant."';");
           $statement->execute();
           $this->deconnexion();
           $tab = $statement->fetch();
