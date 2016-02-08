@@ -906,7 +906,7 @@ public function afficherComptes() {
 
 		$listeEntreprises = $dao->getAllEntreprises();
 
-		if ($listeEntreprises.length() > 0) {
+		if (sizeof($listeEntreprises) > 0) {
 			echo '<tr>
 			<td colspan="2">
 			<a href="mailto:';
@@ -923,7 +923,7 @@ public function afficherComptes() {
 
 		$listeEtudiant = $dao->getAllEtudiants();
 
-		if ($listeEtudiant.length() > 0) {
+		if (sizeof($listeEtudiant) > 0) {
 			echo '<tr>
 			<td colspan="2">
 			<a href="mailto:';
