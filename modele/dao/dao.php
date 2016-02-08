@@ -424,7 +424,7 @@ class Dao
         $statement->execute();
         $statement = $this->connexion->prepare('DELETE FROM temp_entreprise WHERE IDEnt = '.$id.';');
         $statement->execute();
-        $statement = $this->connexion->prepare('SELECT * FROM entreprise ORDER BY IDEnd DESC LIMIT 1;');
+        $statement = $this->connexion->prepare('SELECT * FROM entreprise ORDER BY IDEnt DESC LIMIT 1;');
         $statement->execute();
         $ent = $statement->fetch();
         $this->deconnexion();

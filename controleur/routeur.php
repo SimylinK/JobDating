@@ -206,7 +206,7 @@ class Routeur {
         if ($_GET['type'] == "tmpEnt") {
           $this->dao->validerEntreprise($_GET['id']);
         }
-        header('Location:index.php?choix=ok&menu=2');
+        $this->ctrlMenu->afficherMenu(2);
         return;
       }
     }
