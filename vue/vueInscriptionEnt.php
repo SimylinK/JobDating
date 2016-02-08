@@ -47,7 +47,7 @@ public function afficherFormulaireEnt(){
 				<input type="text" name="nomSociete" onblur="verifString(this, 'messageNom', '30')" required/>
         <p id="messageNom" style="color:red"></p>
 
-				
+
 
 				<h2>Vous recherchez :</h2>
 
@@ -134,8 +134,6 @@ public function afficherFormulaireEnt(){
 				<br/>
 				<input type="number" name="NbRepas" id="nb_repas" min="0" max="10" style="display:none" onchange="verifNbRepas(this, 'messageNbRepas', '10')"/>
         <p id="messageNbRepas" style="color:red"></p>
-				<br/>
-
 
 
 				<h2>Personne à contacter :</h2>
@@ -190,6 +188,7 @@ public function afficherFormulaireEnt(){
         if(champ.value.length > longMax) {
           surligne(champ, true);
           document.getElementById(txt).innerHTML = longMax + " caractères maximum autorisés";
+					champ.value = "";
           return true;
         } else {
           surligne(champ, false);
@@ -214,6 +213,7 @@ public function afficherFormulaireEnt(){
         if(champ.value.length != 5 || !/^\d+$/.test(champ.value)) {
           surligne(champ, true);
           document.getElementById(txt).innerHTML = "Le code postal doit être rentré au format XXXXX avec des chiffres";
+					champ.value = "";
           return true;
         } else {
           surligne(champ, false);
@@ -226,6 +226,7 @@ public function afficherFormulaireEnt(){
         if(champ.value.length != 10 || !/^\d+$/.test(champ.value)) {
           surligne(champ, true);
           document.getElementById(txt).innerHTML = "Format invalide";
+					champ.value = "";
           return true;
         } else {
           surligne(champ, false);
@@ -240,6 +241,7 @@ public function afficherFormulaireEnt(){
         if(!reg.test(champ.value)) {
           surligne(champ, true);
           document.getElementById(txt).innerHTML = "L'e-mail n'est pas valide.";
+					champ.value = "";
           return true;
         } else {
           surligne(champ, false);
@@ -254,11 +256,15 @@ public function afficherFormulaireEnt(){
         if (passw.value != passwBis.value) {
           surligne(passw, true);
           surligne(passwBis, true);
+					passw.value = "";
+					passwBis.value = "";
           document.getElementById(txt).innerHTML = "Les 2 valeurs sont différentes";
           return true;
         } else if (passw.value.length > 20 || passw.value.length < 6) {
           surligne(passw, true);
           surligne(passwBis, true);
+					passw.value = "";
+					passwBis.value = "";
           document.getElementById(txt).innerHTML = "Le mot de passe doit faire 6 à 20 caractères";
           return true;
         } else {
@@ -280,7 +286,8 @@ public function afficherFormulaireEnt(){
       	}
       	else {
       		document.getElementById("labrepas").style.visibility = "hidden";
-			document.getElementById("nb_repas").style.display = "none";
+					document.getElementById("nb_repas").style.display = "none";
+					document.getElementById("messageNbRepas").innerHTML = "";
       	}
       }
 
@@ -294,6 +301,7 @@ public function afficherFormulaireEnt(){
         	}
         	else {
         		surligne(champ, true);
+						champ.value = "";
         		document.getElementById(txt).innerHTML = "Le nombre doit être compris en 1 et 10";
         	}
         }
