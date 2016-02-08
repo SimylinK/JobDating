@@ -237,14 +237,14 @@ class Formation {
           }
           ?>
         </table>
-      <?php
+        <?php
       }
 
       public function calculHoraire($creneau, $tabConfig){
         $duree = $tabConfig["dureeCreneau"];
         $start = 0;
         if($creneau < $tabConfig["nbCreneauxMatin"]) { // si c'est le matin
-    			$heureString = $tabConfig["heureDebutMatin"];
+          $heureString = $tabConfig["heureDebutMatin"];
         } else { //si c'est l'apres midi
           $heureString = $tabConfig["heureDebutAprem"];
           $start = $tabConfig["nbCreneauxMatin"];
@@ -263,5 +263,6 @@ class Formation {
 
         return $heure.':'.$min;
       }
-      ?>
+
     }
+    ?>
