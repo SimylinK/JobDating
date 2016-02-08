@@ -85,6 +85,7 @@ class Dao
   # editTelephoneEtudiant($id,$new)
   # editFormationEtudiant($id,$new)
   # editMdpEtudiant($id,$new,$old)
+  # supprimerFormation($idEntreprise)
 
 
 
