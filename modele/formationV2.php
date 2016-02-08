@@ -71,13 +71,13 @@ class Formation {
     if($this -> periode == "journee") {
       // une personne pour une formation
       if($this -> nbForm == 1 && $this -> nbPers == 1){
-        $dao -> ajoutFormation($this -> form[0], $this -> IDent, $crenAmD, $crenPmF);
+        #$dao -> ajoutFormation($this -> form[0], $this -> IDent, $crenAmD, $crenPmF);
         $this -> ArrayForm[] = array($this -> form[0], $this -> IDent, "", $crenAmD, $crenPmF);
       }
       // k*nbForm = k*nbPers
       else if($this -> nbForm == $this -> nbPers){
         foreach ($this -> form as $value) {
-          $dao -> ajoutFormation($value, $this -> IDent, $crenAmD, $crenPmF);
+          #$dao -> ajoutFormation($value, $this -> IDent, $crenAmD, $crenPmF);
           $this -> ArrayForm[] = array($value, $this -> IDent, "", $crenAmD, $crenPmF);
         }
       }
@@ -85,9 +85,9 @@ class Formation {
       else if(($this -> nbForm / $this -> nbPers) == 2){
         $cpt = 0;
         for ($i=0; $i < $this -> nbPers; $i++) {
-          $dao -> ajoutFormation($this -> form[$cpt], $this -> IDent, $crenAmD, $crenAmF);
+          #$dao -> ajoutFormation($this -> form[$cpt], $this -> IDent, $crenAmD, $crenAmF);
           $this -> ArrayForm[] = array($this -> form[$cpt], $this -> IDent, "", $crenAmD, $crenAmF);
-          $dao -> ajoutFormation($this -> form[$cpt+1], $this -> IDent, $crenPmD, $crenPmF);
+          #$dao -> ajoutFormation($this -> form[$cpt+1], $this -> IDent, $crenPmD, $crenPmF);
           $this -> ArrayForm[] = array($this -> form[$cpt+1], $this -> IDent, "", $crenPmD, $crenPmF);
           $cpt += 2;
         }
@@ -95,9 +95,9 @@ class Formation {
       //si nbForm - 1 = nbPers
       else if(($this -> nbForm - 1) == $this -> nbPers){
         for ($i=0; $i < $this -> nbPers; $i++) {
-          $dao -> ajoutFormation($this -> form[0], $this -> IDent, $crenAmD, $crenAmF);
+          #$dao -> ajoutFormation($this -> form[0], $this -> IDent, $crenAmD, $crenAmF);
           $this -> ArrayForm[] = array($this -> form[0], $this -> IDent, "", $crenAmD, $crenAmF);
-          $dao -> ajoutFormation($this -> form[$i+1], $this -> IDent, $crenPmD, $crenPmF);
+          #$dao -> ajoutFormation($this -> form[$i+1], $this -> IDent, $crenPmD, $crenPmF);
           $this -> ArrayForm[] = array($this -> form[$i+1], $this -> IDent, "", $crenPmD, $crenPmF);
         }
       }
@@ -111,7 +111,7 @@ class Formation {
         for ($i=0; $i < ceil($this -> nbPers/$this -> nbForm); $i++) {
           foreach ($this -> form as $value) {
             if($cpt > 0){
-              $dao -> ajoutFormation($value, $this -> IDent, $crenAmD, $crenPmF);
+              #$dao -> ajoutFormation($value, $this -> IDent, $crenAmD, $crenPmF);
               $this -> ArrayForm[] = array($value, $this -> IDent, "", $crenAmD, $crenPmF);
             }
             $cpt --;
@@ -131,6 +131,15 @@ class Formation {
       $this -> autreCas();
     }
     $dao-> deconnexion();
+
+    foreach ($this -> ArrayForm as $formTest) {
+      echo "<br/>===================<br/>";
+      $dao -> ajoutFormation($formTest[0], $formTest[1], $formTest[3], $formTest[4]);
+      foreach ($formTest as $value) {
+        echo $value."<br/>";
+      }
+    }
+
     return $this -> ArrayForm;
   }
 
@@ -165,7 +174,7 @@ class Formation {
       }
       # ADD #
       $crenFin = $crenDebut + $crenForm - 1;
-      $dao -> ajoutFormation($value, $this -> IDent, $crenDebut, $crenFin);
+      #$dao -> ajoutFormation($value, $this -> IDent, $crenDebut, $crenFin);
       $this -> ArrayForm[] = array($value, $this -> IDent, "", $crenDebut, $crenFin);
       $crenDebut = $crenFin + 1;
       $crenRestant -= $crenForm;
