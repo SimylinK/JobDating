@@ -652,7 +652,7 @@ class Dao
           $tabResult = $statement->fetchAll();
           $sortie = array();
           foreach ($tabResult as $id) {
-            $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.$id.';');
+            $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.$id['entreprisePropose'].';');
             $sortie = $statement->fetch();
           }
           $this->deconnexion();
@@ -812,10 +812,6 @@ class Dao
         //Pour la table formation
         public function ajoutFormation($typeFormation, $entPropose, $creneauDebut, $creneauFin) {
           try {
-            var_dump($typeFormation);
-            var_dump($entPropose);
-            var_dump($creneauDebut);
-            var_dump($creneauFin);
             $this->connexion();
             $statement = $this->connexion->prepare('INSERT INTO formation(typeFormation,entPropose, creneauDebut, creneauFin) VALUES ("'.$typeFormation.'", '.$entPropose.', '.$creneauDebut.', '.$creneauFin.');');
             $statement->execute();
