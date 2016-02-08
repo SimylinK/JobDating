@@ -175,38 +175,6 @@ class Formation {
 
 
   public static function afficherForm($listeFormations) { // array[nomFormation, creneauDebut, creneauFin]
-    echo "<table border=1px >
-    <tr>
-    <td style='text-align:center' colspan=3>
-    Formation
-    </td>
-    </tr>
-    <tr>
-    <td>
-    Nom de la formation
-    </td>
-    <td>
-    Debut periode
-    </td>
-    <td>
-    Fin periode
-    </td>
-    </tr>";
-    foreach ($listeFormations as $formation) {
-      echo "<tr>";
-      echo "<td>";
-      echo $formation[0]; //nom formation
-      echo "</td>";
-      echo "<td>";
-      echo $formation[1]; //creneau debut
-      echo "</td>";
-      echo "<td>";
-      echo $formation[2]; //creneau fin
-      echo "</td>";
-      echo "</tr>";
-    }
-    echo "</table>";
-
     $dao = new Dao();
     $tabConfig = $dao -> getConfiguration();
     ?>
@@ -268,10 +236,10 @@ class Formation {
             echo "</tr>";
           }
           ?>
-
         </table>
-      }
       <?php
+      }
+
       public function calculHoraire($creneau, $tabConfig){
         $duree = $tabConfig["dureeCreneau"];
         $start = 0;
