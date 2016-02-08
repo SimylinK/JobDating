@@ -1,6 +1,6 @@
 <?php
 
-require 'dao/daoAlgo.php';
+require 'dao/dao.php';
 
 class Formation {
 
@@ -46,7 +46,7 @@ class Formation {
   }
 
   public function createForm(){
-    $dao=new daoAlgo();
+    $dao=new Dao();
     $dao->connexion();
 
     $crenAmD = $this -> crenOrigin; #debut matin
@@ -134,6 +134,9 @@ class Formation {
   }
 
   public function autreCas() {
+    $dao = new Dao();
+    $dao->connexion();
+
     $crenOrigin = 1;
     # calculnbCreneau #
     switch ($this -> periode) {
@@ -166,7 +169,7 @@ class Formation {
       $crenDebut = $crenFin + 1;
       $crenRestant -= $crenForm;
     }
-
+    $dao -> deconnexion();  
     return $this -> ArrayForm;
   }
 
