@@ -3,17 +3,18 @@ require_once __DIR__."/../vue/vueMenu.php";
 
 
 class ControleurMenu{
- 
+
  private $vue;
  private $dao;
- 
+
  public function __construct(){
  $this->vue=new VueMenu();
  $this->dao = new Dao();
  }
- 
+
 // demandera à VueMenu de générer une vue correspondant au choix du menu selon le type de connexion
  public function afficherMenu($pos) {
+  header("Content-Type: text/html; charset=utf-8");
  	if ($pos == 1) {
  		if ($_SESSION['type_connexion'] == "entreprise") {
  			$this->vue->afficherPlanningEnt();
