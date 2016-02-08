@@ -149,7 +149,7 @@ class Formation {
         break;
     }
 
-    $crenForm = variant_int(($nbCreneaux/$this -> nbForm)*$this -> nbPers);
+    $crenForm = floor(($nbCreneaux/$this -> nbForm)*$this -> nbPers);
     $crenRestant = $nbCreneaux;
     $crenDebut = $crenOrigin;
 
