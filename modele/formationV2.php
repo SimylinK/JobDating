@@ -285,7 +285,6 @@ class Formation {
         $heure = $heureString[0];
         $min = $heureString[1];
 
-
         for($i = $start; $i < $creneau; $i++){
           $min += $duree;
           if($min == 60) {
@@ -293,6 +292,8 @@ class Formation {
             $heure++;
           }
         }
+
+        return $heure.':'.$min;
       }
       ?>
     }
