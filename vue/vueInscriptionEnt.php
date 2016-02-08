@@ -32,10 +32,6 @@ public function afficherFormulaireEnt(){
 		<p>
 			<p style="color:crimson">Tous les champs suivis d'un * sont obligatoires</p>
 		</p>
-		
-<!-- Completeur.com / Debut -->
-		
-<!-- Completeur.com / Fin -->
 
 
 
