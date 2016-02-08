@@ -1114,6 +1114,12 @@ class Dao
         }
       }
 
+      public function supprimerFormation($idEntreprise){
+        $this -> connexion();
+        $statement = $this->connexion->prepare('DELETE FROM formation WHERE entPropose = '.$idEntreprise.';');
+        $statement -> execute();
+        $this -> deconnexion();
+      }
 
       }
       ?>

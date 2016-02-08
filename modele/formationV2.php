@@ -49,6 +49,8 @@ class Formation {
     $dao=new Dao();
     $dao->connexion();
 
+    $dao -> supprimerFormation($this -> IDent);
+
     $crenAmD = $this -> crenOrigin; #debut matin
     $crenPmD = $this -> nbCreneauxAprem + 1; #debut aprem
     $crenAmF = $this -> nbCreneauxMatin; #fin matin
@@ -133,14 +135,8 @@ class Formation {
     $dao-> deconnexion();
 
     foreach ($this -> ArrayForm as $formTest) {
-      echo "<br/>===================<br/>";
       $dao -> ajoutFormation($formTest[0], $formTest[1], $formTest[3], $formTest[4]);
-      foreach ($formTest as $value) {
-        echo $value."<br/>";
-      }
     }
-
-    return $this -> ArrayForm;
   }
 
   public function autreCas() {
