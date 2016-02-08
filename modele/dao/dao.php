@@ -340,7 +340,12 @@ class Dao
       }
       $i++;
     }
-    $nbPlaces = $_POST['NbAlternants'];
+    $nbPlaces = -1;
+    if (isset($_POST['NbAlternants'])) {
+      if ($_POST['NbAlternants'] != "")
+        $nbPlaces = $_POST['NbAlternants'];
+    }
+
     if (isset($_POST['dejeuner'])) {
       if ($_POST['dejeuner'] == "dejeuner_ok") {
         $nbRepas = $_POST['NbRepas'];
@@ -367,7 +372,7 @@ class Dao
       $statement->execute();
       $this->deconnexion();
       $idEnt = $this->getIdEntreprise($nomEnt);
-      $tabConfig = $this.getConfiguration();
+      $tabConfig = $this->getConfiguration();
       $this->deconnexion();
       return true;
     }
@@ -532,6 +537,7 @@ class Dao
         }
 
         //Pour la table scriptconfig
+
         public function getConfiguration() {
           $this->connexion();
           $statement = $this->connexion->prepare('SELECT * FROM scriptconfig;');
