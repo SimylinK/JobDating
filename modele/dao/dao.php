@@ -875,6 +875,9 @@ class Dao
           $this -> supprimerCreneau();
           $this -> connexion();
 
+          $statement = $this->connexion->prepare("DELETE FROM creneau;");
+          $statement->execute();
+
           $arrayNbCreneaux = $this -> getNbCreneaux();
           $creneauMatin = $arrayNbCreneaux[0];
           $creneauAprem = $arrayNbCreneaux[1];
