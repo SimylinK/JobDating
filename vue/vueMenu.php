@@ -698,7 +698,7 @@ public function afficherComptes() {
 					    return true;
 					  }
 					  else {
-					  	alert("L\"adresse email n"est pas correcte !")  ;
+					  	alert("L\"adresse email n'est pas correcte !");
 					 	return false;
 					  }
 				}
