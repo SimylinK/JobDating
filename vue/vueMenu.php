@@ -55,27 +55,146 @@ public function afficherPlanningEnt(){
 
 	}
 
-public function afficherPlanningAdmin(){
-		$util = new UtilitairePageHtml();
-		echo $util->genereBandeauApresConnexion();
-	?>
-	<!DOCTYPE html>
-	<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
-		<title></title>
-		<meta charset="UTF-8">
-	</head>
-	<body>
-	<div id="main">
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace administrateur créé à l'occasion des rencontres alternances du 1 avril 2016.
+	public function afficherPlanningAdmin(){
+			$util = new UtilitairePageHtml();
+			echo $util->genereBandeauApresConnexion();
+		?>
+		<!DOCTYPE html>
+		<html>
+		<head>
+			<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+			<title></title>
+			<meta charset="UTF-8">
+		</head>
+		<body>
+		<div id="main">
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+			<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace administrateur créé à l'occasion des rencontres alternances du 1 avril 2016.
 
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement n'ont toujours pas été générés. Ceux-ci seront à générer le 31 mars.
-	</div>
+			<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement n'ont toujours pas été générés. Ceux-ci seront à générer le 31 mars.
+		</div>
+			<?php
+	    //////////////////////////////////////ATTTENTION METTRE EN PLACE SYSTEME DATE POUR AFFICHER/////////////////////////////////////
+	    //On génére l'emploi du temps
+	    $dao = new Dao();
+	    $tabConfig = $dao -> getConfiguration();
+			$tabEnt = $dao -> getAllEntreprises();
+			/////////////////////ATTENTION DONNEE MAGIQUE
+	    $tabForm = $dao -> getFormations("Informatique");
+	    //Planning du point de vue des entreprises
+	    ?>
+	    <!DOCTYPE html>
+	  	<html>
+	  	<head>
+	  		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+	  		<title></title>
+	  		<meta charset="UTF-8">
+	  	</head>
+	  	<body>
+	  	<div id="main">
+	  	<br/>
+			<style>
+			#tabPlanningEnt {
+				background-color: #f2f2f2;
+				margin-left: -40%;
+				border-style : solid;
+				border-width : 1 px;
+				border-collapse: collapse;
+				text-align: center;
+			}
+			#tabPlanningEnt tr td {
+				border-style : solid;
+				border-width : 1px;
+				border-collapse: collapse;
+			}
+			</style>
+	    <table id="tabPlanningEnt">
+
+			<tr>
+					<?php
+					$tmp = $tabConfig["nbCreneauxMatin"] + $tabConfig["nbCreneauxAprem"] + 3;
+					echo'<td colspan= '.$tmp.'> Planning Entreprises </td>';
+					?>
+			</tr>
+			<tr>
+				<td colspan= 1> Entreprise </td>
+				<td colspan= 1> Formation </td>
+				<?php
+				echo'<td colspan= '.$tabConfig["nbCreneauxMatin"].'> Matin </td>';
+				echo'<td colspan= 1> Pause midi </td>';
+				echo'<td colspan= '.$tabConfig["nbCreneauxAprem"].'> Après-midi </td>';
+				?>
+			</tr>
+
+			<?php
+			echo'<tr>';
+			echo'<td> </td>';
+			echo'<td> </td>';
+			//Les horaires
+			$duree = $tabConfig["dureeCreneau"];
+			$heureString = $tabConfig["heureDebutMatin"];
+			$heureString = explode(':', $heureString);
+			$heure = $heureString[0];
+			$min = $heureString[1];
+			for($i = 0; $i < 15; $i++) {
+				if ($i == 6) {
+					echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					$heureString = $tabConfig["heureDebutAprem"];
+					$heureString = explode(':', $heureString);
+					$heure = $heureString[0];
+					$min = $heureString[1];
+				} else {
+					echo'<td>' . $heure . ' : ';
+					if ($min == 0)
+						echo '00';
+					else
+						echo $min;
+					echo'</td>';
+					$min += $duree;
+					if($min == 60) {
+						$min = 0;
+						$heure++;
+					}
+				}
+			}
+			echo'</tr>';
+			foreach ($tabEnt as $ent) {
+				$tabForm = $dao -> getFormationsEntreprise($ent -> getID());
+			foreach ($tabForm as $form) {
+				echo '<tr>
+				<td>'
+				.$ent -> getnomEnt().
+				'</td>
+				<td>'
+				.$form['typeFormation'].
+				'</td>';
+				;
+				for($i = 0; $i < $tabConfig['nbCreneauxMatin'] + $tabConfig['nbCreneauxAprem']; $i++) {
+					if ($i == 6) {
+						echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					}
+					echo '
+					<td>'
+					.
+					$dao -> getNomEtudiant($dao -> getCreneau($i, $form['IDformation'])).
+					'</td> ';
+				}
+			}
+				echo '</tr>';
+		}
+			?>
+			</table>
+
+	    <?php
+	    //Planning du point de vue des Etudiants
+			echo $util->generePied();
+			?>
+		</body>
+		</html>
+
 		<?php
+		}
 
-	}
 
 public function afficherComptes() {
 	$util = new UtilitairePageHtml();
