@@ -171,7 +171,7 @@ class Formation {
   }
 
 
-  public function afficherForm() {
+  public static function afficherForm($listeFormations) { // array[nomFormation, creneauDebut, creneauFin]
     echo "<table border=1px >
     <tr>
       <td style='text-align:center' colspan=3>
@@ -189,16 +189,16 @@ class Formation {
         Fin periode
       </td>
     </tr>";
-    foreach ($this -> ArrayForm as $formation) {
+    foreach ($listeFormations as $formation) {
       echo "<tr>";
         echo "<td>";
           echo $formation[0]; //nom formation
         echo "</td>";
         echo "<td>";
-          echo $formation[3]; //creneau debut
+          echo $formation[1]; //creneau debut
         echo "</td>";
         echo "<td>";
-          echo $formation[4]; //creneau fin
+          echo $formation[2]; //creneau fin
         echo "</td>";
       echo "</tr>";
     }

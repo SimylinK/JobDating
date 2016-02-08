@@ -5,6 +5,7 @@ require_once 'util/utilitairePageHtml.php';
 require_once __DIR__."/../modele/dao/dao.php";
 require_once __DIR__."/../modele/bean/Etudiant.php";
 require_once __DIR__."/../modele/bean/Entreprise.php";
+require_once __DIR__."/../modele/formationV2.php";
 
 class VueMenu{
 

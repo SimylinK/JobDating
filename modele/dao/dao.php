@@ -668,7 +668,7 @@ class Dao
           $statement->execute();
           $result = $statement->fetch();
           $this->deconnexion();
-          return $result['IDEtu'];
+          return $result['formationEtu'];
         }
 
         /////////////////////ATTENTION depuis la table entreprise////////////////////
