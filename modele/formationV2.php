@@ -177,6 +177,8 @@ class Formation {
   public static function afficherForm($listeFormations) { // array[nomFormation, creneauDebut, creneauFin]
     $dao = new Dao();
     $tabConfig = $dao -> getConfiguration();
+
+    $classFormation = "Formation";
     ?>
 
 
@@ -224,10 +226,10 @@ class Formation {
             echo $formation[0]; //nom formation
             echo "</td>";
             echo "<td>";
-            echo $this -> calculHoraire($formation[1], $tabConfig); //creneau debut
+            echo $classFormation::calculHoraire($formation[1], $tabConfig); //creneau debut
             echo "</td>";
             echo "<td>";
-            echo $this -> calculHoraire($formation[2], $tabConfig); //creneau fin
+            echo $classFormation::calculHoraire($formation[2], $tabConfig); //creneau fin
             echo "</td>";
             echo "<td>";
             $nbEntretions = $formation[2] - $formation[1] +1;
@@ -240,7 +242,7 @@ class Formation {
         <?php
       }
 
-      public function calculHoraire($creneau, $tabConfig){
+      public static function calculHoraire($creneau, $tabConfig){
         $duree = $tabConfig["dureeCreneau"];
         $start = 0;
         if($creneau < $tabConfig["nbCreneauxMatin"]) { // si c'est le matin
@@ -263,6 +265,5 @@ class Formation {
 
         return $heure.':'.$min;
       }
-
     }
     ?>
