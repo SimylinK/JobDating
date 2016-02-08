@@ -949,11 +949,16 @@ public function afficherComptes() {
 		<?php
 		$date = getdate();
 		// if ($date['mday'] > 30 && $date['mon'] >2) {
-			?><form method="POST" action="index.php" onsubmit="return confirm('Attention ! Cette action utilisera les données courantes pour générer les emplois
-				du temps ! Veuillez vérifier toutes vos données avant de continuer.');">
-			<input type="submit" value="Générer les emplois du temps" name="startGeneration" onclick="return confirm('Attention ! Cette action utilisera les données courantes pour générer les emplois
-				du temps ! Veuillez vérifier toutes vos données avant de continuer.');">
-			</form><?php
+			?>
+			<form method="POST" action="index.php" onsubmit="return ConfirmerGeneration();">
+			<input type="submit" value="Générer les emplois du temps" name="startGeneration"/>
+			</form>
+			<script>
+				function ConfirmerGeneration() {
+					return confirm('Êtes-vous sûr(e) de vouloir générer les emplois du temps avec les données actuelles ?');
+				}
+			</script>
+			<?php
 		// }
 		// else {
 		// 	echo 'La génération des emplois du temps sera disponible à partir du 31 mars inclus.';

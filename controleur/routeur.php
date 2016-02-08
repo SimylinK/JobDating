@@ -46,7 +46,7 @@ class Routeur {
       }
     }
 
-    if(isset($_POST['startGeneration']) && isset($_SESSION['type_connexion'])){
+    if(isset($_POST['startGeneration'])){
       $this->dao->generatePlanning();
       $this->ctrlMenu->afficherMenu(1);
       return;
