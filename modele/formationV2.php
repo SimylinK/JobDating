@@ -232,7 +232,7 @@ class Formation {
             echo $classFormation::calculHoraire($formation[2], $tabConfig); //creneau fin
             echo "</td>";
             echo "<td>";
-            $nbEntretions = $formation[2] - $formation[1] +1;
+            $nbEntretiens = $formation[2] - $formation[1] +1;
             echo $nbEntretiens; // nb Entretiens
             echo "</td>";
             echo "</tr>";
