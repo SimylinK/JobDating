@@ -33,15 +33,15 @@ class Formation {
 
     switch ($this -> periode) {
       case 'matin':
-        $this -> nbCreneaux = $this -> nbCreneauxMatin;
-        break;
+      $this -> nbCreneaux = $this -> nbCreneauxMatin;
+      break;
       case 'apres_midi':
-        $this -> nbCreneaux = $this -> nbCreneauxAprem;
-        $this -> crenOrigin = $this -> nbCreneauxMatin + 1;
-        break;
+      $this -> nbCreneaux = $this -> nbCreneauxAprem;
+      $this -> crenOrigin = $this -> nbCreneauxMatin + 1;
+      break;
       default:
-        $this -> nbCreneaux = $this -> nbCreneauxMatin + $this -> nbCreneauxAprem;
-        break;
+      $this -> nbCreneaux = $this -> nbCreneauxMatin + $this -> nbCreneauxAprem;
+      break;
     }
   }
 
@@ -141,15 +141,15 @@ class Formation {
     # calculnbCreneau #
     switch ($this -> periode) {
       case 'matin':
-        $nbCreneaux = $this -> nbCreneauxMatin;
-        break;
+      $nbCreneaux = $this -> nbCreneauxMatin;
+      break;
       case 'apres_midi':
-        $nbCreneaux = $this -> nbCreneauxAprem;
-        $crenOrigin = $this -> nbCreneauxMatin + 1;
-        break;
+      $nbCreneaux = $this -> nbCreneauxAprem;
+      $crenOrigin = $this -> nbCreneauxMatin + 1;
+      break;
       default:
-        $nbCreneaux = $this -> nbCreneauxMatin + $this -> nbCreneauxAprem;
-        break;
+      $nbCreneaux = $this -> nbCreneauxMatin + $this -> nbCreneauxAprem;
+      break;
     }
 
     $crenForm = floor(($nbCreneaux/$this -> nbForm)*$this -> nbPers);
@@ -169,7 +169,7 @@ class Formation {
       $crenDebut = $crenFin + 1;
       $crenRestant -= $crenForm;
     }
-    $dao -> deconnexion();  
+    $dao -> deconnexion();
     return $this -> ArrayForm;
   }
 
@@ -177,35 +177,122 @@ class Formation {
   public static function afficherForm($listeFormations) { // array[nomFormation, creneauDebut, creneauFin]
     echo "<table border=1px >
     <tr>
-      <td style='text-align:center' colspan=3>
-        Formation
-      </td>
+    <td style='text-align:center' colspan=3>
+    Formation
+    </td>
     </tr>
     <tr>
-      <td>
-        Nom de la formation
-      </td>
-      <td>
-        Debut periode
-      </td>
-      <td>
-        Fin periode
-      </td>
+    <td>
+    Nom de la formation
+    </td>
+    <td>
+    Debut periode
+    </td>
+    <td>
+    Fin periode
+    </td>
     </tr>";
     foreach ($listeFormations as $formation) {
       echo "<tr>";
-        echo "<td>";
-          echo $formation[0]; //nom formation
-        echo "</td>";
-        echo "<td>";
-          echo $formation[1]; //creneau debut
-        echo "</td>";
-        echo "<td>";
-          echo $formation[2]; //creneau fin
-        echo "</td>";
+      echo "<td>";
+      echo $formation[0]; //nom formation
+      echo "</td>";
+      echo "<td>";
+      echo $formation[1]; //creneau debut
+      echo "</td>";
+      echo "<td>";
+      echo $formation[2]; //creneau fin
+      echo "</td>";
       echo "</tr>";
     }
     echo "</table>";
-  }
-}
-?>
+
+    $dao = new Dao();
+    $tabConfig = $dao -> getConfiguration();
+    ?>
+
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <link rel="stylesheet" type="text/css" href="vue/css/general.css">
+      <title></title>
+      <meta charset="UTF-8">
+    </head>
+    <body>
+      <div id="main">
+        <br/>
+        <style>
+        #tabFormation {
+          background-color: #f2f2f2;
+          margin-left: -40%;
+          border-style : solid;
+          border-width : 1 px;
+          border-collapse: collapse;
+          text-align: center;
+        }
+        #tabFormation tr td {
+          border-style : solid;
+          border-width : 1px;
+          border-collapse: collapse;
+        }
+        </style>
+        <table id="tabFormation">
+          <tr>
+            echo'<td colspan=4> Formation </td>';
+          </tr>
+          <tr>
+            <td colspan= 1> Nom de la formation </td>
+            <td colspan= 1> Debut </td>
+            <td colspan= 1> Fin </td>';
+            <td colspan= 1> Nombre d'entretiens </td>';
+          </tr>
+
+          <?php
+          //affichage formation + horaire
+          foreach ($listeFormations as $formation) {
+            echo "<tr>";
+            echo "<td>";
+            echo $formation[0]; //nom formation
+            echo "</td>";
+            echo "<td>";
+            echo $this -> calculHoraire($formation[1], $tabConfig); //creneau debut
+            echo "</td>";
+            echo "<td>";
+            echo $this -> calculHoraire($formation[2], $tabConfig); //creneau fin
+            echo "</td>";
+            echo "<td>";
+            $nbEntretions = $formation[2] - $formation[1] +1;
+            echo $nbEntretiens; // nb Entretiens
+            echo "</td>";
+            echo "</tr>";
+          }
+          ?>
+
+        </table>
+      }
+      <?php
+      public function calculHoraire($creneau, $tabConfig){
+        $duree = $tabConfig["dureeCreneau"];
+        $start = 0;
+        if($creneau < $tabConfig["nbCreneauxMatin"]) { // si c'est le matin
+    			$heureString = $tabConfig["heureDebutMatin"];
+        } else { //si c'est l'apres midi
+          $heureString = $tabConfig["heureDebutAprem"];
+          $start = $tabConfig["nbCreneauxMatin"];
+        }
+        $heureString = explode(':', $heureString);
+        $heure = $heureString[0];
+        $min = $heureString[1];
+
+
+        for($i = $start; $i < $creneau; $i++){
+          $min += $duree;
+          if($min == 60) {
+            $min = 0;
+            $heure++;
+          }
+        }
+      }
+      ?>
+    }

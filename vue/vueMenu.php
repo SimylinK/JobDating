@@ -136,8 +136,8 @@ public function afficherPlanningEnt(){
 			$heureString = explode(':', $heureString);
 			$heure = $heureString[0];
 			$min = $heureString[1];
-			for($i = 0; $i < 15; $i++) {
-				if ($i == 6) {
+			for($i = 0; $i < 15; $i++) { //nbCreneauTotal
+				if ($i == 6) { //nbCreneauxMatin
 					echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 					$heureString = $tabConfig["heureDebutAprem"];
 					$heureString = explode(':', $heureString);
