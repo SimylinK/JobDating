@@ -409,7 +409,7 @@ public function afficherComptes() {
 			if (sizeof($tabEntreprises) > 0) {
 
 				foreach ($tabEntreprises as $entreprise) {
-					echo '<a href="index.php?profil='.$entreprise->getID().'&type=Ent">'.$entreprise->getNomEnt().'</a><br/><br/>';
+					echo '<a href="index.php?profil='.$entreprise['IDEnt'].'&type=Ent">'.$entreprise['mailEnt'].'</a><br/><br/>';
 				}
 
 			}

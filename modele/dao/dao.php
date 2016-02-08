@@ -647,16 +647,9 @@ class Dao
 
         public function getEntreprisesParFormation($formation) {
           $this->connexion();
-          $statement = $this->connexion->prepare('SELECT entPropose FROM formation WHERE typeFormation ="'.$formation.'";');
+          $statement = $this->connexion->prepare('SELECT IDEnt,mailEnt FROM entreprise,formation WHERE formation.typeFormation ="'.$formation.'" AND entreprise.IDEnt = formation.entPropose;');
           $statement->execute();
-          $tabResult = $statement->fetchAll();
-          $sortie = array();
-          for ($i = 0; $i < sizeof($tabResult); $i++) {
-            $this->connexion();
-            $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt ="'.$tabResult[$i]['entPropose'].'";');
-            $statement->execute();
-            array_push($sortie,$statement->fetchAll(PDO::FETCH_CLASS,"Entreprise"));
-          }
+          $sortie = $statement->fetchAll();
           $this->deconnexion();
           return $sortie;
         }
