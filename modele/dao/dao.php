@@ -424,12 +424,12 @@ class Dao
         $statement->execute();
         $statement = $this->connexion->prepare('DELETE FROM temp_entreprise WHERE IDEnt = '.$id.';');
         $statement->execute();
-        $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.$id.';');
+        $statement = $this->connexion->prepare('SELECT * FROM entreprise ORDER BY IDEnd DESC LIMIT 1;');
         $statement->execute();
         $ent = $statement->fetch();
         $this->deconnexion();
         $tabConfig = $this->getConfiguration();
-        $idEnt = $$ent['IDEnt'];
+        $idEnt = $ent['IDEnt'];
         $formationsRecherchees = $ent['formationsRecherchees'];
         $nbStands = $ent['nbStands'];
         $disponibilite = $ent['typeCreneau'];
@@ -812,6 +812,10 @@ class Dao
         //Pour la table formation
         public function ajoutFormation($typeFormation, $entPropose, $creneauDebut, $creneauFin) {
           try {
+            var_dump($typeFormation);
+            var_dump($entPropose);
+            var_dump($creneauDebut);
+            var_dump($creneauFin);
             $this->connexion();
             $statement = $this->connexion->prepare('INSERT INTO formation(typeFormation,entPropose, creneauDebut, creneauFin) VALUES ("'.$typeFormation.'", '.$entPropose.', '.$creneauDebut.', '.$creneauFin.');');
             $statement->execute();
