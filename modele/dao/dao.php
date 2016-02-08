@@ -647,7 +647,7 @@ class Dao
 
         public function getEntreprisesParFormation($formation) {
           $this->connexion();
-          $statement = $this->connexion->prepare('SELECT IDEnt,mailEnt FROM entreprise,formation WHERE formation.typeFormation ="'.$formation.'" AND entreprise.IDEnt = formation.entPropose;');
+          $statement = $this->connexion->prepare('SELECT IDEnt,nomEnt FROM entreprise,formation WHERE formation.typeFormation ="'.$formation.'" AND entreprise.IDEnt = formation.entPropose;');
           $statement->execute();
           $sortie = $statement->fetchAll();
           $this->deconnexion();
