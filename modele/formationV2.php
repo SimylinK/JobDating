@@ -117,6 +117,7 @@ class Formation {
             $cpt --;
           }
         }
+
       }
       else{
         echo "erreur lors de la création des formations : données incorrectes";
