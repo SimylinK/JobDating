@@ -746,7 +746,7 @@ public function afficherComptes() {
 				<br/><br/>
 				<label for="nbRepasSociete"/> Nombre de repas prévus
 				<br/>
-				<input required type="text" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, "messageNbRepas", "3")">
+				<input required type="text" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, \'messageNbRepas\', 3)">
 	 			<p id="messageNbRepas" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_organistaion" value="confirmer"/> </TD>
 		</TABLE>
@@ -788,19 +788,19 @@ public function afficherComptes() {
 	  	<TR>
 	 			<TD> <label for="nomSociete"/> Nom
 				<br/>
-				<input required type="text" name="nomSociete" value="'.$profil->getNomEnt().'" onblur="verifString(this, "messageNom", "20")">
+				<input required type="text" name="nomSociete" value="'.$profil->getNomEnt().'" onblur="verifString(this, \'messageNom\', 20)">
 				<p id="messageNom" style="color:red"></p>
 				<label for="villeSociete"/> Ville
 				<br/>
-				<input required type="text" name="villeSociete" value="'.$profil->getVilleEnt().'" onblur="verifString(this, "messageVille", "20")">
+				<input required type="text" name="villeSociete" value="'.$profil->getVilleEnt().'" onblur="verifString(this, \'messageVille\', 20)">
 				<p id="messageVille" style="color:red"></p>
 				<label for="codePostalSociete"/> Code postal
 				<br/>
-				<input required type="text" name="codePostalSociete" value="'.$profil->getCodePostal().'" onblur="verifCodePostal(this, "messageCP")">
+				<input required type="text" name="codePostalSociete" value="'.$profil->getCodePostal().'" onblur="verifCodePostal(this, \'messageCP\')">
 				<p id="messageCP" style="color:red"></p>
 				<label for="adresseSociete"/> Adresse
 				<br/>
-				<input required type="text" name="adresseSociete" value="'.$profil->getAdresseEnt().'" onblur="verifString(this, "messageAdresse", "30")"> </TD>
+				<input required type="text" name="adresseSociete" value="'.$profil->getAdresseEnt().'" onblur="verifString(this, \'messageAdresse\', 30)"> </TD>
 	 			<p id="messageAdresse" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_informations" value="confirmer"/> </TD>
 		</TABLE>
@@ -813,19 +813,19 @@ public function afficherComptes() {
 	  	<TR>
 	 			<TD> <label for="nomContactSociete"/> Nom du contact
 				<br/>
-				<input required type="text" name="nomContactSociete" value="'.$profil->getNomContact().'" onblur="verifString(this, "messageNomContact", "20")">
+				<input required type="text" name="nomContactSociete" value="'.$profil->getNomContact().'" onblur="verifString(this, \'messageNomContact\', 20)">
 				<p id="messageNomContact" style="color:red"></p>
 				<label for="prenomContactSociete"/> Prénom du contact
 				<br/>
-				<input required type="text" name="prenomContactSociete" value="'.$profil->getPrenomContact().'" onblur="verifString(this, "messagePrenomContact", "20")" >
+				<input required type="text" name="prenomContactSociete" value="'.$profil->getPrenomContact().'" onblur="verifString(this, \'messagePrenomContact\', 20)" >
 				<p id="messagePrenomContact" style="color:red"></p>
 				<label for="emailSociete"/> Email
 				<br/>
-				<input required type="text" name="emailSociete" value="'.$profil->getMailEnt().'" onblur="verifEmail(this, "messageEmail")">
+				<input required type="text" name="emailSociete" value="'.$profil->getMailEnt().'" onblur="verifEmail(this, \'messageEmail\')">
 				<p id="messageEmail" style="color:red"></p>
 				<label for="numTelSociete"/> Téléphone
 				<br/>
-				<input required type="text" name="numTelSociete" value="'.$profil->getNumTelContact().'" onblur="verifTelephone(this, "messageTel")"> </TD>
+				<input required type="text" name="numTelSociete" value="'.$profil->getNumTelContact().'" onblur="verifTelephone(this, \'messageTel\')"> </TD>
 	 			<p id="messageTel" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_contact" value="confirmer"/> </TD>
 		</TABLE>
@@ -846,7 +846,7 @@ public function afficherComptes() {
 				<br/><br/>
 				<label for="mdpNouveau2"/> Confirmez
 				<br/>
-				<input required type="password" name="mdpNouveau2" onblur="verifMdp("messageMdp")"> </TD>
+				<input required type="password" name="mdpNouveau2" onblur="verifMdp(\'messageMdp\')"> </TD>
 				<p id="messageMdp" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_motdepasse" value="confirmer"/> </TD>
 		</TABLE>
