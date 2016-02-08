@@ -429,7 +429,7 @@ class Dao
         $ent = $statement->fetch();
         $this->deconnexion();
         $tabConfig = $this->getConfiguration();
-        $idEnt = $id;
+        $idEnt = $$ent['IDEnt'];
         $formationsRecherchees = $ent['formationsRecherchees'];
         $nbStands = $ent['nbStands'];
         $disponibilite = $ent['typeCreneau'];
