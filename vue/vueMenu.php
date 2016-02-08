@@ -901,6 +901,45 @@ public function afficherComptes() {
 			<td>Nombre de repas à prévoir</td>
 			<td><?php echo $tabDetails['nbRepas'];?></td>
 		</tr>
+
+		<?php
+
+		$listeEntreprises = $dao->getAllEntreprises();
+
+		if ($listeEntreprises.length() > 0) {
+			echo '<tr>
+			<td colspan="2">
+			<a href="mailto:';
+
+			foreach ($listeEntreprises as $ent) {
+				echo $ent->getMailEnt().',';
+			}
+
+			echo '">Mail groupé aux entreprises</a>
+			</td>
+			</tr>
+				';
+		}
+
+		$listeEtudiant = $dao->getAllEtudiants();
+
+		if ($listeEtudiant.length() > 0) {
+			echo '<tr>
+			<td colspan="2">
+			<a href="mailto:';
+
+			foreach ($listeEtudiant as $etu) {
+				echo $etu->getMailEtu().',';
+			}
+
+			echo '">Mail groupé aux étudiants</a>
+			</td>
+			</tr>
+				';
+		}
+
+		?>
+
 		</table>
 		<br/><br/>
 		<!-- IMPORTANT : demande de génération des emplois du temps -->
