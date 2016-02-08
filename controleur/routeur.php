@@ -47,8 +47,8 @@ class Routeur {
     }
 
     if(isset($_POST['startGeneration']) && isset($_SESSION['type_connexion'])){
-      $this -> dao -> generatePlanning();
-      $this -> ctrlMenu -> afficherMenu(1);
+      $this->dao->generatePlanning();
+      $this->ctrlMenu->afficherMenu(1);
       return;
     }
 
@@ -95,13 +95,13 @@ class Routeur {
     //Les modifications de compte de l'entreprise
     if (isset($_POST['modification_entreprise_organistaion'])) {
       if ($_POST['disponibiliteSociete'] != "") {
-        $this -> dao -> editTypeCreneauEntreprise(($_SESSION['idUser']), $_POST['disponibiliteSociete']);
+        $this->dao->editTypeCreneauEntreprise(($_SESSION['idUser']), $_POST['disponibiliteSociete']);
       }
       if ($_POST['nbStandsSociete'] != 0) {
-        $this -> dao -> editNbStandsEntreprise(($_SESSION['idUser']), $_POST['nbStandsSociete']);
+        $this->dao->editNbStandsEntreprise(($_SESSION['idUser']), $_POST['nbStandsSociete']);
       }
       if ($_POST['nbRepasSociete'] >= 0) {
-        $this -> dao -> editNbRepasEntreprise(($_SESSION['idUser']), $_POST['nbRepasSociete']);
+        $this->dao->editNbRepasEntreprise(($_SESSION['idUser']), $_POST['nbRepasSociete']);
       }
       $this->ctrlMenu->afficherMenu(3);
       return;
@@ -113,39 +113,39 @@ class Routeur {
         foreach ($forms as $form){
           $stringFormations = $stringFormations . $form . ",";
         }
-        $this -> dao -> editFormationsRechercheesEntreprise(($_SESSION['idUser']), $stringFormations);
+        $this->dao->editFormationsRechercheesEntreprise(($_SESSION['idUser']), $stringFormations);
       }
       $this->ctrlMenu->afficherMenu(3);
       return;
     }
     if (isset($_POST['modification_entreprise_informations'])) {
       if ($_POST['nomSociete'] != "") {
-        $this -> dao -> editNomEntreprise(($_SESSION['idUser']), $_POST['nomSociete']);
+        $this->dao->editNomEntreprise(($_SESSION['idUser']), $_POST['nomSociete']);
       }
       if ($_POST['villeSociete'] != "") {
-        $this -> dao -> editVilleEntreprise(($_SESSION['idUser']), $_POST['villeSociete']);
+        $this->dao->editVilleEntreprise(($_SESSION['idUser']), $_POST['villeSociete']);
       }
       if ($_POST['codePostalSociete'] != 0) {
-        $this -> dao -> editCPEntreprise(($_SESSION['idUser']), $_POST['codePostalSociete']);
+        $this->dao->editCPEntreprise(($_SESSION['idUser']), $_POST['codePostalSociete']);
       }
       if ($_POST['adresseSociete'] != "") {
-        $this -> dao -> editAdresseEntreprise(($_SESSION['idUser']), $_POST['adresseSociete']);
+        $this->dao->editAdresseEntreprise(($_SESSION['idUser']), $_POST['adresseSociete']);
       }
       $this->ctrlMenu->afficherMenu(3);
       return;
     }
     if (isset($_POST['modification_entreprise_contact'])) {
       if ($_POST['nomContactSociete'] != "") {
-        $this -> dao -> editNomContactEntreprise(($_SESSION['idUser']), $_POST['nomContactSociete']);
+        $this->dao->editNomContactEntreprise(($_SESSION['idUser']), $_POST['nomContactSociete']);
       }
       if ($_POST['prenomContactSociete'] != "") {
-        $this -> dao -> editPrenomContactEntreprise(($_SESSION['idUser']), $_POST['prenomContactSociete']);
+        $this->dao->editPrenomContactEntreprise(($_SESSION['idUser']), $_POST['prenomContactSociete']);
       }
       if ($_POST['emailSociete'] != "") {
-        $this -> dao -> editMailEntreprise(($_SESSION['idUser']), $_POST['emailSociete']);
+        $this->dao->editMailEntreprise(($_SESSION['idUser']), $_POST['emailSociete']);
       }
       if ($_POST['numTelSociete'] != 0) {
-        $this -> dao -> editTelephoneEntreprise(($_SESSION['idUser']), $_POST['numTelSociete']);
+        $this->dao->editTelephoneEntreprise(($_SESSION['idUser']), $_POST['numTelSociete']);
       }
       $this->ctrlMenu->afficherMenu(3);
       return;
@@ -153,7 +153,7 @@ class Routeur {
     if (isset($_POST['modification_entreprise_motdepasse'])) {
       if ($_POST['mdpActuel'] != "" && $_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
         && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
-          $this -> dao -> editMdpEntreprise(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
+          $this->dao->editMdpEntreprise(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
       }
       $this->ctrlMenu->afficherMenu(3);
       return;
