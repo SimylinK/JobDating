@@ -52,6 +52,29 @@ class Routeur {
       return;
     }
 
+    if(isset($_POST['changementListeEtu'])) {
+      $string1 = "";
+      $string2 = "";
+      $string3 = "";
+      $string4 = "";
+      if ($_POST['choix1'] != "Faire un choix...") {
+        $string1 = $_POST['choix1'];
+      }
+      if ($_POST['choix2'] != "Faire un choix...") {
+        $string2 = ','.$_POST['choix2'];
+      }
+      if ($_POST['choix3'] != "Faire un choix...") {
+        $string3 = ','.$_POST['choix3'];
+      }
+      if ($_POST['choix4'] != "Faire un choix...") {
+        $string4 = ','.$_POST['choix4'];
+      }
+      $newList = $string1.$string2.$string3.$string4;
+      $this->dao->editChoixEtudiant($_SESSION['idUser'],$newList);
+      $this->ctrlMenu->afficherMenu(2);
+      return;
+    }
+
     if (isset($_GET['profil']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
             if ($_GET['type'] == "tmpEnt") {
               $this->ctrlProfil->afficherProfil("entreprise",$this->dao->getTempEnt($_GET['profil']));
@@ -184,7 +207,7 @@ class Routeur {
         }
        else {
        		//$_SESSION['fail'] = "Cette adresse email a déjà été utilisée ou cette<br/>entreprise est déjà inscrite à l'événement.<br/>Veuillez vérifier que vous n'êtes pas déjà inscrit<br/>ou réessayez avec une autre adresse email.";
-           $this->ctrlLost->genererLost();
+       		$this->ctrlLost->genererLost();
      		return;
        }
       }
@@ -288,7 +311,7 @@ class Routeur {
     }
 
   	if (isset($_GET['deconnexion'])) {
-
+      
   		session_destroy();
       header('Location: index.php');
   		return;
@@ -300,18 +323,34 @@ class Routeur {
     }
 
   	if (isset($_POST['submit_new_mdp'])) {
-  		/*
-			TODO
-			Modification du mdp
-			Vérification de l'email donné.
-			Si présent, alors détruire mdp courant
-			Créer nouveau mdp
-			Envoyer un email avec nouveau mdp
-			$this->ctrlMenu->afficherMenu(1);
-  		*/
-		$_SESSION['fail'] = "Cette fonctionnalité n'est pas encore<br/>implémentée. Nous nous excusons pour cela<br/>et vous demanderons de bien vouloir faire<br/>preuve de patience.";
+  		if($this->dao->estInscrit($_POST['mail_new_mdp'])) {
+            $new_mdp = chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90));
+            $message = "Bonjour,\r\n";
+            $message .= "Voici le nouveau mot de passe que vous avez demandé à réinitialiser :\r\n";
+            $message .= "-----------------------\r\n";
+            $message .= "$new_mdp\r\n";
+            $message .= "-----------------------\r\n";
+            $message .= "Si vous n'avez pas fait cette demande, veuillez en informer l'administrateur. Veuillez aussi manuellement modifier votre mot de passe en vous connectant au site JobMeeting de l'IUT de Nantes.\r\n\r\n";
+            $message .= "Cordialement,\r\n";
+            $message .= "L'équipe informatique de l'IUT de Nantes.";
+            $headers = "From: IUT Nantes JobMeeting <webmaster@oursite.com> \n";
+            $headers .= "To-Sender: \n";
+            $headers .= "X-Mailer: PHP\n";
+            $headers .= "Reply-To: webmaster@oursite.com\n";
+            $headers .= "Return-Path: webmaster@oursite.com\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8";
+            $subject = "[Réinitialisation mot de passe]";
+            @mail($_POST['mail_new_mdp'],utf8_decode($subject),$message,$headers);
+            $_SESSION['fail'] = "Un email a été envoyé à l'adresse indiquée.";
+            $this->dao->manualPasswdEdit($_POST['mail_new_mdp'],$new_mdp);
+            $this->ctrlLost->genererLost();
+            return;
+      }
+      else {
+        $_SESSION['fail'] = "Cet email n'existe pas dans notre base de données ou n'a pas été validé. Si vous désirez être informé de l'état de cette validation, veuillez contacter l'administrateur.";
         $this->ctrlLost->genererLost();
         return;
+      }
   	}
 
   	if (isset($_POST['submit_new_choix'])) {

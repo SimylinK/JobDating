@@ -8,7 +8,7 @@ class Etudiant {
 	private $mdpEtu;
 	private $numtelEtu;
 	private $formationEtu;
-	private $listeChoixEtu;
+	private $listechoixEtu;
 
 	public function getId() {
 		return $this->IDEtu;
@@ -32,7 +32,7 @@ class Etudiant {
 		return $this->formationEtu;
 	}
 	public function getListeChoixEtu() {
-		return $this->listeChoixEtu;
+		return $this->listechoixEtu;
 	}
 }
 

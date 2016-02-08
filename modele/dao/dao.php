@@ -84,6 +84,7 @@ class Dao
   # editMailEtudiant($id,$new)
   # editTelephoneEtudiant($id,$new)
   # editFormationEtudiant($id,$new)
+  # editChoixEtudiant($id,$new)
   # editMdpEtudiant($id,$new,$old)
   # supprimerFormation($idEntreprise)
 
@@ -340,12 +341,7 @@ class Dao
       }
       $i++;
     }
-    $nbPlaces = -1;
-    if (isset($_POST['NbAlternants'])) {
-      if ($_POST['NbAlternants'] != "")
-        $nbPlaces = $_POST['NbAlternants'];
-    }
-
+    $nbPlaces = $_POST['NbAlternants'];
     if (isset($_POST['dejeuner'])) {
       if ($_POST['dejeuner'] == "dejeuner_ok") {
         $nbRepas = $_POST['NbRepas'];
@@ -372,7 +368,7 @@ class Dao
       $statement->execute();
       $this->deconnexion();
       $idEnt = $this->getIdEntreprise($nomEnt);
-      $tabConfig = $this->getConfiguration();
+      $tabConfig = $this.getConfiguration();
       $this->deconnexion();
       return true;
     }
@@ -537,7 +533,6 @@ class Dao
         }
 
         //Pour la table scriptconfig
-
         public function getConfiguration() {
           $this->connexion();
           $statement = $this->connexion->prepare('SELECT * FROM scriptconfig;');
@@ -654,13 +649,15 @@ class Dao
 
         public function getEntreprisesParFormation($formation) {
           $this->connexion();
-          $statement = $this->connexion->prepare('SELECT entPropose FROM formation WHERE typeFormation="'.$formation.'";');
+          $statement = $this->connexion->prepare('SELECT entPropose FROM formation WHERE typeFormation="'.$formation.'" GROUP BY entPropose;');
           $statement->execute();
           $tabResult = $statement->fetchAll();
           $sortie = array();
           foreach ($tabResult as $id) {
-            $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.$id['entreprisePropose'].';');
-            $sortie = $statement->fetch();
+            $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.intval($id['entPropose']).';');
+            $statement->execute();
+            array_push($sortie,$statement->fetchAll(PDO::FETCH_CLASS, "Entreprise")[0]);
+            
           }
           $this->deconnexion();
           return $sortie;
@@ -1096,6 +1093,14 @@ class Dao
       public function editFormationEtudiant($id,$new) {
         $this->connexion();
         $statement = $this->connexion->prepare("UPDATE etudiant SET formationEtu='".$new."' WHERE IDEtu = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+
+      public function editChoixEtudiant($id,$new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE etudiant SET listechoixEtu='".$new."' WHERE IDEtu = ".$id.";");
         $statement->execute();
         $this->deconnexion();
         return;

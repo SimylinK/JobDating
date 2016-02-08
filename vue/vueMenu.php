@@ -136,8 +136,8 @@ public function afficherPlanningEnt(){
 			$heureString = explode(':', $heureString);
 			$heure = $heureString[0];
 			$min = $heureString[1];
-			for($i = 0; $i < 15; $i++) { //nbCreneauTotal
-				if ($i == 6) { //nbCreneauxMatin
+			for($i = 0; $i < 15; $i++) {
+				if ($i == 6) {
 					echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 					$heureString = $tabConfig["heureDebutAprem"];
 					$heureString = explode(':', $heureString);
@@ -482,6 +482,9 @@ public function afficherComptes() {
 	public function afficherChoix(){
 		$util = new UtilitairePageHtml();
 		echo $util->genereBandeauApresConnexion();
+		$dao = new Dao();
+		$etudiantCourant = $dao->getEtu($_SESSION['idUser'])[0];
+		$listeEntreprises = $dao->getEntreprisesParFormation($etudiantCourant->getFormationEtu());
 	?>
 	<!DOCTYPE html>
 	<html>
@@ -492,8 +495,152 @@ public function afficherComptes() {
 	</head>
 	<body>
 	<div id="main">
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici sera affichée la liste des entreprises proposant la formation de l'élève pour sélectionner des voeux. La sélection se fera par listes déroulantes.
+
+		<?php
+			if ($etudiantCourant->getListeChoixEtu() == "") {
+				echo "<br/>Vous n'avez pas encore fait de choix.";
+			}
+			else {
+				echo "<br/>";
+				$choix = explode(",",$etudiantCourant->getListeChoixEtu());
+				$compteur = 1;
+				$newList = $etudiantCourant->getListeChoixEtu();
+				foreach ($choix as $entreprise) {
+					$objEnt = $dao->getEnt(intval($entreprise))[0];
+					if (!is_null($objEnt)) {
+						echo "Choix ".$compteur." : ";
+						echo '<a href="index.php?profil='.$objEnt->getId().'&type=Ent">'.$objEnt->getNomEnt().'</a><br/><br/>';
+						$compteur = $compteur + 1;
+					}
+					else {
+						echo "Votre choix ".$compteur." n'existe plus. Il a été retiré de votre liste de choix.<br/>";
+						$compteur = $compteur + 1;
+						if (strpos($newList, $entreprise.',') == false) {
+							str_replace($entreprise, "", $newList);
+						}
+						else {
+							str_replace($entreprise.',', "", $newList);
+						}
+					}
+				}
+				$dao->editChoixEtudiant($_SESSION['idUser'],$newList);
+			}
+		?>
+
+		<br/><br/>
+
+		Vous pouvez faire jusqu'à quatre choix. Le premier choix sera favorisé par rapport aux suivants. Les doublons ne permettront pas l'envoi du formulaire.
+
+		<br/><br/>
+
+
+
+		<form action="index.php" method="POST" onsubmit="return verifier();">
+
+			<select id="ent1" name="choix1" onchange="Changement1()" >
+				<option value="Faire un choix...">Faire un choix...</option>
+				<?php
+					foreach ($listeEntreprises as $entreprise) {
+						echo '<option value="'.$entreprise->getId().'">'.$entreprise->getNomEnt().'</option>';
+					}
+				?>
+			</select>
+			<br/><br/>
+			<select id="ent2" name="choix2" onchange="Changement2()" style="visibility:hidden;">
+				<option value="Faire un choix...">Faire un choix...</option>
+				<?php
+					foreach ($listeEntreprises as $entreprise) {
+						echo '<option value="'.$entreprise->getId().'">'.$entreprise->getNomEnt().'</option>';
+					}
+				?>
+			</select>
+			<br/><br/>
+			<select id="ent3" name="choix3" onchange="Changement3()" style="visibility:hidden;">
+				<option value="Faire un choix...">Faire un choix...</option>
+				<?php
+					foreach ($listeEntreprises as $entreprise) {
+						echo '<option value="'.$entreprise->getId().'">'.$entreprise->getNomEnt().'</option>';
+					}
+				?>
+			</select>
+			<br/><br/>
+			<select id="ent4" name="choix4" style="visibility:hidden;">
+				<option value="Faire un choix...">Faire un choix...</option>
+				<?php
+					foreach ($listeEntreprises as $entreprise) {
+						echo '<option value="'.$entreprise->getId().'">'.$entreprise->getNomEnt().'</option>';
+					}
+				?>
+			</select>
+
+			<br/><br/>
+			<input type="submit" value="Valider les changements" name="changementListeEtu"/>
+
+		</form>
+
+		<script>
+
+		function Changement1() {
+			if (document.getElementById("ent1").value == "Faire un choix...") {
+				document.getElementById("ent2").style.visibility = "hidden";
+				document.getElementById("ent3").style.visibility = "hidden";
+				document.getElementById("ent4").style.visibility = "hidden";
+				document.getElementById("ent2").value = "Faire un choix...";
+				document.getElementById("ent3").value = "Faire un choix...";
+				document.getElementById("ent4").value = "Faire un choix...";
+			}
+			else {
+				document.getElementById("ent2").style.visibility = "";
+			}
+		}
+
+		function Changement2() {
+			if (document.getElementById("ent2").value == "Faire un choix...") {
+				document.getElementById("ent3").style.visibility = "hidden";
+				document.getElementById("ent4").style.visibility = "hidden";
+				document.getElementById("ent3").value = "Faire un choix...";
+				document.getElementById("ent4").value = "Faire un choix...";
+			}
+			else {
+				document.getElementById("ent3").style.visibility = "";
+			}
+		}
+
+		function Changement3() {
+			if (document.getElementById("ent3").value == "Faire un choix...") {
+				document.getElementById("ent4").style.visibility = "hidden";
+				document.getElementById("ent4").value = "Faire un choix...";
+			}
+			else {
+				document.getElementById("ent4").style.visibility = "";
+			}
+		}
+
+		function verifier() {
+			var value1 = document.getElementById("ent1").value;
+			var value2 = document.getElementById("ent2").value;
+			var value3 = document.getElementById("ent3").value;
+			var value4 = document.getElementById("ent4").value;
+			if (value1 == "Faire un choix...") {
+				return false;
+			}
+			if (value2 == "Faire un choix..." && value1 != "Faire un choix...") {
+				return true;
+			}
+			if (value3 == "Faire un choix..." && value2 != value1) {
+				return true;
+			}
+			if (value4 == "Faire un choix..." && value3 != value2 && value3 != value1 && value2 != value1) {
+				return true;
+			} 
+			if (value4 != value3 && value4 != value2 && value4 != value1 && value3 != value2 && value3 != value1 && value2 != value1) {
+				return true;
+			}
+			return false;
+		}
+
+		</script>
+
 	</div>
 		<?php
 
@@ -525,12 +672,10 @@ public function afficherComptes() {
 
 		<?php
 
-			if (sizeof($tabEntreprises) > 0) {
-
+			if (sizeof($tabEntreprises) > 0 && !is_bool($tabEntreprises)) {
 				foreach ($tabEntreprises as $entreprise) {
-					echo '<a href="index.php?profil='.$entreprise['IDEnt'].'&type=Ent">'.$entreprise['nomEnt'].'</a><br/><br/>';
+					echo '<a href="index.php?profil='.$entreprise->getId().'&type=Ent">'.$entreprise->getNomEnt().'</a><br/><br/>';
 				}
-
 			}
 			else {
 				echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Actuellement, aucune entreprise ne propose de formation correspondante à la votre.';
