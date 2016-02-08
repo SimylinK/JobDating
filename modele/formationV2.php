@@ -263,6 +263,9 @@ class Formation {
           }
         }
 
+        if($min == 0){
+          $min = "00";
+        }
         return $heure.':'.$min;
       }
     }
