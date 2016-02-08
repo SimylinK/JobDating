@@ -426,14 +426,13 @@ class Dao
         $statement->execute();
         $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.$id.';');
         $statement->execute();
-        $tabSortie = $statement->fetchAll(PDO::FETCH_CLASS, "Entreprise");
-        $ent = $tabSortie[0];
+        $ent = $statement->fetch();
         $this->deconnexion();
         $tabConfig = $this->getConfiguration();
         $idEnt = $id;
-        $formationsRecherchees = $ent->getFormationsRecherchees();
-        $nbStands = $ent->getNbStands();
-        $disponibilite = $ent->getTypeCreneau();
+        $formationsRecherchees = $ent['formationsRecherchees'];
+        $nbStands = $ent['nbStands'];
+        $disponibilite = $ent['typeCreneau'];
         $creationFormation = new Formation($idEnt, $formationsRecherchees, $nbStands, $disponibilite, $tabConfig['nbCreneauxMatin'], $tabConfig['nbCreneauxAprem']);
         $creationFormation->createForm();
         return;
