@@ -73,7 +73,7 @@ public function afficherFormulaireEnt(){
 				<input type="checkbox" name="formation_DCG" value="DCG" onClick="EnableSubmit(this)">Préparation Diplôme de Comptabilité et de Gestion (DCG)</option>
 				<br/><br/>
 
-				<span name="information">Pour plus d'informations sur nos formations : <a href="www.univ-nantes.fr/iutnantes">www.univ-nantes.fr/iutnantes</a> </span>
+				<span name="information">Pour plus d'informations sur nos formations : <a href="http://www.univ-nantes.fr/iutnantes">www.univ-nantes.fr/iutnantes</a> </span>
 				<br/><br/>
 				Emplacement de l'entreprise :
 				<br/><br/>
