@@ -93,27 +93,12 @@ public function afficherPlanningEnt(){
 	  	<body>
 	  	<div id="main">
 	  	<br/>
-			<style>
-			#tabPlanningEnt {
-				background-color: #f2f2f2;
-				margin-left: -40%;
-				border-style : solid;
-				border-width : 1 px;
-				border-collapse: collapse;
-				text-align: center;
-			}
-			#tabPlanningEnt tr td {
-				border-style : solid;
-				border-width : 1px;
-				border-collapse: collapse;
-			}
-			</style>
 	    <table id="tabPlanningEnt">
 
 			<tr>
 					<?php
 					$tmp = $tabConfig["nbCreneauxMatin"] + $tabConfig["nbCreneauxAprem"] + 3;
-					echo'<td colspan= '.$tmp.'> Planning Entreprises </td>';
+					echo'<td id="titre" colspan= '.$tmp.'> Planning Entreprises </td>';
 					?>
 			</tr>
 			<tr>
@@ -138,7 +123,7 @@ public function afficherPlanningEnt(){
 			$min = $heureString[1];
 			for($i = 0; $i < 15; $i++) {
 				if ($i == 6) {
-					echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 					$heureString = $tabConfig["heureDebutAprem"];
 					$heureString = explode(':', $heureString);
 					$heure = $heureString[0];
@@ -161,7 +146,7 @@ public function afficherPlanningEnt(){
 			foreach ($tabEnt as $ent) {
 				$tabForm = $dao -> getFormationsEntreprise($ent -> getID());
 			foreach ($tabForm as $form) {
-				echo '<tr>
+				echo '<tr id="entreprise">
 				<td>'
 				.$ent -> getnomEnt().
 				'</td>
@@ -171,7 +156,7 @@ public function afficherPlanningEnt(){
 				;
 				for($i = 0; $i < $tabConfig['nbCreneauxMatin'] + $tabConfig['nbCreneauxAprem']; $i++) {
 					if ($i == 6) {
-						echo'<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+						echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 					}
 					echo '
 					<td>'
@@ -184,7 +169,9 @@ public function afficherPlanningEnt(){
 		}
 			?>
 			</table>
-
+			<p>
+			</br>
+			</p>
 	    <?php
 	    //Planning du point de vue des Etudiants
 			echo $util->generePied();
@@ -633,7 +620,7 @@ public function afficherComptes() {
 			}
 			if (value4 == "Faire un choix..." && value3 != value2 && value3 != value1 && value2 != value1) {
 				return true;
-			} 
+			}
 			if (value4 != value3 && value4 != value2 && value4 != value1 && value3 != value2 && value3 != value1 && value2 != value1) {
 				return true;
 			}
@@ -699,7 +686,7 @@ public function afficherComptes() {
 
 	public function afficherCompteEtu(){
 		$util = new UtilitairePageHtml();
-		echo $util->genereBandeauApresConnexion();	
+		echo $util->genereBandeauApresConnexion();
 	$dao = new Dao();
 	$id = $_SESSION['idUser'];
 	$tabprofil = $dao->getEtu($id);
