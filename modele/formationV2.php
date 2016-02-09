@@ -196,7 +196,19 @@ class Formation {
       <div id="main">
         <br/>
         <style>
-
+        #tabFormation {
+          background-color: #f2f2f2;
+          margin-left: 40%;
+          border-style : solid;
+          border-width : 1 px;
+          border-collapse: collapse;
+          text-align: center;
+        }
+        #tabFormation tr td {
+          border-style : solid;
+          border-width : 1px;
+          border-collapse: collapse;
+        }
         </style>
         <table id="tabFormation">
           <tr>
