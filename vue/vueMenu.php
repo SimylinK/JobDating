@@ -93,21 +93,6 @@ public function afficherPlanningEnt(){
 	  	<body>
 	  	<div id="main">
 	  	<br/>
-			<style>
-			#tabPlanningEnt {
-				background-color: #f2f2f2;
-				margin-left: -40%;
-				border-style : solid;
-				border-width : 1 px;
-				border-collapse: collapse;
-				text-align: center;
-			}
-			#tabPlanningEnt tr td {
-				border-style : solid;
-				border-width : 1px;
-				border-collapse: collapse;
-			}
-			</style>
 	    <table id="tabPlanningEnt">
 
 			<tr>
@@ -633,7 +618,7 @@ public function afficherComptes() {
 			}
 			if (value4 == "Faire un choix..." && value3 != value2 && value3 != value1 && value2 != value1) {
 				return true;
-			} 
+			}
 			if (value4 != value3 && value4 != value2 && value4 != value1 && value3 != value2 && value3 != value1 && value2 != value1) {
 				return true;
 			}
@@ -699,7 +684,7 @@ public function afficherComptes() {
 
 	public function afficherCompteEtu(){
 		$util = new UtilitairePageHtml();
-		echo $util->genereBandeauApresConnexion();	
+		echo $util->genereBandeauApresConnexion();
 	$dao = new Dao();
 	$id = $_SESSION['idUser'];
 	$tabprofil = $dao->getEtu($id);

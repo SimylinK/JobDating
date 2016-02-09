@@ -29,11 +29,9 @@ public function afficherFormulaireEnt(){
 			Si vous êtes intéressés, nous organiserons les entretiens sur inscription : vous avez donc l'assurance de rencontrer des candidats motivés et correspondant au profil que vous recherchez.
 			<br><b>Attention, aucune modification ne pourra être apportée après le 28 mars.</b>
 		</span>
-		<p>
-			<p style="color:crimson">Tous les champs suivis d'un * sont obligatoires</p>
+		<p name="obligatoire">
+			Tous les champs suivis d'un * sont obligatoires
 		</p>
-
-
 
 			<form name ="inscriptionEnt" action="index.php" method="post" onSubmit="return VerifSubmit();">
 				<!-- Participation-->
@@ -79,7 +77,7 @@ public function afficherFormulaireEnt(){
 				<input type="checkbox" name="formation_DCG" value="DCG" onClick="EnableSubmit(this)"> Préparation Diplôme de Comptabilité et de Gestion (DCG)</option>
 				<br/><br/>
 
-				<span name="information">Pour plus d'informations sur nos formations : <a href="http://www.univ-nantes.fr/iutnantes">www.univ-nantes.fr/iutnantes</a> </span>
+				<span name="information">Pour plus d'informations sur nos formations : <a href="http://www.univ-nantes.fr/iutnantes" target="_blank">www.univ-nantes.fr/iutnantes</a> </span>
 				<br/><br/>
 				<b>Emplacement de l'entreprise :</b>
 				<br/><br/>

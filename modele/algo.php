@@ -51,8 +51,6 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
     $this -> afficheEchiquier();
   }
 
-  //Fonction qui va diviser les entreprises avec plusieurs créneaux simultané
-
   //Fonction qui va initialiser les tableaux Echiquier et Satisfait
   function initEchiquier(){
     //On regarde la taille que doit avoir l'échiquier

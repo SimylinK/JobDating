@@ -1,9 +1,7 @@
 <?php
 
-
 class ConnexionException extends Exception
 {
-
 	private $chaine;
 
 	public function __construct($chaine)
@@ -15,7 +13,6 @@ class ConnexionException extends Exception
 	{
 		return $this->chaine;
 	}
-
 }
 
 ?>

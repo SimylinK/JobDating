@@ -1,6 +1,6 @@
 <?php
 
-    
+
 require_once 'util/utilitairePageHtml.php';
 
 class VueInscriptionEtu{
@@ -25,8 +25,8 @@ public function afficherFormulaireEtu(){
 		<span> Vous êtes candidat ou admis en Licence Pro, DUT ou DCG par alternance à l'IUT de Nantes.
 			Le 3 avril 2015 à 9h00 à l'IUT (Campus la Fleuriaye à Carquefou), nous organisons des pré-entretiens de recrutement avec des entreprises qui recherchent des alternants de votre formation.
 		</span>
-		<p>
-			* Obligatoire
+		<p name="obligatoire">
+			Tous les champs suivis d'un * sont obligatoires
 		</p>
 		<br/>
 		<p>
@@ -143,17 +143,17 @@ public function afficherFormulaireEtu(){
 				<br/>
 				<input type="text" name="prenom" onblur="verifString(this,'messagePrenomContact','20')" required/>
 				<p id="messagePrenomContact" style="color:red"></p>
-				<br/><br/>
+
 				<!-- Nom -->
 				<label for="nom"/> Nom <span name="obligatoire">*</span>
 				<br/>
 				<input type="text" name="nom" onblur="verifString(this,'messageNomContact','20')" required/>
 				<p id="messageNomContact" style="color:red"></p>
-				<br/><br/>
+				<br/>
 				<!-- Telephone -->
 				<label for="tel"/> Téléphone (portable de préférence, sans espace. Ex : 0610203040) <span name="obligatoire">*</span>
 				<p id="messageTel" style="color:red"></p>
-				<br/>
+
 				<input type="text" name="tel" onblur="verifTelephone(this, 'messageTel')" required/>
 				<br/><br/>
 				<!-- Engagement -->
@@ -190,7 +190,7 @@ public function afficherFormulaireEtu(){
 				<br/>
 				<input type="text" name="email" id="mail" onblur="verifEmail(this, 'messageEmail')" required/>
 				<p id="messageEmail" style="color:red"></p>
-				<br/><br/>
+				<br/>
 				<!--  Mdp -->
 				<label for="password"/> Mot de passe (il sera utilité pour l'authentification sur le site)<span name="obligatoire">*</span>
 				<br/>
