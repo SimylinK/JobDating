@@ -36,8 +36,6 @@ class Routeur {
   // Traite une requête entrante
   public function routerRequete() {
 
-    header("Content-type: text/html; charset=utf-8" );
-
     if (isset($_POST['submit_login'])) {
       $this->dao->connexion();
       if($this->dao->verifieMotDePasse($_POST['identifiant'],$_POST['password'])) {
@@ -118,7 +116,7 @@ class Routeur {
 
 
     //Les modifications de compte de l'entreprise
-    if (isset($_POST['modification_entreprise_organistaion'])) {
+    if (isset($_POST['modification_entreprise_organisation'])) {
       if ($_POST['disponibiliteSociete'] != "") {
         $this->dao->editTypeCreneauEntreprise(($_SESSION['idUser']), $_POST['disponibiliteSociete']);
       }
@@ -181,6 +179,32 @@ class Routeur {
           $this->dao->editMdpEntreprise(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
       }
       $this->ctrlMenu->afficherMenu(3);
+      return;
+    }
+
+     //Les modifications de compte de l'étudiant
+    if (isset($_POST['modification_etudiant_identite'])) {
+      if ($_POST['nomEtu'] != "") {
+        $this->dao->editNomEtudiant(($_SESSION['idUser']), $_POST['nomEtu']);
+      }
+      if ($_POST['prenomEtu'] != "") {
+        $this->dao->editPrenomEtudiant(($_SESSION['idUser']), $_POST['prenomEtu']);
+      }
+      if ($_POST['email'] != "") {
+        $this->dao->editMailEtudiant(($_SESSION['idUser']), $_POST['email']);
+      }
+      if ($_POST['numTelEtu'] > 0) {
+        $this->dao->editTelephoneEtudiant(($_SESSION['idUser']), $_POST['numTelEtu']);
+      }
+      $this->ctrlMenu->afficherMenu(4);
+      return;
+    }
+    if (isset($_POST['modification_etudiant_motdepasse'])) {
+      if ($_POST['mdpActuel'] != "" && $_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
+        && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
+          $this->dao->editMdpEtudiant(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
+      }
+      $this->ctrlMenu->afficherMenu(4);
       return;
     }
 
@@ -305,9 +329,9 @@ class Routeur {
     }
 
   	if (isset($_GET['deconnexion'])) {
-
+      
   		session_destroy();
-      header('Location: index.php');
+      $this->ctrlAuthentification->authentification();
   		return;
   	}
 

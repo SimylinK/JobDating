@@ -1,6 +1,9 @@
 <?php
 require_once "controleur/routeur.php";
 session_start();
+?>
+<meta charset="UTF-8">
+<?php
 
 $routeur=new Routeur();
 
