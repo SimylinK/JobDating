@@ -213,14 +213,6 @@ class Routeur {
       }
     }
 
-    if (isset($_GET['choix']) && isset($_GET['menu'])) {
-      if ($_GET['menu'] < 1 || $_GET['menu'] > 4) {
-      	$_SESSION['fail'] = "Êtes-vous perdu(e) ? Il semblerait qu'un imprévu<br/>soit arrivé. Refaites donc votre choix pour retrouver<br/>vos marques.";
-        $this->ctrlLost->genererLost();
-        return;
-      }
-    }
-
     if (isset($_GET['validation']) && isset($_GET['id']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
       if ($_SESSION['type_connexion'] == "admin") {
         if ($_GET['type'] == "tmpEtu") {
@@ -296,12 +288,12 @@ class Routeur {
   	}
 
     if (isset($_GET['choix']) && isset($_SESSION['type_connexion']) && isset($_GET['menu'])) {
-      if ($_SESSION['type_connexion'] == "entreprise" && $_GET['menu'] > 3) {
+      if ($_SESSION['type_connexion'] == "entreprise" && ($_GET['menu'] > 3 || $_GET['menu'] < 1)) {
          $_SESSION['fail'] = "Êtes-vous perdu(e) ? Il semblerait qu'un imprévu<br/>soit arrivé. Refaites donc votre choix pour retrouver<br/>vos marques.";
          $this->ctrlLost->genererLost();
          return;
       }
-      if ($_SESSION['type_connexion'] == "admin" && $_GET['menu'] > 4) {
+      if ($_SESSION['type_connexion'] == "admin" && ($_GET['menu'] > 4 || $_GET['menu'] < 1)) {
          $_SESSION['fail'] = "Êtes-vous perdu(e) ? Il semblerait qu'un imprévu<br/>soit arrivé. Refaites donc votre choix pour retrouver<br/>vos marques.";
          $this->ctrlLost->genererLost();
          return;
