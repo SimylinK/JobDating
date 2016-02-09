@@ -1,6 +1,6 @@
 <?php
 
-    
+
 require_once 'util/utilitairePageHtml.php';
 
 class VueAuthentification{
@@ -23,19 +23,21 @@ public function genereVueAuthentification(){
 			<form method="POST" action="index.php">
 				<table>
 					<tr>
-						<td><label>E-mail : </label></td>
+						<td><label>E-mail</label></td>
+            <td>&nbsp; : &nbsp;</td>
 						<td><input type="text" name="identifiant"/><br/></td>
 					</tr>
 					<tr>
-						<td><label>Mot de passe : </label></td>
+						<td><label>Mot de passe</label></td>
+            <td>&nbsp; : &nbsp;</td>
 						<td><input type="password" name="password"/<br/></td>
 					</tr>
 					<tr>
-						<th colspan="2"><br/><input type="submit" name="submit_login" value="Connexion"></td>
+						<th colspan="3"><br/><input type="submit" name="submit_login" value="Connexion"></td>
 					</tr>
 				</table>
 			</form>
-			
+
 			<table style="width: 80%; margin: auto; text-align: center;">
 				<tr>
 					<td><a href="index.php?oubliMdp=1">Mot de passe oublié ?</a></td>
