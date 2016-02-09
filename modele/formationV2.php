@@ -212,7 +212,7 @@ class Formation {
         </style>
         <table id="tabFormation">
           <tr>
-            <td colspan=4> Formation </td>
+            <td colspan=4 id="titre"> Formation </td>
           </tr>
           <tr>
             <td colspan= 1> Nom de la formation </td>
@@ -224,7 +224,7 @@ class Formation {
           <?php
           //affichage formation + horaire
           foreach ($listeFormations as $formation) {
-            echo "<tr>";
+            echo "<tr id='formation'>";
             echo "<td>";
             echo $formation[0]; //nom formation
             echo "</td>";
