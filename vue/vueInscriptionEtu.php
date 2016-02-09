@@ -1,6 +1,6 @@
 <?php
 
-    
+
 require_once 'util/utilitairePageHtml.php';
 
 class VueInscriptionEtu{
