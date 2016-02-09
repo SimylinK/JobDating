@@ -1033,6 +1033,7 @@ public function afficherComptes() {
       function verifString(champ, txt, longMax) {
         if(champ.value.length > longMax) {
           surligne(champ, true);
+					champ.value = "";
           document.getElementById(txt).innerHTML = longMax + " caractères maximum autorisé";
           return true;
         } else {
@@ -1046,6 +1047,7 @@ public function afficherComptes() {
         if(champ.value.length > longMax || (!/^\d+$/.test(champ.value) && champ.value.length != 0)) {
           surligne(champ, true);
           document.getElementById(txt).innerHTML = "Un nombre de taille maximum " + longMax + " est attendu";
+					champ.value = "";
           return true;
         } else {
           surligne(champ, false);
@@ -1058,6 +1060,7 @@ public function afficherComptes() {
         if(champ.value.length != 5 || !/^\d+$/.test(champ.value)) {
           surligne(champ, true);
           document.getElementById(txt).innerHTML = "Le code postal doit être rentré au format 44000";
+					champ.value = "";
           return true;
         } else {
           surligne(champ, false);
@@ -1084,6 +1087,7 @@ public function afficherComptes() {
         if(!reg.test(champ.value)) {
           surligne(champ, true);
           document.getElementById(txt).innerHTML = "L\'e-mail n\'est pas valide.";
+					champ.value = "";
           return true;
         } else {
           surligne(champ, false);
@@ -1098,11 +1102,15 @@ public function afficherComptes() {
         if (passw.value != passwBis.value) {
           surligne(passw, true);
           surligne(passwBis, true);
+					passw.value = "";
+					passwBis.value = "";
           document.getElementById(txt).innerHTML = "Les 2 valeurs sont différentes";
           return true;
         } else if (passw.value.length > 20 || passw.value.length < 5) {
           surligne(passw, true);
           surligne(passwBis, true);
+					passw.value = "";
+					passwBis.value = "";
           document.getElementById(txt).innerHTML = "Le mot de passe doit faire 5 à 20 caractères";
           return true;
         } else {
@@ -1286,8 +1294,8 @@ public function afficherComptes() {
 	  	<TR>
 	 			<TD> <label for="mdpActuel"/> Mot de passe actuel
 				<br/>
-				<input required type="password" name="mdpActuel">
-				<br/><br/>
+				<input required type="password" name="mdpActuel" onblur="verifString(this, \'messageMdpAncien\', 20)">
+				<p id="messageMdpAncien" style="color:red"></p>
 				<label for="mdpNouveau1"/> Nouveau mot de passe
 				<br/>
 				<input required type="password" name="mdpNouveau1" id="passw">

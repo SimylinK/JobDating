@@ -216,8 +216,8 @@ class Formation {
           </tr>
           <tr>
             <td colspan= 1> Nom de la formation </td>
-            <td colspan= 1> Debut </td>
-            <td colspan= 1> Fin </td>
+            <td colspan= 1> Debut des entretiens</td>
+            <td colspan= 1> Fin des entretiens</td>
             <td colspan= 1> Nombre d'entretiens </td>
           </tr>
 
