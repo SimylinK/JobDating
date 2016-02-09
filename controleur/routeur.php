@@ -36,6 +36,8 @@ class Routeur {
   // Traite une requête entrante
   public function routerRequete() {
 
+    header("Content-type: text/html; charset=utf-8" );
+
     if (isset($_POST['submit_login'])) {
       $this->dao->connexion();
       if($this->dao->verifieMotDePasse($_POST['identifiant'],$_POST['password'])) {
@@ -311,7 +313,7 @@ class Routeur {
     }
 
   	if (isset($_GET['deconnexion'])) {
-      
+
   		session_destroy();
       header('Location: index.php');
   		return;
