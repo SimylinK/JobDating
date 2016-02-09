@@ -506,24 +506,25 @@ public function afficherComptes() {
 				$compteur = 1;
 				$newList = $etudiantCourant->getListeChoixEtu();
 				foreach ($choix as $entreprise) {
-					$objEnt = $dao->getEnt(intval($entreprise))[0];
-					if (!is_null($objEnt)) {
+					$truc = $dao->getEnt(intval($entreprise));
+					if (isset($truc[0])) {
+						$objEnt = $truc[0];
 						echo "Choix ".$compteur." : ";
 						echo '<a href="index.php?profil='.$objEnt->getId().'&type=Ent">'.$objEnt->getNomEnt().'</a><br/><br/>';
 						$compteur = $compteur + 1;
 					}
 					else {
-						echo "Votre choix ".$compteur." n'existe plus. Il a été retiré de votre liste de choix.<br/>";
+						echo "Votre choix ".$compteur." n'existe plus. Il a été retiré de votre liste de choix.<br/><br/>";
 						$compteur = $compteur + 1;
-						if (strpos($newList, $entreprise.',') == false) {
-							str_replace($entreprise, "", $newList);
+						if (strpos($newList, $entreprise.',') != false) {
+							$newList = str_replace($entreprise.',', "", $newList);
 						}
 						else {
-							str_replace($entreprise.',', "", $newList);
+							$newList = str_replace($entreprise, "", $newList);
 						}
+						$dao->editChoixEtudiant($_SESSION['idUser'],$newList);
 					}
 				}
-				$dao->editChoixEtudiant($_SESSION['idUser'],$newList);
 			}
 		?>
 
@@ -622,7 +623,7 @@ public function afficherComptes() {
 			var value3 = document.getElementById("ent3").value;
 			var value4 = document.getElementById("ent4").value;
 			if (value1 == "Faire un choix...") {
-				return false;
+				return true;
 			}
 			if (value2 == "Faire un choix..." && value1 != "Faire un choix...") {
 				return true;
