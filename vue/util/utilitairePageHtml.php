@@ -14,7 +14,7 @@ private function itemsBandeauApresConnexion(){
             </a>
             <a href="index.php?choix=ok&menu=2">
             <div class="onglet">
-                Choix
+                Choix   
             </div>
             </a>
             <a href="index.php?choix=ok&menu=3">
@@ -43,7 +43,7 @@ private function itemsBandeauApresConnexion(){
         </a>
         <a href="index.php?choix=ok&menu=2">
         <div class="onglet_ent">
-            Formations
+            Formations  
         </div>
         </a>
         <a href="index.php?choix=ok&menu=3">
@@ -67,7 +67,7 @@ private function itemsBandeauApresConnexion(){
             </a>
             <a href="index.php?choix=ok&menu=2">
             <div class="onglet">
-                Comptes
+                Comptes   
             </div>
             </a>
             <a href="index.php?choix=ok&menu=3">
@@ -87,7 +87,7 @@ private function itemsBandeauApresConnexion(){
             </a>
             </div>';
         }
-        return $menu;
+        return $menu;        
     }
 
 
@@ -123,7 +123,7 @@ public function genereBandeauAvantConnexion() {
 public function generePied(){
 $pied= '</body>
 <div id="bas_page">
-        <table style="width: 80%; margin: auto; text-align: center;font-size: 14px;">
+        <table style="width: 80%; margin: auto; text-align: center;">
             <tr>
             <td>IUT de Nantes - Site de la Fleuriaye</td>
             <td>2 avenue du Prof Jean Rouxel - Carquefou</td>

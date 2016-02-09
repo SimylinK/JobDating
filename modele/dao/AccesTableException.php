@@ -1,5 +1,7 @@
 <?php
 
+
+
 class AccesTableException extends Exception
 {
 	private $chaine;
@@ -13,6 +15,8 @@ class AccesTableException extends Exception
 	{
 		return $this->chaine;
 	}
+
+
 }
 
 ?>
