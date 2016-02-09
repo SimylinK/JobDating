@@ -25,6 +25,9 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
   var $satisfait = array();
   var $Max = 0;// un choix pour chaque ETUDIANT
 
+  //Va peremttre de mémoriser si l'étudiant à déjà un entretient vace l'entreprise
+  var $EntretiensEntrepriseEtudiant = array();
+
   function __construct($c_Etudiants, $c_Choix, $c_Entreprises, $c_Creneaux, $c_LiensEntrCren , $c_Formations, $c_nbCreneaux) {
     $this -> Etudiants = $c_Etudiants;
     $this -> Choix = $c_Choix;
@@ -62,6 +65,9 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
       $taille += $this -> LiensEntrCren[$IDent][0];
       if ($this -> LiensEntrCren[$IDent][0] == 0)
         $taille++;
+      for ($etudiant = 1; $etudiant <= sizeof($this -> Etudiants); $etudiant++) {
+        $this -> EntretiensEntrepriseEtudiant[$IDent][$etudiant] = false;
+      }
     }
 
 
@@ -93,7 +99,7 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
         while($i <=  $this -> LiensEntrCren[$l1][0] && $nonPlace) {
           $numCreneau = $this -> LiensEntrCren[$l1][$i];
 
-          if ($this -> bienPlace($etu, $numCreneau, $c)
+          if ($this -> bienPlace($etu, $numCreneau, $c, $l1)
           && $this -> Echiquier[$numCreneau][$c] == $this -> CASE_VIDE) {
 
               if ($this -> Creneaux[$numCreneau][$c] != $this -> CASE_VIDE) {
@@ -102,6 +108,7 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
                 $this -> Creneaux[$numCreneau][$c] = $this -> CASE_VIDE;
 
                 $this -> placeEtudiant($etu, $l + 1);
+                $this -> EntretiensEntrepriseEtudiant[$l1][$etu] = true;
                 $nonPlace = False;
 
                 if ($this -> Gauss == '0') {
@@ -109,6 +116,7 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
                   $this -> satisfait[$etu-1]--;
                   $this -> Creneaux[$numCreneau][$c] = 1;
                   $nonPlace = True;
+                  $this -> EntretiensEntrepriseEtudiant[$l1][$etu] = false;
                 }
               }
 
@@ -122,7 +130,7 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
 
   // Verifie qu'une ETUDIANT placee en (l,c) n'est pas en prise avec une des
   // ETUDIANTs deja placees.
-  function bienPlace($etu, $l, $c) {
+  function bienPlace($etu, $l, $c, $entreprise) {
     for($i = 0; $i < $l; $i++) {
       if($this -> Echiquier[$i][$c] == $etu // meme colonne  de 1 au choix de l'etudiant
       || ($c > 0 && $this -> Echiquier[$i][$c-1] == $etu) //m�me colonne c-1
@@ -131,7 +139,7 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
       }
     }
     $i = $l + 1;
-    while ($i < 7) {
+    while ($i < sizeof($this->Entreprises)) {
       if($this -> Echiquier[$i][$c] == $etu  // m�me colonne du choix de l'etudiant a la fin
       || ($c > 0 && $this -> Echiquier[$i][$c-1] == $etu) // colonne c-1
       || ($c < 9 && $this -> Echiquier[$i][$c+1] == $etu)) { // colonne c+1
@@ -139,6 +147,10 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
       }
       $i++;
     }
+    if($this -> EntretiensEntrepriseEtudiant[$entreprise][$etu] == true)
+      return false;
+
+
     return True;
   }
 

@@ -657,7 +657,7 @@ class Dao
             $statement = $this->connexion->prepare('SELECT * FROM entreprise WHERE IDEnt = '.intval($id['entPropose']).';');
             $statement->execute();
             array_push($sortie,$statement->fetchAll(PDO::FETCH_CLASS, "Entreprise")[0]);
-            
+
           }
           $this->deconnexion();
           return $sortie;
@@ -887,57 +887,64 @@ class Dao
           $creneauAprem = $arrayNbCreneaux[1];
           $nbCreneaux = $creneauMatin + $creneauAprem;
 
-          $Etudiants = array();
-          $Choix = array();
-          $Entreprises = array();
-          $Creneaux = array();
-          $LiensEntrCren = array();
-          $Formations = array();
 
 
-          $listeEtu = $this->getEtudiants("Informatique");
+          $listeDepartement = array("LP IDEB", " LP SEICOM", "DUT GEII", "LP I2P", "LP EAS", "DUT GMP", "LP IMOC",
+"LP D2M", "DUT SGM", "LP SIL", "DUT INFO", "LP FICA", "LP LOGIQUAL", "DUT QLIO en 2 ans", "DUT QLIO en 1 an", "DCG");
 
-          //On s'occupe de $Etudiants
-          $cmp = 0;
-          foreach ($listeEtu as $etu){
-            $Etudiants[$cmp+1] = $etu["IDEtu"];
-            $Choix[] = explode ( "," , $etu["listeChoixEtu"]);
-            $cmp++;
-          }
+          foreach ($listeDepartement as $departement) {
+            $Etudiants = array();
+            $Choix = array();
+            $Entreprises = array();
+            $Creneaux = array();
+            $LiensEntrCren = array();
+            $Formations = array();
 
-          //On s'occupe de $Entreprises, $Creneaux et $LiensEntrCren
-          $listeEnt = $this -> getEntreprises();
-          foreach ($listeEnt as $ent){
-            $Entreprises[] = $ent["IDEnt"];
-          }
-          $listeFormation = $this -> getFormations("Informatique");
 
-          foreach ($Entreprises as $IDent) {
-            $LiensEntrCren[$IDent][0] = 0;
-          }
+            $listeEtu = $this->getEtudiants($departement);
 
-          $cmp = 0;
-          foreach ($listeFormation as $form){
-            $Formations[] = $form["IDformation"];
-
-            $LiensEntrCren[$form["entPropose"]][0]++;
-            $LiensEntrCren[$form["entPropose"]][$LiensEntrCren[$form["entPropose"]][0]] = $cmp;
-
-            for ($i = 0; $i < $nbCreneaux; $i++) {
-              $tmp[] = 0;
-            }
-            for ($i = $creneauDebut; $i < $creneauFin; $i++) {
-              $tmp[$i] = 1;
+            //On s'occupe de $Etudiants
+            $cmp = 0;
+            foreach ($listeEtu as $etu){
+              $Etudiants[$cmp+1] = $etu["IDEtu"];
+              $Choix[] = explode ( "," , $etu["listeChoixEtu"]);
+              $cmp++;
             }
 
-            $Creneaux[] = $tmp;
-            $cmp++;
-          }
+            //On s'occupe de $Entreprises, $Creneaux et $LiensEntrCren
+            $listeEnt = $this -> getEntreprises();
+            foreach ($listeEnt as $ent){
+              $Entreprises[] = $ent["IDEnt"];
+            }
+            $listeFormation = $this -> getFormations($departement);
 
+            foreach ($Entreprises as $IDent) {
+              $LiensEntrCren[$IDent][0] = 0;
+            }
 
-          $jobMeeting = new jobMeeting($Etudiants, $Choix, $Entreprises, $Creneaux, $LiensEntrCren, $Formations,  $nbCreneaux);
-          $jobMeeting -> appli();
+            $cmp = 0;
+            foreach ($listeFormation as $form){
+              $tmp = array();
 
+              $Formations[] = $form["IDformation"];
+
+              $LiensEntrCren[$form["entPropose"]][0]++;
+              $LiensEntrCren[$form["entPropose"]][$LiensEntrCren[$form["entPropose"]][0]] = $cmp;
+
+              for ($i = 0; $i < $nbCreneaux; $i++) {
+                $tmp[] = 0;
+              }
+              for ($i = $form["creneauDebut"]-1; $i <=$form["creneauFin"]; $i++) {
+                $tmp[$i] = 1;
+              }
+              $Creneaux[] = $tmp;
+              $cmp++;
+            }
+
+            $jobMeeting = new jobMeeting($Etudiants, $Choix, $Entreprises, $Creneaux, $LiensEntrCren, $Formations,  $nbCreneaux);
+            $jobMeeting -> appli();
+
+        }
           $this -> deconnexion();
         }
 
