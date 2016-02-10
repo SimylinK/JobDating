@@ -5,6 +5,7 @@ require_once 'util/utilitairePageHtml.php';
 require_once __DIR__."/../modele/dao/dao.php";
 require_once __DIR__."/../modele/bean/Etudiant.php";
 require_once __DIR__."/../modele/bean/Entreprise.php";
+require_once __DIR__."/../modele/bean/Formation.php";
 require_once __DIR__."/../modele/formationV2.php";
 
 class VueMenu{
@@ -25,7 +26,7 @@ public function afficherPlanningEtu(){
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace utilisateur créé à l'occasion des rencontres alternances du 1 avril 2016.
 
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés la troisième semaine du mois de mars.
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés le 31 mars.
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
 		<?php
@@ -48,7 +49,7 @@ public function afficherPlanningEnt(){
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace utilisateur créé à l'occasion des rencontres alternances du 1 avril 2016.
 
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés la troisième semaine du mois de mars.
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés le 31 mars.
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
 		<?php
@@ -79,10 +80,6 @@ public function afficherPlanningEnt(){
 	    $dao = new Dao();
 	    $tabConfig = $dao -> getConfiguration();
 			$tabEnt = $dao -> getAllEntreprises();
-
-			$nbCreneaux = $tabConfig["nbCreneauxAprem"] + $tabConfig["nbCreneauxMatin"];
-			$pauseMidi = $tabConfig["nbCreneauxMatin"];
-
 	    //Planning du point de vue des entreprises
 	    ?>
 	    <!DOCTYPE html>
@@ -99,7 +96,7 @@ public function afficherPlanningEnt(){
 
 			<tr>
 					<?php
-					$tmp = $nbCreneaux + 3; //Nombres de créneaux + colonne entreprise, formation et pause midi
+					$tmp = $tabConfig["nbCreneauxMatin"] + $tabConfig["nbCreneauxAprem"] + 3;
 					echo'<td id="titre" colspan= '.$tmp.'> Planning Entreprises </td>';
 					?>
 			</tr>
@@ -117,15 +114,14 @@ public function afficherPlanningEnt(){
 			echo'<tr>';
 			echo'<td> </td>';
 			echo'<td> </td>';
-
 			//Les horaires
 			$duree = $tabConfig["dureeCreneau"];
 			$heureString = $tabConfig["heureDebutMatin"];
 			$heureString = explode(':', $heureString);
 			$heure = $heureString[0];
 			$min = $heureString[1];
-			for($i = 0; $i <= $nbCreneaux; $i++) {
-				if ($i == $pauseMidi) {
+			for($i = 0; $i < 15; $i++) {
+				if ($i == 6) {
 					echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 					$heureString = $tabConfig["heureDebutAprem"];
 					$heureString = explode(':', $heureString);
@@ -157,8 +153,8 @@ public function afficherPlanningEnt(){
 				.$form['typeFormation'].
 				'</td>';
 				;
-				for($i = 0; $i < $nbCreneaux; $i++) {
-					if ($i == $pauseMidi) {
+				for($i = 0; $i < $tabConfig['nbCreneauxMatin'] + $tabConfig['nbCreneauxAprem']; $i++) {
+					if ($i == 6) {
 						echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 					}
 					echo '
@@ -445,15 +441,15 @@ public function afficherComptes() {
 		<br/><br/><span class="categorie_profil">Nouvelle configuration :</span>
 		<form action="index.php" method="POST">
 			<br/>
-			<label>Début de la matinée (format hh:mm) : </label><input type="text" name="heureDebutMatin"/>
+			<label>Début de la matinée (format hh:mm) : </label><input type="time" name="heureDebutMatin"/>
 			<br/><br/>
-			<label>Nombre de créneaux dans la matinée : </label><input type="text" name="nbCreneauxMatin"/>
+			<label>Nombre de créneaux dans la matinée : </label><input type="number" min="1" max="20" name="nbCreneauxMatin"/>
 			<br/><br/>
-			<label>Début de l'après-midi (format hh:mm) : </label><input type="text" name="heureDebutAprem"/>
+			<label>Début de l'après-midi (format hh:mm) : </label><input type="time" name="heureDebutAprem"/>
 			<br/><br/>
-			<label>Nombre de créneaux dans l'après-midi : </label><input type="text" name="nbCreneauxAprem"/>
+			<label>Nombre de créneaux dans l'après-midi : </label><input type="number" min="1" max="20" name="nbCreneauxAprem"/>
 			<br/><br/>
-			<label>Durée en minutes d'un créneau : </label><input type="text" name="dureeCreneau"/>
+			<label>Durée en minutes d'un créneau : </label><input type="number" name="dureeCreneau"/>
 			<br/><br/>
 			<input type="submit" name="changementConfig" value="Confirmer"/>
 		</form>
@@ -1205,7 +1201,7 @@ public function afficherComptes() {
 				<br/><br/>
 				<label for="nbRepasSociete"/> Nombre de repas prévus
 				<br/>
-				<input required type="number" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, \'messageNbRepas\', 3)">
+				<input required type="text" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, \'messageNbRepas\', 3)">
 	 			<p id="messageNbRepas" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_organisation" value="confirmer"/> </TD>
 		</TABLE>
