@@ -164,21 +164,17 @@ public function afficherFormulaireEtu(){
 				<!-- Formation -->
 				<label for="formation"/> Choix de votre formation en alternance <span name="obligatoire">*</span>
 				<br/>
-				<select name="formation" required>
-					<option value=""/>
-					<option value="DCG">DCG</option>
-					<option value="DUT GEII">DUT GEII</option>
-					<option value="DUT GMP">DUT GMP</option>
-					<option value="DUT INFO">DUT INFO</option>
-					<option value="DUT QLIO">DUT QLIO</option>
-					<option value="DUT SGM">DUT SGM</option>
-					<option value="LP EAS">LP EAS</option>
-					<option value="LP FICA">LP FICA</option>
-					<option value="LP I2P">LP I2P</option>
-					<option value="LP IDEB">LP IDEB</option>
-					<option value="LP IMOC">LP IMOC</option>
-					<option value="LP LOGIQUAL">LP LOGIQUAL</option>
-					<option value="LP SEICOM">LP SEICOM</option>
+								<select name="formation" required>
+						<?php
+
+							$dao = new Dao();
+							$listeFormations = $dao->getListeFormations();
+							foreach ($listeFormations as $formation) {
+								echo '<option value="'.$formation->getInitiales().'"> '.$formation->getDescription().'</option>
+								<br/>';
+							}
+
+						?>
 				</select>
 				<br/><br/>
 
