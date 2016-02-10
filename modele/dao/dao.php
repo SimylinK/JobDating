@@ -637,7 +637,7 @@ class Dao
             $this->connexion();
             $statement = $this->connexion->prepare('SELECT * FROM listeFormations;');
             $statement->execute();
-            $tabResult = $statement->fetchAll(PDO::FETCH_CLASS, "Formation");
+            $tabResult = $statement->fetchAll(PDO::FETCH_CLASS, "ListeFormation");
             $this->deconnexion();
             return $tabResult;
           } catch (TableAccesException $e) {

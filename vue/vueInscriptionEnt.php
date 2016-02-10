@@ -1,7 +1,8 @@
 <?php
 
-
+require_once(__DIR__."/../modele/dao/dao.php");
 require_once 'util/utilitairePageHtml.php';
+require_once(__DIR__."/../modele/bean/Formation.php");
 
 class VueInscriptionEnt{
 
@@ -52,51 +53,28 @@ class VueInscriptionEnt{
 						<!-- Formation -->
 						<label for="formation"/> Quelle(s) formation(s) vous intéresse(nt) ? <span name="obligatoire">*</span></label>
 						<br/><br/>
-						<span>Département GEII :</span>
-						<br/>
-						<input type="checkbox" name="formation_LPIDEB" value="LP IDEB" onClick="EnableSubmit(this)"> LP IDEB</option>
-						<br/>
-						<input type="checkbox" name="formation_LPSEICOM" value="LP SEICOM" onClick="EnableSubmit(this)"> LP SEICOM</option>
-						<br/>
-						<input type="checkbox" name="formation_DUTGEII" value="DUT GEII" onClick="EnableSubmit(this)"> DUT GEII</option>
-						<br/>
-						<span>Département GMP :</span>
-						<br/>
-						<input type="checkbox" name="formation_LPI2P" value="LP I2P" onClick="EnableSubmit(this)"> LP I2P</option>
-						<br/>
-						<input type="checkbox" name="formation_LPEAS" value="LP EAS" onClick="EnableSubmit(this)"> LP EAS</option>
-						<br/>
-						<input type="checkbox" name="formation_DUTGMP" value="DUT GMP" onClick="EnableSubmit(this)"> DUT GMP</option>
-						<br/>
-						<span>Département SGM :</span>
-						<br/>
-						<input type="checkbox" name="formation_LPIMOC" value="LP IMOC" onClick="EnableSubmit(this)"> LP IMOC</option>
-						<br/>
-						<input type="checkbox" name="formation_LPD2M" value="LP D2M" onClick="EnableSubmit(this)"> LP D2M</option>
-						<br/>
-						<input type="checkbox" name="formation_DUTSGM" value="DUT SGM" onClick="EnableSubmit(this)"> DUT SGM</option>
-						<br/>
-						<span>Département INFO :</span>
-						<br/>
-						<input type="checkbox" name="formation_LPSIL" value="LP SIL" onClick="EnableSubmit(this)"> LP SIL</option>
-						<br/>
-						<input type="checkbox" name="formation_DUTINFO" value="DUT INFO" onClick="EnableSubmit(this)"> DUT INFO</option>
-						<br/>
-						<span>Département GTE :</span>
-						<br/>
-						<input type="checkbox" name="formation_LPFICA" value="LP FICA" onClick="EnableSubmit(this)"> LP FICA</option>
-						<br/>
-						<span>Département QLIO :</span>
-						<br/>
-						<input type="checkbox" name="formation_LPLOGIQUAL" value="LP LOGIQUAL" onClick="EnableSubmit(this)"> LP LOGIQUAL</option>
-						<br/>
-						<input type="checkbox" name="formation_DUTQLIOen2ans" value="DUT QLIO en 2 ans" onClick="EnableSubmit(this)"> DUT QLIO en 2 ans</option>
-						<br/>
-						<input type="checkbox" name="formation_DUTQLIOen1an" value="DUT QLIO en 1 an" onClick="EnableSubmit(this)"> DUT QLIO en 1 an</option>
-						<br/>
-						<span>Département GEA :</span>
-						<br/>
-						<input type="checkbox" name="formation_DCG" value="DCG" onClick="EnableSubmit(this)"> DCG</option>
+						<?php
+
+							$dao = new Dao();
+							$listeFormations = $dao->getListeFormations();
+							$listeDepartements = array();
+							foreach ($listeFormations as $formation) {
+								if(!in_array($formation->getDepartement(), $listeDepartements)) {
+									array_push($listeDepartements, $formation->getDepartement());
+								}
+							}
+							foreach ($listeDepartements as $departement) {
+								echo '<span>Département '.$departement.' :</span>
+										<br/>';
+								foreach ($listeFormations as $formation) {
+									if($formation->getDepartement() == $departement) {
+										echo '<input type="checkbox" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)"> '.$formation->getDescription().'</option>
+										<br/>';
+									}
+								}
+							}
+
+						?>
 						<br/><br/>
 
 						<span name="information">Pour plus d'informations sur nos formations : <a href="http://www.univ-nantes.fr/iutnantes" target="_blank">www.univ-nantes.fr/iutnantes</a> </span>
@@ -111,7 +89,7 @@ class VueInscriptionEnt{
 						<!-- Code Postal -->
 						<label for="codePostal"/> Code Postal : <span name="obligatoire">*</span></label>
 						<br/>
-						<input type="text" name="codePostal" id="cp" onblur="verifCodePostal(this, 'messageCP')" required autocomplete:"off"/>
+						<input type="text" name="codePostal" id="cp"onblur="verifCodePostal(this, 'messageCP')" required autocomplete:"off"/>
 						<p id="messageCP" style="color:red"></p>
 						<!-- Adresse -->
 						<label for="adresse"/> Adresse : <span name="obligatoire">*</span></label>
@@ -122,7 +100,7 @@ class VueInscriptionEnt{
 						<!-- Nombre alternant -->
 						<label for="NbAlternants"/> Pouvez-vous indiquer le nombre d'alternants (pour chaque formation) que vous envisagez de recruter ? </span></label>
 						<br/>
-						<input type="number" name="NbAlternants" min="1" max="10" value="1" required/>
+						<input type="number" name="NbAlternants" min="1" max="10"/>
 						<br/><br/>
 						<!-- Nombre de personnes
 						<label for="NbPersonnes"/> Afin d'organiser au mieux le planning, merci de nous indiquer le nombre de personnes de votre entreprise présentes pour mener les entretiens. <span name="obligatoire">*</span>
@@ -133,7 +111,8 @@ class VueInscriptionEnt{
 						<label for="disponibilite"/> Veuillez indiquer vos disponibilités : <span name="obligatoire">*</span></label>
 						<br/>
 						<select name="disponibilite" required>
-							<option value="matin" selected="selected">Matin</option>
+							<option value=""/>
+							<option value="matin">Matin</option>
 							<option value="apres_midi">Après-midi</option>
 							<option value="journee">Journée</option>
 						</select>
@@ -143,7 +122,7 @@ class VueInscriptionEnt{
 						<p style="font-size:70%">Le nombre d'étudiants est à penser en fonction du nombre de recruteurs de votre société qui viennent à la Rencontre Alternance.</br></p>
 						<p style="font-size:70% ; color:green">Par exemple : si 3 recruteurs viennent ; il y aura soit : un entretien par recruteurs donc un étudiant chacun OU un entretien regroupant les 3 recruteurs pour voir un seul étudiant en tout OU un entretien avec deux recruteurs et un second avec le recruteur restant.</p></label>
 						<br/>
-						<input type="number" name="NbStand" min="1" max="10" value="1" required/>
+						<input type="number" name="NbStand" min="1" max="10" required/>
 						<br/><br/>
 						<!-- Déjeuner ?-->
 						<input type="checkbox" name="dejeuner" value="dejeuner_ok" id="checkbox_repas" onclick="activer()"/><span> Cochez la case si vous souhaitez déjeuner sur place. </span></label>
@@ -216,17 +195,17 @@ class VueInscriptionEnt{
 						}
 					}
 
-				/*function verifNombre(champ, txt, longMax) {
+					/*function verifNombre(champ, txt, longMax) {
 					if(champ.value.length > longMax || (!/^\d+$/.test(champ.value) && champ.value.length != 0)) {
-						surligne(champ, true);
-						document.getElementById(txt).innerHTML = "Un nombre de taille maximum " + longMax + " est attendu";
-						return true;
-					} else {
-						surligne(champ, false);
-						document.getElementById(txt).innerHTML = "";
-						return false;
-					}
-				}*/
+					surligne(champ, true);
+					document.getElementById(txt).innerHTML = "Un nombre de taille maximum " + longMax + " est attendu";
+					return true;
+				} else {
+				surligne(champ, false);
+				document.getElementById(txt).innerHTML = "";
+				return false;
+			}
+		}*/
 
 		function verifCodePostal(champ, txt) {
 			if(champ.value.length != 5 || !/^\d+$/.test(champ.value)) {
