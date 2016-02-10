@@ -232,7 +232,7 @@ class Routeur {
         	return;
         }
        else {
-       		//$_SESSION['fail'] = "Cette adresse email a déjà été utilisée ou cette<br/>entreprise est déjà inscrite à l'événement.<br/>Veuillez vérifier que vous n'êtes pas déjà inscrit<br/>ou réessayez avec une autre adresse email.";
+       		$_SESSION['fail'] = "Cette adresse email a déjà été utilisée ou cette<br/>entreprise est déjà inscrite à l'événement.<br/>Veuillez vérifier que vous n'êtes pas déjà inscrit<br/>ou réessayez avec une autre adresse email.";
        		$this->ctrlLost->genererLost();
      		return;
        }
@@ -398,7 +398,7 @@ class Routeur {
     }
 
   	if (isset($_GET['deconnexion'])) {
-      
+
   		session_destroy();
       $this->ctrlAuthentification->authentification();
   		return;

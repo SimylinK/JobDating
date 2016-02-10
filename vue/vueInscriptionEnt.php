@@ -68,7 +68,7 @@ class VueInscriptionEnt{
 										<br/>';
 								foreach ($listeFormations as $formation) {
 									if($formation->getDepartement() == $departement) {
-										echo '<input type="checkbox" name="formation['.$compteur.']" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)"> '.$formation->getDescription().'</option>
+										echo '<input type="checkbox" name="formation['.$compteur.']" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)"> <a id="lienFormation" href="'. $formation->getLien() .'" target="_blank">'.$formation->getDescription().' </a> </option>
 										<br/>';
 										$compteur = $compteur + 1;
 									}
@@ -78,7 +78,7 @@ class VueInscriptionEnt{
 						?>
 						<br/><br/>
 
-						<span name="information">Pour plus d'informations sur nos formations : <a href="http://www.univ-nantes.fr/iutnantes" target="_blank">www.univ-nantes.fr/iutnantes</a> </span>
+						<span name="information">Pour plus d'informations sur nos formations : <a href="http://www.iutnantes.univ-nantes.fr/20796624/0/fiche___pagelibre/&RH=1183111171330&RF=1183119182323" target="_blank">www.univ-nantes.fr/iutnantes</a> </span>
 						<br/><br/>
 						<b>Emplacement de l'entreprise :</b>
 						<br/><br/>
