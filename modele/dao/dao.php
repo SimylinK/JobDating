@@ -1029,6 +1029,8 @@ class Dao
         $statement = $this->connexion->prepare("UPDATE entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
+        $classFormation = "Formation";
+        $classFormation::updateFormation($id);
         return;
       }
       public function editTypeCreneauEntreprise($id,$new) {
@@ -1036,6 +1038,8 @@ class Dao
         $statement = $this->connexion->prepare("UPDATE entreprise SET typeCreneau='".$new."' WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
+        $classFormation = "Formation";
+        $classFormation::updateFormation($id);
         return;
       }
       public function editNbStandsEntreprise($id,$new) {
@@ -1043,6 +1047,8 @@ class Dao
         $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands=".$new." WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
+        $classFormation = "Formation";
+        $classFormation::updateFormation($id);
         return;
       }
       public function editNbRepasEntreprise($id,$new) {
