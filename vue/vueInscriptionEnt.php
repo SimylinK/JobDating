@@ -54,7 +54,7 @@ class VueInscriptionEnt{
 						<label for="formation"/> Quelle(s) formation(s) vous intéresse(nt) ? <span name="obligatoire">*</span></label>
 						<br/><br/>
 						<?php
-
+							$compteur = 0;
 							$dao = new Dao();
 							$listeFormations = $dao->getListeFormations();
 							$listeDepartements = array();
@@ -68,8 +68,9 @@ class VueInscriptionEnt{
 										<br/>';
 								foreach ($listeFormations as $formation) {
 									if($formation->getDepartement() == $departement) {
-										echo '<input type="checkbox" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)"> '.$formation->getDescription().'</option>
+										echo '<input type="checkbox" name="formation['.$compteur.']" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)"> '.$formation->getDescription().'</option>
 										<br/>';
+										$compteur = $compteur + 1;
 									}
 								}
 							}
@@ -100,7 +101,7 @@ class VueInscriptionEnt{
 						<!-- Nombre alternant -->
 						<label for="NbAlternants"/> Pouvez-vous indiquer le nombre d'alternants (pour chaque formation) que vous envisagez de recruter ? </span></label>
 						<br/>
-						<input type="number" name="NbAlternants" min="1" max="10"/>
+						<input type="number" name="NbAlternants" value="1" min="1" max="10"/>
 						<br/><br/>
 						<!-- Nombre de personnes
 						<label for="NbPersonnes"/> Afin d'organiser au mieux le planning, merci de nous indiquer le nombre de personnes de votre entreprise présentes pour mener les entretiens. <span name="obligatoire">*</span>
@@ -111,7 +112,6 @@ class VueInscriptionEnt{
 						<label for="disponibilite"/> Veuillez indiquer vos disponibilités : <span name="obligatoire">*</span></label>
 						<br/>
 						<select name="disponibilite" required>
-							<option value=""/>
 							<option value="matin">Matin</option>
 							<option value="apres_midi">Après-midi</option>
 							<option value="journee">Journée</option>
@@ -122,7 +122,7 @@ class VueInscriptionEnt{
 						<p style="font-size:70%">Le nombre d'étudiants est à penser en fonction du nombre de recruteurs de votre société qui viennent à la Rencontre Alternance.</br></p>
 						<p style="font-size:70% ; color:green">Par exemple : si 3 recruteurs viennent ; il y aura soit : un entretien par recruteurs donc un étudiant chacun OU un entretien regroupant les 3 recruteurs pour voir un seul étudiant en tout OU un entretien avec deux recruteurs et un second avec le recruteur restant.</p></label>
 						<br/>
-						<input type="number" name="NbStand" min="1" max="10" required/>
+						<input type="number" name="NbStand" value="1" min="1" max="10" required/>
 						<br/><br/>
 						<!-- Déjeuner ?-->
 						<input type="checkbox" name="dejeuner" value="dejeuner_ok" id="checkbox_repas" onclick="activer()"/><span> Cochez la case si vous souhaitez déjeuner sur place. </span></label>

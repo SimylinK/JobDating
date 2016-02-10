@@ -327,13 +327,13 @@ class Dao
     $formationsRecherchees = "";
     $listeFormations = $this->getListeFormations();
     while ($i < sizeof($listeFormations)) {
-      if (isset($_POST[$listeFormations[$i]])) {
-        $formationsRecherchees = $formationsRecherchees.$_POST[$listeFormations[$i]];
+      if (isset($_POST['formation'][$i])) {
+        $formationsRecherchees = $formationsRecherchees.$_POST['formation'][$i];
         $i++;
         while ($i < sizeof($listeFormations)) {
-          if (isset($_POST[$listeFormations[$i]])) {
+          if (isset($_POST['formation'][$i])) {
             $formationsRecherchees = $formationsRecherchees.",";
-            $formationsRecherchees = $formationsRecherchees.$_POST[$listeFormations[$i]];
+            $formationsRecherchees = $formationsRecherchees.$_POST['formation'][$i];
           }
           $i++;
         }

@@ -45,7 +45,6 @@ public function genereVueLost(){
 	</div>
 </div>
 	<?php
-
 	echo $util->generePied();
 
 	?>

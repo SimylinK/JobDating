@@ -1221,6 +1221,7 @@ public function afficherComptes() {
 	  	<CAPTION> Formations recherchées </CAPTION>
 	  	<TR>
 	 			<TD> ';		
+	 						$compteur = 0;
 	 						$formationsRecherchees = explode(",",$profil->getFormationsRecherchees());
 							$listeFormations = $dao->getListeFormations();
 							$listeDepartements = array();
@@ -1234,12 +1235,13 @@ public function afficherComptes() {
 										<br/>';
 								foreach ($listeFormations as $formation) {
 									if($formation->getDepartement() == $departement) {
-										echo '<input type="checkbox" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)" ';
+										echo '<input type="checkbox" name="formation['.$compteur.']" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)" ';
 										if (in_array($formation->getInitiales(), $formationsRecherchees)) {
 											echo 'checked';
 										}
 										echo '> '.$formation->getDescription().'</option>
 										<br/>';
+										$compteur = $compteur + 1;
 									}
 								}
 							}
