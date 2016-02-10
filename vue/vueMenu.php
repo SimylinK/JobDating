@@ -440,15 +440,15 @@ public function afficherComptes() {
 		<br/><br/><span class="categorie_profil">Nouvelle configuration :</span>
 		<form action="index.php" method="POST">
 			<br/>
-			<label>Début de la matinée (format hh:mm) : </label><input type="text" name="heureDebutMatin"/>
+			<label>Début de la matinée (format hh:mm) : </label><input type="time" name="heureDebutMatin"/>
 			<br/><br/>
-			<label>Nombre de créneaux dans la matinée : </label><input type="text" name="nbCreneauxMatin"/>
+			<label>Nombre de créneaux dans la matinée : </label><input type="number" min="1" max="20" name="nbCreneauxMatin"/>
 			<br/><br/>
-			<label>Début de l'après-midi (format hh:mm) : </label><input type="text" name="heureDebutAprem"/>
+			<label>Début de l'après-midi (format hh:mm) : </label><input type="time" name="heureDebutAprem"/>
 			<br/><br/>
-			<label>Nombre de créneaux dans l'après-midi : </label><input type="text" name="nbCreneauxAprem"/>
+			<label>Nombre de créneaux dans l'après-midi : </label><input type="number" min="1" max="20" name="nbCreneauxAprem"/>
 			<br/><br/>
-			<label>Durée en minutes d'un créneau : </label><input type="text" name="dureeCreneau"/>
+			<label>Durée en minutes d'un créneau : </label><input type="number" name="dureeCreneau"/>
 			<br/><br/>
 			<input type="submit" name="changementConfig" value="Confirmer"/>
 		</form>
