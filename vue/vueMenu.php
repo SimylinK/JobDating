@@ -1194,13 +1194,22 @@ public function afficherComptes() {
 				<br/>
 				<select required name="disponibiliteSociete"/>';
 					if ($profil->getTypeCreneau() == "matin") {
-						echo '<option value="matin">Matin</option>';
+						echo '<option value="matin" selected >Matin</option>
+						<option value="apres_midi">Après-midi</option>
+						<option value="journee"> Journée</option>
+						';
 					}
 					if ($profil->getTypeCreneau() == "apres_midi") {
-						echo '<option value="apres_midi">Après-midi</option>';
+						echo '<option value="matin">Matin</option>
+						<option value="apres_midi" selected >Après-midi</option>
+						<option value="journee"> Journée</option>
+						';
 					}
 					if ($profil->getTypeCreneau() == "journee") {
-						echo '<option value="journee"> Journée</option>';
+						echo '<option value="matin">Matin</option>
+						<option value="apres_midi">Après-midi</option>
+						<option value="journee" selected> Journée</option>
+						';
 					}
 				echo '</select>
 				<br/><br/>

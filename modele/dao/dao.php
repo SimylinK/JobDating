@@ -340,6 +340,9 @@ class Dao
       }
       $i++;
     }
+    if (substr($formationsRecherchees, -1) == ",") {
+          $formationsRecherchees = substr($formationsRecherchees, 0, -1);
+        }
     $nbPlaces = $_POST['NbAlternants'];
     if (isset($_POST['dejeuner'])) {
       if ($_POST['dejeuner'] == "dejeuner_ok") {
@@ -1038,9 +1041,14 @@ class Dao
       }
       public function editFormationsRechercheesEntreprise($id,$new) {
         $this->connexion();
+        if (substr($new, -1) == ",") {
+          $new = substr($new,0, -1);
+        }
         $statement = $this->connexion->prepare("UPDATE entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
+        $classFormation = "Formation";
+        $classFormation::updateFormation($id);
         return;
       }
       public function editTypeCreneauEntreprise($id,$new) {
@@ -1048,6 +1056,8 @@ class Dao
         $statement = $this->connexion->prepare("UPDATE entreprise SET typeCreneau='".$new."' WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
+        $classFormation = "Formation";
+        $classFormation::updateFormation($id);
         return;
       }
       public function editNbStandsEntreprise($id,$new) {
@@ -1055,6 +1065,8 @@ class Dao
         $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands=".$new." WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
+        $classFormation = "Formation";
+        $classFormation::updateFormation($id);
         return;
       }
       public function editNbRepasEntreprise($id,$new) {

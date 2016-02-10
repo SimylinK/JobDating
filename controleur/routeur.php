@@ -242,8 +242,8 @@ class Routeur {
     if (isset($_GET['validation']) && isset($_GET['id']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
       if ($_SESSION['type_connexion'] == "admin") {
         if ($_GET['type'] == "tmpEtu") {
-          $user = $this->dao->getTempEtu($id);
-          $mail = $user[O]->getMailEtu();
+          $user = $this->dao->getTempEtu($_GET['id']);
+          $mail = $user[0]->getMailEtu();
 
             $message = "Bonjour,\r\n";
             $message .= "Nous avons l'honneur de vous informer que votre compte sur le site http://jobmeeting.iut-nantes.univ-nantes.fr\r\n";
@@ -263,8 +263,8 @@ class Routeur {
         }
         if ($_GET['type'] == "tmpEnt") {
 
-          $user = $this->dao->getTempEnt($id);
-          $mail = $user[O]->getMailEnt();
+          $user = $this->dao->getTempEnt($_GET['id']);
+          $mail = $user[0]->getMailEnt();
 
             $message = "Bonjour,\r\n";
             $message .= "Nous avons l'honneur de vous informer que votre compte sur le site http://jobmeeting.iut-nantes.univ-nantes.fr a été activé.\r\n";
@@ -290,8 +290,8 @@ class Routeur {
     if (isset($_GET['geler']) && isset($_GET['id']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
       if ($_SESSION['type_connexion'] == "admin") {
         if ($_GET['type'] == "Etu") {
-          $user = $this->dao->getEtu($id);
-          $mail = $user[O]->getMailEtu();
+          $user = $this->dao->getEtu($_GET['id']);
+          $mail = $user[0]->getMailEtu();
 
             $message = "Bonjour,\r\n";
             $message .= "Nous avons le regret de vous informer que votre compte sur le site http://jobmeeting.iut-nantes.univ-nantes.fr a été gelé.\r\n";
@@ -310,8 +310,8 @@ class Routeur {
           $this->dao->gelerEtudiant($_GET['id']);
         }
         if ($_GET['type'] == "Ent") {
-          $user = $this->dao->getEnt($id);
-          $mail = $user[O]->getMailEnt();
+          $user = $this->dao->getEnt($_GET['id']);
+          $mail = $user[0]->getMailEnt();
 
             $message = "Bonjour,\r\n";
             $message .= "Nous avons le regret de vous informer que votre compte sur le site http://jobmeeting.iut-nantes.univ-nantes.fr a été gelé.\r\n";
