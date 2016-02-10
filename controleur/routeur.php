@@ -260,7 +260,7 @@ class Routeur {
         if ($_GET['type'] == "Ent") {
           $this->dao->gelerEntreprise($_GET['id']);
         }
-        header('Location:index.php?choix=ok&menu=2');
+        $this->ctrlMenu->afficherMenu(2);
         return;
       }
     }
@@ -269,26 +269,26 @@ class Routeur {
       if ($_SESSION['type_connexion'] == "admin") {
         if ($_GET['type'] == "Etu") {
           $this->dao->supprimerEtu($_GET['id']);
-          header('Location:index.php?choix=ok&menu=2');
+          $this->ctrlMenu->afficherMenu(2);
           return;
         }
         if ($_GET['type'] == "tmpEtu") {
           $this->dao->supprimerEtuTemp($_GET['id']);
-          header('Location:index.php?choix=ok&menu=2');
+          $this->ctrlMenu->afficherMenu(2);
           return;
         }
         if ($_GET['type'] == "Ent") {
           $this->dao->supprimerEnt($_GET['id']);
-          header('Location:index.php?choix=ok&menu=2');
+          $this->ctrlMenu->afficherMenu(2);
           return;
         }
         if ($_GET['type'] == "tmpEnt") {
           $this->dao->supprimerEntTemp($_GET['id']);
-          header('Location:index.php?choix=ok&menu=2');
+          $this->ctrlMenu->afficherMenu(2);
           return;
         }
       }
-      header('Location:index.php?choix=ok&menu=2');
+      $this->ctrlMenu->afficherMenu(2);
       return;
     }
 
