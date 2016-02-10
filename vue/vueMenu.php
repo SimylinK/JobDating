@@ -1123,6 +1123,13 @@ public function afficherComptes() {
           return false;
         }
       }
+
+			function initChoix(){
+				var dao = new Dao();
+				var ent = dao.getEnt($_SESSION['idUser']);
+				alert(ent.getNomEnt);
+			}
+    window.onpaint = initChoix();
       </script>
 
 
@@ -1211,32 +1218,55 @@ public function afficherComptes() {
 		</TABLE>
 		</form></br>
 
-		<form action="index.php" method="post" >
+		<form action="index.php" method="post">
 		<TABLE id="tabModifEnt">
 	  	<CAPTION> Formations recherchées </CAPTION>
 	  	<TR>
-	 			<TD> <input type="checkbox" name="formation[]" id="formation" value="LP I2P" onClick="EnableSubmit(this)">
-				 LP Innovations Produits Process (I2P)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP LOGIQUAL" onClick="EnableSubmit(this)">
-				LP Industrialisation et Mise en Oeuvre des matériaux composites (IMOC)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP LOGIQUAL" onClick="EnableSubmit(this)">
-				LP Logistique et qualité (LOGIQUAL)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP EAS" onClick="EnableSubmit(this)">
-				LP Electrohydraulique mobile et automatismes associés (EAS)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP SEICOM" onClick="EnableSubmit(this)">
-				LP Systèmes Electroniques et Informatiques Communicants (SEICOM)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP IDEB" onClick="EnableSubmit(this)">
-				LP Intelligence et Distribution Electrique du Bâtiment (IDEB)<br/>
-    		<input type="checkbox" name="formation[]" id="formation" value="LP FICA" onClick="EnableSubmit(this)">
-				LP Froid Industriel et Conditionnement d\'Air (FICA)<br/>
-				<input type="checkbox" name="formation[]" id="formation" value="DUT GEII" onClick="EnableSubmit(this)">
-				DUT 2ème année GEII : Génie Électrique et Informatique Industrielle<br/>
-				<input type="checkbox" name="formation[]" id="formation" value="DUT INFO" onClick="EnableSubmit(this)">
-				DUT 2ème année Informatique<br/>
-				<input type="checkbox" name="formation[]" id="formation" value="DUT GMP" onClick="EnableSubmit(this)">
-				DUT 2ème année Génie Mécanique et Productique<br/>
-				<input type="checkbox" name="formation[]" id="formation" value="DUT SGM" onClick="EnableSubmit(this)">
-				DUT 2ème année Science et Génie des Matériaux<br/>
+	 			<TD> <span>Département GEII :</span>
+				<br/>
+				<input type="checkbox" name="formation_LPIDEB" id="formation_LPIDEB" value="LP IDEB" onClick="EnableSubmit(this)"> LP IDEB</option>
+				<br/>
+				<input type="checkbox" name="formation_LPSEICOM" id="formation_LPSEICOM" value="LP SEICOM" onClick="EnableSubmit(this)"> LP SEICOM</option>
+				<br/>
+				<input type="checkbox" name="formation_DUTGEII" id="formation_DUTGEII" value="DUT GEII" onClick="EnableSubmit(this)"> DUT GEII</option>
+				<br/>
+				<span>Département GMP :</span>
+				<br/>
+				<input type="checkbox" name="formation_LPI2P" id="formation_LPI2P" value="LP I2P" onClick="EnableSubmit(this)"> LP I2P</option>
+				<br/>
+				<input type="checkbox" name="formation_LPEAS" id="formation_LPEAS" value="LP EAS" onClick="EnableSubmit(this)"> LP EAS</option>
+				<br/>
+				<input type="checkbox" name="formation_DUTGMP" id="formation_DUTGMP" value="DUT GMP" onClick="EnableSubmit(this)"> DUT GMP</option>
+				<br/>
+				<span>Département SGM :</span>
+				<br/>
+				<input type="checkbox" name="formation_LPIMOC" id="formation_LPIMOC" value="LP IMOC" onClick="EnableSubmit(this)"> LP IMOC</option>
+				<br/>
+				<input type="checkbox" name="formation_LPD2M" id="formation_LPD2M" value="LP D2M" onClick="EnableSubmit(this)"> LP D2M</option>
+				<br/>
+				<input type="checkbox" name="formation_DUTSGM" id="formation_DUTSGM" value="DUT SGM" onClick="EnableSubmit(this)"> DUT SGM</option>
+				<br/>
+				<span>Département INFO :</span>
+				<br/>
+				<input type="checkbox" name="formation_LPSIL" id="formation_LPSIL" value="LP SIL" onClick="EnableSubmit(this)"> LP SIL</option>
+				<br/>
+				<input type="checkbox" name="formation_DUTINFO" id="formation_DUTINFO" value="DUT INFO" onClick="EnableSubmit(this)"> DUT INFO</option>
+				<br/>
+				<span>Département GTE :</span>
+				<br/>
+				<input type="checkbox" name="formation_LPFICA" id="formation_LPFICA" value="LP FICA" onClick="EnableSubmit(this)"> LP FICA</option>
+				<br/>
+				<span>Département QLIO :</span>
+				<br/>
+				<input type="checkbox" name="formation_LPLOGIQUAL" id="formation_LPLOGIQUAL" value="LP LOGIQUAL" onClick="EnableSubmit(this)"> LP LOGIQUAL</option>
+				<br/>
+				<input type="checkbox" name="formation_DUTQLIOen2ans" id="formation_DUTQLIOen2ans" value="DUT QLIO en 2 ans" onClick="EnableSubmit(this)"> DUT QLIO en 2 ans</option>
+				<br/>
+				<input type="checkbox" name="formation_DUTQLIOen1an" id="formation_DUTQLIOen1an" value="DUT QLIO en 1 an" onClick="EnableSubmit(this)"> DUT QLIO en 1 an</option>
+				<br/>
+				<span>Département GEA :</span>
+				<br/>
+				<input type="checkbox" name="formation_DCG" id="" value="DCG" onClick="EnableSubmit(this)"> DCG</option>
 	 			<TD> 	<input type="submit" name="modification_entreprise_formations" value="confirmer"/> </TD>
 		</TABLE>
 		</form></br>

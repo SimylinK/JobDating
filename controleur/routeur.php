@@ -134,7 +134,7 @@ class Routeur {
         $stringFormations = "";
         $forms = $_POST['formation'];
         foreach ($forms as $form){
-          $stringFormations = $stringFormations . $form . ",";
+          $stringFormations = "," . $stringFormations . $form;
         }
         $this->dao->editFormationsRechercheesEntreprise(($_SESSION['idUser']), $stringFormations);
       }
@@ -398,7 +398,7 @@ class Routeur {
     }
 
   	if (isset($_GET['deconnexion'])) {
-      
+
   		session_destroy();
       $this->ctrlAuthentification->authentification();
   		return;
