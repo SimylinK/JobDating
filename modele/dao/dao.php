@@ -368,7 +368,7 @@ class Dao
       $statement->execute();
       $this->deconnexion();
       $idEnt = $this->getIdEntreprise($nomEnt);
-      $tabConfig = $this.getConfiguration();
+      $tabConfig = $this->getConfiguration();
       $this->deconnexion();
       return true;
     }
