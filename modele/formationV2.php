@@ -36,13 +36,34 @@ class Formation {
       $this -> nbCreneaux = $this -> nbCreneauxMatin;
       break;
       case 'apres_midi':
-      $this -> nbCreneaux = $this -> nbCreneauxAprem;
+      $this -> nbCreneaux = $this -> nbCreneauxMatin + $this -> nbCreneauxAprem;
       $this -> crenOrigin = $this -> nbCreneauxMatin + 1;
       break;
       default:
       $this -> nbCreneaux = $this -> nbCreneauxMatin + $this -> nbCreneauxAprem;
       break;
     }
+
+    echo "<br/>";
+    echo $this -> IDent;
+    echo "<br/>";
+    print_r($this -> form);
+    echo "<br/>";
+    echo $this -> nbForm;
+    echo "<br/>";
+    echo $this -> nbPers;
+    echo "<br/>";
+    echo $this -> periode;
+    echo "<br/>";
+    echo $this -> nbCreneauxMatin;
+    echo "<br/>";
+    echo $this -> nbCreneauxAprem;
+    echo "<br/>";
+    echo $this -> nbCreneaux;
+    echo "<br/>";
+    echo $this -> crenOrigin;
+    echo "<br/>";
+    echo "==========================";
   }
 
   public function createForm(){
@@ -52,7 +73,7 @@ class Formation {
     $dao -> supprimerFormation($this -> IDent);
 
     $crenAmD = $this -> crenOrigin; #debut matin
-    $crenPmD = $this -> nbCreneauxAprem + 1; #debut aprem
+    $crenPmD = $this -> nbCreneauxMatin + 1; #debut aprem
     $crenAmF = $this -> nbCreneauxMatin; #fin matin
     $crenPmF = $this -> nbCreneaux; #fin aprem et journee
 
@@ -70,7 +91,8 @@ class Formation {
     #############################
     #          JOURNEE          #
     #############################
-    if($this -> periode == "journee") {
+    #if($this -> periode == "journee") {
+      echo "test6";
       // une personne pour une formation
       if($this -> nbForm == 1 && $this -> nbPers == 1){
         #$dao -> ajoutFormation($this -> form[0], $this -> IDent, $crenAmD, $crenPmF);
@@ -78,6 +100,7 @@ class Formation {
       }
       // k*nbForm = k*nbPers
       else if($this -> nbForm == $this -> nbPers){
+        echo "test5";
         foreach ($this -> form as $value) {
           #$dao -> ajoutFormation($value, $this -> IDent, $crenAmD, $crenPmF);
           $this -> ArrayForm[] = array($value, $this -> IDent, "", $crenAmD, $crenPmF);
@@ -85,6 +108,7 @@ class Formation {
       }
       // si nbForm = 2*nbPers
       else if(($this -> nbForm / $this -> nbPers) == 2){
+        echo "test4";
         $cpt = 0;
         for ($i=0; $i < $this -> nbPers; $i++) {
           #$dao -> ajoutFormation($this -> form[$cpt], $this -> IDent, $crenAmD, $crenAmF);
@@ -96,6 +120,7 @@ class Formation {
       }
       //si nbForm - 1 = nbPers
       else if(($this -> nbForm - 1) == $this -> nbPers){
+        echo "test3";
         for ($i=0; $i < $this -> nbPers; $i++) {
           #$dao -> ajoutFormation($this -> form[0], $this -> IDent, $crenAmD, $crenAmF);
           $this -> ArrayForm[] = array($this -> form[0], $this -> IDent, "", $crenAmD, $crenAmF);
@@ -105,33 +130,46 @@ class Formation {
       }
       // si nbForm = 2*nbPers + k personne
       else if($this -> nbForm > $this -> nbPers){
+        echo "test2";
         $this -> autreCas();
       }
       // si nbPers > nbForm
       else if(($this -> nbPers > $this -> nbForm)){
+        echo "test1";
         $cpt = $this -> nbPers;
         for ($i=0; $i < ceil($this -> nbPers/$this -> nbForm); $i++) {
           foreach ($this -> form as $value) {
             if($cpt > 0){
               #$dao -> ajoutFormation($value, $this -> IDent, $crenAmD, $crenPmF);
+              echo "<br/>";
+              echo "###########################";
+              echo "<br/>";
+              echo $value;
+              echo "<br/>";
+              echo $crenAmD;
+              echo "<br/>";
+              echo $crenPmF;
+              echo "<br/>";
+              echo "###########################";
+
               $this -> ArrayForm[] = array($value, $this -> IDent, "", $crenAmD, $crenPmF);
             }
             $cpt --;
           }
         }
 
+      }else{
+        $this -> autreCas();
+        // echo "erreur lors de la création des formations : données incorrectes";
+        // return null;
       }
-      else{
-        echo "erreur lors de la création des formations : données incorrectes";
-        return null;
-      }
-    }
+    #}
     #############################
     #         AUTRE CAS         #
     #############################
-    else {
-      $this -> autreCas();
-    }
+    #else {
+      #$this -> autreCas();
+    #}
     $dao-> deconnexion();
 
     foreach ($this -> ArrayForm as $formTest) {
@@ -142,7 +180,7 @@ class Formation {
   public function autreCas() {
     $dao = new Dao();
     $dao->connexion();
-
+echo "autre";
     $crenOrigin = 1;
     # calculnbCreneau #
     switch ($this -> periode) {
@@ -214,10 +252,10 @@ class Formation {
             echo $formation[0]; //nom formation
             echo "</td>";
             echo "<td>";
-            echo $classFormation::calculHoraire($formation[1], $tabConfig); //creneau debut
+            echo $classFormation::calculHoraire($formation[1], $tabConfig, "debut"); //creneau debut
             echo "</td>";
             echo "<td>";
-            echo $classFormation::calculHoraire($formation[2], $tabConfig); //creneau fin
+            echo $classFormation::calculHoraire($formation[2], $tabConfig, "fin"); //creneau fin
             echo "</td>";
             echo "<td>";
             $nbEntretiens = $formation[2] - $formation[1] +1;
@@ -230,10 +268,10 @@ class Formation {
         <?php
       }
 
-      public static function calculHoraire($creneau, $tabConfig){
+      public static function calculHoraire($creneau, $tabConfig, $horaire){
         $duree = $tabConfig["dureeCreneau"];
         $start = 1;
-        if($creneau < $tabConfig["nbCreneauxMatin"]) { // si c'est le matin
+        if($creneau <= $tabConfig["nbCreneauxMatin"]) { // si c'est le matin
           $heureString = $tabConfig["heureDebutMatin"];
         } else { //si c'est l'apres midi
           $heureString = $tabConfig["heureDebutAprem"];
@@ -242,6 +280,10 @@ class Formation {
         $heureString = explode(':', $heureString);
         $heure = $heureString[0];
         $min = $heureString[1];
+
+        if($horaire == "fin"){
+          $start --;
+        }
 
         for($i = $start; $i < $creneau; $i++){
           $min += $duree;
@@ -255,6 +297,16 @@ class Formation {
           $min = "00";
         }
         return $heure.':'.$min;
+      }
+
+      public static function updateFormation($idEnt){
+        $dao=new dao();
+        $dao->connexion();
+        $entr=$dao->getEnt($idEnt)[0];
+        $tabConfig = $dao -> getConfiguration();
+        $dao->deconnexion();
+        $formation = new formation($entr-> getId(), $entr-> getFormationsRecherchees(), $entr-> getNbStands(), $entr-> getTypeCreneau(), $tabConfig["nbCreneauxMatin"], $tabConfig["nbCreneauxAprem"]);
+        $formation -> createForm();
       }
 
       public static function generateFormation(){

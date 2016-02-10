@@ -325,13 +325,12 @@ class Dao
     $typeCreneau = $_POST['disponibilite'];
     $i = 0;
     $formationsRecherchees = "";
-    $listeFormations = array('formation_LPI2P','formation_LPIMOC','formation_LPLOGICA','formation_LPEAS','formation_LPSEICOM','formation_LPIDEB',
-    'formation_LPFICA','formation_DUTGEII','formation_DUTINFO','formation_DUTGMP','formation_DUTSGM','formation_DCG');
-    while ($i < 12) {
+    $listeFormations = $this->getListeFormations();
+    while ($i < sizeof($listeFormations)) {
       if (isset($_POST[$listeFormations[$i]])) {
         $formationsRecherchees = $formationsRecherchees.$_POST[$listeFormations[$i]];
         $i++;
-        while ($i < 12) {
+        while ($i < sizeof($listeFormations)) {
           if (isset($_POST[$listeFormations[$i]])) {
             $formationsRecherchees = $formationsRecherchees.",";
             $formationsRecherchees = $formationsRecherchees.$_POST[$listeFormations[$i]];
@@ -635,6 +634,22 @@ class Dao
           }
         }
 
+<<<<<<< HEAD
+=======
+        public function getListeFormations() {
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT * FROM listeFormations;');
+            $statement->execute();
+            $tabResult = $statement->fetchAll(PDO::FETCH_CLASS, "ListeFormation");
+            $this->deconnexion();
+            return $tabResult;
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
+
+>>>>>>> c65f79e6bf4423ec59108ee0655ab869e097dee9
         //Pour la table Entreprise
 
         public function getEntreprises()  {
