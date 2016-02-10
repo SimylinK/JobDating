@@ -232,7 +232,7 @@ class Formation {
 
       public static function calculHoraire($creneau, $tabConfig){
         $duree = $tabConfig["dureeCreneau"];
-        $start = 0;
+        $start = 1;
         if($creneau < $tabConfig["nbCreneauxMatin"]) { // si c'est le matin
           $heureString = $tabConfig["heureDebutMatin"];
         } else { //si c'est l'apres midi
