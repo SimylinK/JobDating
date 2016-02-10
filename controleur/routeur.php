@@ -242,9 +242,44 @@ class Routeur {
     if (isset($_GET['validation']) && isset($_GET['id']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
       if ($_SESSION['type_connexion'] == "admin") {
         if ($_GET['type'] == "tmpEtu") {
+          $user = $this->dao->getTempEtu($id);
+          $mail = $user[O]->getMailEtu();
+
+            $message = "Bonjour,\r\n";
+            $message .= "Nous avons l'honneur de vous informer que votre compte sur le site http://jobmeeting.iut-nantes.univ-nantes.fr\r\n";
+            $message .= "Vous pouvez dorénavant vous connecter sur le site internet et avoir accès à vos données.\r\n\r\n";
+            $message .= "Cordialement,\r\n";
+            $message .= "Tifenn Corbel";
+            $headers = "From: Tifenn Corbel <Tifenn.Corbel@univ-nantes.fr> \n";
+            $headers .= "To-Sender: \n";
+            $headers .= "X-Mailer: PHP\n";
+            $headers .= "Reply-To: Tifenn.Corbel@univ-nantes.fr\n";
+            $headers .= "Return-Path: Tifenn.Corbel@univ-nantes.fr\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8";
+            $subject = "[Réinitialisation mot de passe]";
+            @mail($_POST['mail_new_mdp'],utf8_decode($subject),$message,$headers);
+
           $this->dao->validerEtudiant($_GET['id']);
         }
         if ($_GET['type'] == "tmpEnt") {
+
+          $user = $this->dao->getTempEnt($id);
+          $mail = $user[O]->getMailEnt();
+
+            $message = "Bonjour,\r\n";
+            $message .= "Nous avons l'honneur de vous informer que votre compte sur le site http://jobmeeting.iut-nantes.univ-nantes.fr a été activé.\r\n";
+            $message .= "Vous pouvez dorénavant vous connecter sur le site internet et avoir accès à vos données.\r\n\r\n";
+            $message .= "Cordialement,\r\n";
+            $message .= "Tifenn Corbel";
+            $headers = "From: Tifenn Corbel <Tifenn.Corbel@univ-nantes.fr> \n";
+            $headers .= "To-Sender: \n";
+            $headers .= "X-Mailer: PHP\n";
+            $headers .= "Reply-To: Tifenn.Corbel@univ-nantes.fr\n";
+            $headers .= "Return-Path: Tifenn.Corbel@univ-nantes.fr\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8";
+            $subject = "[Réinitialisation mot de passe]";
+            @mail($_POST['mail_new_mdp'],utf8_decode($subject),$message,$headers);
+
           $this->dao->validerEntreprise($_GET['id']);
         }
         $this->ctrlMenu->afficherMenu(2);
@@ -255,9 +290,43 @@ class Routeur {
     if (isset($_GET['geler']) && isset($_GET['id']) && isset($_GET['type']) && isset($_SESSION['type_connexion'])) {
       if ($_SESSION['type_connexion'] == "admin") {
         if ($_GET['type'] == "Etu") {
+          $user = $this->dao->getEtu($id);
+          $mail = $user[O]->getMailEtu();
+
+            $message = "Bonjour,\r\n";
+            $message .= "Nous avons le regret de vous informer que votre compte sur le site http://jobmeeting.iut-nantes.univ-nantes.fr a été gelé.\r\n";
+            $message .= "Vous ne pouvez dorénavant plus vous connecter sur le site internet ni avoir accès à vos données.\r\n\r\n";
+            $message .= "Pour davantage d'informations, n'hésitez pas à nous contacter.\r\n\r\n";
+            $message .= "Cordialement,\r\n";
+            $message .= "Tifenn Corbel";
+            $headers = "From: Tifenn Corbel <Tifenn.Corbel@univ-nantes.fr> \n";
+            $headers .= "To-Sender: \n";
+            $headers .= "X-Mailer: PHP\n";
+            $headers .= "Reply-To: Tifenn.Corbel@univ-nantes.fr\n";
+            $headers .= "Return-Path: Tifenn.Corbel@univ-nantes.fr\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8";
+            $subject = "[Réinitialisation mot de passe]";
+            @mail($_POST['mail_new_mdp'],utf8_decode($subject),$message,$headers);
           $this->dao->gelerEtudiant($_GET['id']);
         }
         if ($_GET['type'] == "Ent") {
+          $user = $this->dao->getEnt($id);
+          $mail = $user[O]->getMailEnt();
+
+            $message = "Bonjour,\r\n";
+            $message .= "Nous avons le regret de vous informer que votre compte sur le site http://jobmeeting.iut-nantes.univ-nantes.fr a été gelé.\r\n";
+            $message .= "Vous ne pouvez dorénavant plus vous connecter sur le site internet ni avoir accès à vos données.\r\n\r\n";
+            $message .= "Pour davantage d'informations, n'hésitez pas à nous contacter.\r\n\r\n";
+            $message .= "Cordialement,\r\n";
+            $message .= "Tifenn Corbel";
+            $headers = "From: Tifenn Corbel <Tifenn.Corbel@univ-nantes.fr> \n";
+            $headers .= "To-Sender: \n";
+            $headers .= "X-Mailer: PHP\n";
+            $headers .= "Reply-To: Tifenn.Corbel@univ-nantes.fr\n";
+            $headers .= "Return-Path: Tifenn.Corbel@univ-nantes.fr\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8";
+            $subject = "[Réinitialisation mot de passe]";
+            @mail($_POST['mail_new_mdp'],utf8_decode($subject),$message,$headers);
           $this->dao->gelerEntreprise($_GET['id']);
         }
         $this->ctrlMenu->afficherMenu(2);
@@ -350,12 +419,12 @@ class Routeur {
             $message .= "-----------------------\r\n";
             $message .= "Si vous n'avez pas fait cette demande, veuillez en informer l'administrateur. Veuillez aussi manuellement modifier votre mot de passe en vous connectant au site JobMeeting de l'IUT de Nantes.\r\n\r\n";
             $message .= "Cordialement,\r\n";
-            $message .= "L'équipe informatique de l'IUT de Nantes.";
-            $headers = "From: IUT Nantes JobMeeting <webmaster@oursite.com> \n";
+            $message .= "Tifenn Corbel";
+            $headers = "From: Tifenn Corbel <Tifenn.Corbel@univ-nantes.fr> \n";
             $headers .= "To-Sender: \n";
             $headers .= "X-Mailer: PHP\n";
-            $headers .= "Reply-To: webmaster@oursite.com\n";
-            $headers .= "Return-Path: webmaster@oursite.com\n";
+            $headers .= "Reply-To: Tifenn.Corbel@univ-nantes.fr\n";
+            $headers .= "Return-Path: Tifenn.Corbel@univ-nantes.fr\n";
             $headers .= "Content-Type: text/html; charset=UTF-8";
             $subject = "[Réinitialisation mot de passe]";
             @mail($_POST['mail_new_mdp'],utf8_decode($subject),$message,$headers);
