@@ -72,7 +72,7 @@ body
 }
 #login
 {
-    height: 300px;
+    height: 200%;
     margin-top: 130px;
 
     background-image: url('../img/blue-stripe-bg.png');
@@ -218,6 +218,7 @@ body
 #tabFormation
 {
     position: relative;
+    margin: auto;
 
     border-collapse: collapse;
 
@@ -249,7 +250,6 @@ body
 {
     color: crimson;
 }
-
 #Lost
 {
     font-size: 24px;
