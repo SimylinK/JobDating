@@ -326,13 +326,12 @@ class Dao
     $typeCreneau = $_POST['disponibilite'];
     $i = 0;
     $formationsRecherchees = "";
-    $listeFormations = array('formation_LPI2P','formation_LPIMOC','formation_LPLOGICA','formation_LPEAS','formation_LPSEICOM','formation_LPIDEB',
-    'formation_LPFICA','formation_DUTGEII','formation_DUTINFO','formation_DUTGMP','formation_DUTSGM','formation_DCG');
-    while ($i < 12) {
+    $listeFormations = $this->getListeFormations();
+    while ($i < sizeof($listeFormations)) {
       if (isset($_POST[$listeFormations[$i]])) {
         $formationsRecherchees = $formationsRecherchees.$_POST[$listeFormations[$i]];
         $i++;
-        while ($i < 12) {
+        while ($i < sizeof($listeFormations)) {
           if (isset($_POST[$listeFormations[$i]])) {
             $formationsRecherchees = $formationsRecherchees.",";
             $formationsRecherchees = $formationsRecherchees.$_POST[$listeFormations[$i]];
@@ -1039,8 +1038,6 @@ class Dao
         $statement = $this->connexion->prepare("UPDATE entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
-        $classFormation = "Formation";
-        $classFormation::updateFormation($id);
         return;
       }
       public function editTypeCreneauEntreprise($id,$new) {
@@ -1048,8 +1045,6 @@ class Dao
         $statement = $this->connexion->prepare("UPDATE entreprise SET typeCreneau='".$new."' WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
-        $classFormation = "Formation";
-        $classFormation::updateFormation($id);
         return;
       }
       public function editNbStandsEntreprise($id,$new) {
@@ -1057,8 +1052,6 @@ class Dao
         $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands=".$new." WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
-        $classFormation = "Formation";
-        $classFormation::updateFormation($id);
         return;
       }
       public function editNbRepasEntreprise($id,$new) {
