@@ -236,7 +236,7 @@ class Formation {
           $heureString = $tabConfig["heureDebutMatin"];
         } else { //si c'est l'apres midi
           $heureString = $tabConfig["heureDebutAprem"];
-          $start = $tabConfig["nbCreneauxMatin"];
+          $start = $tabConfig["nbCreneauxMatin"] + 1;
         }
         $heureString = explode(':', $heureString);
         $heure = $heureString[0];
