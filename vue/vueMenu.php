@@ -1192,12 +1192,17 @@ public function afficherComptes() {
 	  	<TR>
 	 			<TD> <label for="disponibiliteSociete"/> Disponibilité
 				<br/>
-				<select required name="disponibiliteSociete"/>
-					<option value=""disabled selected>Sélectionnez un horaire</option>
-					<option value="matin">Matin</option>
-					<option value="apres_midi">Après-midi</option>
-					<option value="journee">Journée</option>
-				</select>
+				<select required name="disponibiliteSociete"/>';
+					if ($profil->getTypeCreneau() == "matin") {
+						echo '<option value="matin">Matin</option>';
+					}
+					if ($profil->getTypeCreneau() == "apres_midi") {
+						echo '<option value="apres_midi">Après-midi</option>';
+					}
+					if ($profil->getTypeCreneau() == "journee") {
+						echo '<option value="journee"> Journée</option>';
+					}
+				echo '</select>
 				<br/><br/>
 				<label for="nbStandsSociete"/> Nombre d\'entretiens en simultanés
 				<br/>
