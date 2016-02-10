@@ -634,8 +634,6 @@ class Dao
           }
         }
 
-<<<<<<< HEAD
-=======
         public function getListeFormations() {
           try {
             $this->connexion();
@@ -649,7 +647,6 @@ class Dao
           }
         }
 
->>>>>>> c65f79e6bf4423ec59108ee0655ab869e097dee9
         //Pour la table Entreprise
 
         public function getEntreprises()  {
