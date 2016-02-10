@@ -28,7 +28,7 @@ class VueInscriptionEnt{
 					<h1> Rencontres Alternance </h1>
 					<span> Le 1 avril 2016, l'IUT de Nantes vous propose de rencontrer nos futurs étudiants en alternance (DUT, Licences Professionnelles et DCG).
 						Si vous êtes intéressés, nous organiserons les entretiens sur inscription : vous avez donc l'assurance de rencontrer des candidats motivés et correspondant au profil que vous recherchez.
-						<br><b>Attention, aucune modification ne pourra être apportée après le 4 mars.</b>
+						<br><b>Attention, aucune modification ne pourra être apportée après le 28 mars.</b>
 					</span>
 					<p name="obligatoire">
 						Tous les champs suivis d'un * sont obligatoires
@@ -120,6 +120,7 @@ class VueInscriptionEnt{
 						<!-- Nombre stand -->
 						<label for="NbStand"/> Pouvez-vous indiquer combien d'étudiants vous pourrez faire passer simultanément en entretien ? <span name="obligatoire">*</span></br>
 						<p style="font-size:70%">Le nombre d'étudiants est à penser en fonction du nombre de recruteurs de votre société qui viennent à la Rencontre Alternance.</br></p>
+						<p style="font-size:70% ; color:green">Par exemple : si 3 recruteurs viennent ; il y aura soit : un entretien par recruteurs donc un étudiant chacun OU un entretien regroupant les 3 recruteurs pour voir un seul étudiant en tout OU un entretien avec deux recruteurs et un second avec le recruteur restant.</p></label>
 						<br/>
 						<input type="number" name="NbStand" value="1" min="1" max="10" required/>
 						<br/><br/>

@@ -379,14 +379,14 @@ class Dao
 
     public function getAllEtudiantsTemp() {
       $this->connexion();
-      $statement = $this->connexion->prepare('SELECT * from temp_etudiant order by nomEtu;');
+      $statement = $this->connexion->prepare('SELECT * from temp_etudiant order by formationEtu, nomEtu;');
       $statement->execute();
       return $statement->fetchAll(PDO::FETCH_CLASS, "Etudiant");
     }
 
     public function getAllEtudiants() {
       $this->connexion();
-      $statement = $this->connexion->prepare('SELECT * from etudiant order by nomEtu;');
+      $statement = $this->connexion->prepare('SELECT * from etudiant order by formationEtu, nomEtu;');
       $statement->execute();
       $this->deconnexion();
       return $statement->fetchAll(PDO::FETCH_CLASS, "Etudiant");
