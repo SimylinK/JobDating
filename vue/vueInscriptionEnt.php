@@ -111,7 +111,7 @@ class VueInscriptionEnt{
 						<!-- Code Postal -->
 						<label for="codePostal"/> Code Postal : <span name="obligatoire">*</span></label>
 						<br/>
-						<input type="text" name="codePostal" id="cp"onblur="verifCodePostal(this, 'messageCP')" required autocomplete:"off"/>
+						<input type="text" name="codePostal" id="cp" onblur="verifCodePostal(this, 'messageCP')" required autocomplete:"off"/>
 						<p id="messageCP" style="color:red"></p>
 						<!-- Adresse -->
 						<label for="adresse"/> Adresse : <span name="obligatoire">*</span></label>
@@ -122,7 +122,7 @@ class VueInscriptionEnt{
 						<!-- Nombre alternant -->
 						<label for="NbAlternants"/> Pouvez-vous indiquer le nombre d'alternants (pour chaque formation) que vous envisagez de recruter ? </span></label>
 						<br/>
-						<input type="number" name="NbAlternants" min="1" max="10"/>
+						<input type="number" name="NbAlternants" min="1" max="10" value="1" required/>
 						<br/><br/>
 						<!-- Nombre de personnes
 						<label for="NbPersonnes"/> Afin d'organiser au mieux le planning, merci de nous indiquer le nombre de personnes de votre entreprise présentes pour mener les entretiens. <span name="obligatoire">*</span>
@@ -133,8 +133,7 @@ class VueInscriptionEnt{
 						<label for="disponibilite"/> Veuillez indiquer vos disponibilités : <span name="obligatoire">*</span></label>
 						<br/>
 						<select name="disponibilite" required>
-							<option value=""/>
-							<option value="matin">Matin</option>
+							<option value="matin" selected="selected">Matin</option>
 							<option value="apres_midi">Après-midi</option>
 							<option value="journee">Journée</option>
 						</select>
@@ -144,7 +143,7 @@ class VueInscriptionEnt{
 						<p style="font-size:70%">Le nombre d'étudiants est à penser en fonction du nombre de recruteurs de votre société qui viennent à la Rencontre Alternance.</br></p>
 						<p style="font-size:70% ; color:green">Par exemple : si 3 recruteurs viennent ; il y aura soit : un entretien par recruteurs donc un étudiant chacun OU un entretien regroupant les 3 recruteurs pour voir un seul étudiant en tout OU un entretien avec deux recruteurs et un second avec le recruteur restant.</p></label>
 						<br/>
-						<input type="number" name="NbStand" min="1" max="10" required/>
+						<input type="number" name="NbStand" min="1" max="10" value="1" required/>
 						<br/><br/>
 						<!-- Déjeuner ?-->
 						<input type="checkbox" name="dejeuner" value="dejeuner_ok" id="checkbox_repas" onclick="activer()"/><span> Cochez la case si vous souhaitez déjeuner sur place. </span></label>
@@ -217,17 +216,17 @@ class VueInscriptionEnt{
 						}
 					}
 
-					/*function verifNombre(champ, txt, longMax) {
+				/*function verifNombre(champ, txt, longMax) {
 					if(champ.value.length > longMax || (!/^\d+$/.test(champ.value) && champ.value.length != 0)) {
-					surligne(champ, true);
-					document.getElementById(txt).innerHTML = "Un nombre de taille maximum " + longMax + " est attendu";
-					return true;
-				} else {
-				surligne(champ, false);
-				document.getElementById(txt).innerHTML = "";
-				return false;
-			}
-		}*/
+						surligne(champ, true);
+						document.getElementById(txt).innerHTML = "Un nombre de taille maximum " + longMax + " est attendu";
+						return true;
+					} else {
+						surligne(champ, false);
+						document.getElementById(txt).innerHTML = "";
+						return false;
+					}
+				}*/
 
 		function verifCodePostal(champ, txt) {
 			if(champ.value.length != 5 || !/^\d+$/.test(champ.value)) {

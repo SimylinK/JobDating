@@ -25,7 +25,7 @@ public function afficherPlanningEtu(){
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace utilisateur créé à l'occasion des rencontres alternances du 1 avril 2016.
 
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés le 31 mars.
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés la troisième semaine du mois de mars.
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
 		<?php
@@ -48,7 +48,7 @@ public function afficherPlanningEnt(){
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Bienvenue sur votre espace utilisateur créé à l'occasion des rencontres alternances du 1 avril 2016.
 
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés le 31 mars.
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés la troisième semaine du mois de mars.
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
 		<?php
@@ -1205,7 +1205,7 @@ public function afficherComptes() {
 				<br/><br/>
 				<label for="nbRepasSociete"/> Nombre de repas prévus
 				<br/>
-				<input required type="text" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, \'messageNbRepas\', 3)">
+				<input required type="number" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, \'messageNbRepas\', 3)">
 	 			<p id="messageNbRepas" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_organisation" value="confirmer"/> </TD>
 		</TABLE>
