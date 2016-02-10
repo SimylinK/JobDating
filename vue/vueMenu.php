@@ -1220,7 +1220,8 @@ public function afficherComptes() {
 		<TABLE id="tabModifEnt">
 	  	<CAPTION> Formations recherchées </CAPTION>
 	  	<TR>
-	 			<TD> ';
+	 			<TD> ';		
+	 						$formationsRecherchees = explode(",",$profil->getFormationsRecherchees());
 							$listeFormations = $dao->getListeFormations();
 							$listeDepartements = array();
 							foreach ($listeFormations as $formation) {
@@ -1233,7 +1234,11 @@ public function afficherComptes() {
 										<br/>';
 								foreach ($listeFormations as $formation) {
 									if($formation->getDepartement() == $departement) {
-										echo '<input type="checkbox" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)"> '.$formation->getDescription().'</option>
+										echo '<input type="checkbox" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)" ';
+										if (in_array($formation->getInitiales(), $formationsRecherchees)) {
+											echo 'checked';
+										}
+										echo '> '.$formation->getDescription().'</option>
 										<br/>';
 									}
 								}
