@@ -594,6 +594,8 @@ class Dao
           $statement = $this->connexion->prepare("UPDATE scriptconfig SET nbCreneauxMatin=".$new.";");
           $statement->execute();
           $this->deconnexion();
+          $classFormation = "Formation";
+          $classFormation::generateFormation();
           return;
         }
 
@@ -602,6 +604,8 @@ class Dao
           $statement = $this->connexion->prepare("UPDATE scriptconfig SET nbCreneauxAprem=".$new.";");
           $statement->execute();
           $this->deconnexion();
+          $classFormation = "Formation";
+          $classFormation::generateFormation();
           return;
         }
 

@@ -195,21 +195,6 @@ class Formation {
     <body>
       <div id="main">
         <br/>
-        <style>
-        #tabFormation {
-          background-color: #f2f2f2;
-          margin-left: 40%;
-          border-style : solid;
-          border-width : 1 px;
-          border-collapse: collapse;
-          text-align: center;
-        }
-        #tabFormation tr td {
-          border-style : solid;
-          border-width : 1px;
-          border-collapse: collapse;
-        }
-        </style>
         <table id="tabFormation">
           <tr>
             <td colspan=4 id="titre"> Formation </td>
@@ -270,6 +255,19 @@ class Formation {
           $min = "00";
         }
         return $heure.':'.$min;
+      }
+    }
+
+    public static function generateFormation(){
+      $dao=new dao();
+      $dao->connexion();
+      $listeEnt=$dao->getEntreprises();
+      $tabConfig = $dao -> getConfiguration();
+      $dao->deconnexion();
+
+      foreach ($listeEnt as $entr) {
+        $formation = new formation($entr["IDEnt"], $entr["formationsRecherchees"], $entr["nbPlaces"], $entr["typeCreneau"], $tabConfig["nbCreneauxMatin"], $tabConfig["nbCreneauxAprem"]);
+        $formation -> createForm();
       }
     }
     ?>
