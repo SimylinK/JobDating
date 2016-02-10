@@ -256,18 +256,17 @@ class Formation {
         }
         return $heure.':'.$min;
       }
-    }
 
-    public static function generateFormation(){
-      $dao=new dao();
-      $dao->connexion();
-      $listeEnt=$dao->getEntreprises();
-      $tabConfig = $dao -> getConfiguration();
-      $dao->deconnexion();
+      public static function generateFormation(){
+        $dao=new dao();
+        $dao->connexion();
+        $listeEnt=$dao->getEntreprises();
+        $tabConfig = $dao -> getConfiguration();
+        $dao->deconnexion();
 
-      foreach ($listeEnt as $entr) {
-        $formation = new formation($entr["IDEnt"], $entr["formationsRecherchees"], $entr["nbPlaces"], $entr["typeCreneau"], $tabConfig["nbCreneauxMatin"], $tabConfig["nbCreneauxAprem"]);
-        $formation -> createForm();
+        foreach ($listeEnt as $entr) {
+          $formation = new formation($entr["IDEnt"], $entr["formationsRecherchees"], $entr["nbPlaces"], $entr["typeCreneau"], $tabConfig["nbCreneauxMatin"], $tabConfig["nbCreneauxAprem"]);
+          $formation -> createForm();
+        }
       }
-    }
-    ?>
+      ?>
