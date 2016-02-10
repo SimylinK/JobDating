@@ -50,6 +50,7 @@ class Dao
   # editNbCreneauxAprem($new)
   # editDureeCreneau($new)
   # getEtudiants($formation)
+  # getListeFormations()
   # getEntreprises()
   # getEntreprisesParFormation($formation)
   # getFormationEtudiant($id)
@@ -368,7 +369,7 @@ class Dao
       $statement->execute();
       $this->deconnexion();
       $idEnt = $this->getIdEntreprise($nomEnt);
-      $tabConfig = $this->getConfiguration();
+      $tabConfig = $this.getConfiguration();
       $this->deconnexion();
       return true;
     }
@@ -594,8 +595,6 @@ class Dao
           $statement = $this->connexion->prepare("UPDATE scriptconfig SET nbCreneauxMatin=".$new.";");
           $statement->execute();
           $this->deconnexion();
-          $classFormation = "Formation";
-          $classFormation::generateFormation();
           return;
         }
 
@@ -604,8 +603,6 @@ class Dao
           $statement = $this->connexion->prepare("UPDATE scriptconfig SET nbCreneauxAprem=".$new.";");
           $statement->execute();
           $this->deconnexion();
-          $classFormation = "Formation";
-          $classFormation::generateFormation();
           return;
         }
 
@@ -628,6 +625,19 @@ class Dao
             $statement = $this->connexion->prepare('SELECT IDEtu, listeChoixEtu, nomEtu FROM etudiant WHERE formationEtu = "'.$formation.'";');
             $statement->execute();
             $tabResult = $statement->fetchAll();
+            $this->deconnexion();
+            return $tabResult;
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
+
+        public function getListeFormations() {
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT * FROM listeFormations;');
+            $statement->execute();
+            $tabResult = $statement->fetchAll(PDO::FETCH_CLASS, "ListeFormation");
             $this->deconnexion();
             return $tabResult;
           } catch (TableAccesException $e) {
