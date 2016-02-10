@@ -1,7 +1,9 @@
 <?php
 
-    
+
 require_once 'util/utilitairePageHtml.php';
+require_once __DIR__."/../modele/dao/dao.php";
+require_once __DIR__."/../modele/formationV2.php";
 
 class VueProfil{
 
@@ -16,7 +18,7 @@ public function afficherProfil($type,$profil){
 		$util = new UtilitairePageHtml();
 		echo $util->genereBandeauAvantConnexion();
 	}
-	
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,7 +37,7 @@ public function afficherProfil($type,$profil){
 	}
 ?>
 	<br/><br/>
-	
+
 
 	<!-- Description profil -->
 <?php
@@ -84,6 +86,12 @@ public function afficherProfil($type,$profil){
 		<span class="categorie_profil">Nombre de stands en simultané :</span> '.$profil->getNbStands().'
 		<br/><br/>
 		';
+    $dao = new Dao();
+    $id = $profil->getID();
+
+    $listeFormation = $dao -> getFormationsAffichage($id);
+    $formation = "Formation";
+    $formation::afficherForm($listeFormation);
 	}
 
 ?>

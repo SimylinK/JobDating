@@ -733,7 +733,7 @@ class Dao
         public function getFormationsAffichage($entreprise) {
           try {
             $this->connexion();
-            $statement = $this->connexion->prepare('SELECT typeFormation, creneauDebut, creneauFin FROM formation where entPropose = "'.$entreprise.'";');
+            $statement = $this->connexion->prepare('SELECT typeFormation, creneauDebut, creneauFin FROM formation where entPropose = "'.$entreprise.'" ORDER BY typeFormation;');
             $statement->execute();
             $tabResult = $statement->fetchAll();
             $this->deconnexion();
