@@ -79,8 +79,6 @@ public function afficherPlanningEnt(){
 	    $dao = new Dao();
 	    $tabConfig = $dao -> getConfiguration();
 			$tabEnt = $dao -> getAllEntreprises();
-			/////////////////////ATTENTION DONNEE MAGIQUE
-	    $tabForm = $dao -> getFormations("Informatique");
 	    //Planning du point de vue des entreprises
 	    ?>
 	    <!DOCTYPE html>
