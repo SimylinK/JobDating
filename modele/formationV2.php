@@ -198,7 +198,7 @@ class Formation {
         <br/>
         <table id="tabFormation">
           <tr>
-            <td colspan=4 id="titre"> Formation </td>
+            <td colspan=4 id="titre"><b> Formations <b></td>
           </tr>
           <tr>
             <td colspan= 1> Nom de la formation </td>

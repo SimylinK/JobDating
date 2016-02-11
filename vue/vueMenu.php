@@ -926,8 +926,6 @@ public function afficherComptes() {
 	</head>
 	<body>
 	<div id="main">
-		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
-		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées les formations possibles de l'entreprise. Celle-ci pourra les modifier en respectant les contraintes de son compte.
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Une pause à midi est prévue pour les entretiens qui se déroulent toute la journée.
 		<?php
 		echo "<br/><br/><b>&nbsp;&nbsp;&nbsp;&nbsp;Un entretien dure ".$config['dureeCreneau']." minutes.</b></div>";
@@ -1249,7 +1247,7 @@ public function afficherComptes() {
 								}
 							}
 							foreach ($listeDepartements as $departement) {
-								echo '<span>Département '.$departement.' :</span>
+								echo '<span><b>Département '.$departement.' :</b></span>
 										<br/>';
 								foreach ($listeFormations as $formation) {
 									if($formation->getDepartement() == $departement) {
@@ -1257,12 +1255,14 @@ public function afficherComptes() {
 										if (in_array($formation->getInitiales(), $formationsRecherchees)) {
 											echo 'checked';
 										}
-										echo '> '.$formation->getDescription().'</option>
+										echo '><a id="lienFormation" href="'. $formation->getLien() .'" target="_blank">'.$formation->getDescription().' </a></option>
 										<br/>';
 										$compteur = $compteur + 1;
 									}
 								}
 							}
+
+
 
 	 		echo '<TD> 	<input type="submit" name="modification_entreprise_formations" value="confirmer"/> </TD>
 		</TABLE>
