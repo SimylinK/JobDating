@@ -90,7 +90,7 @@ class VueInscriptionEnt{
 						<!-- Code Postal -->
 						<label for="codePostal"/> Code Postal : <span name="obligatoire">*</span></label>
 						<br/>
-						<input type="text" name="codePostal" id="cp"onblur="verifCodePostal(this, 'messageCP')" required autocomplete:"off"/>
+						<input type="text" maxlength="5" name="codePostal" id="cp"onblur="verifCodePostal(this, 'messageCP')" required autocomplete:"off"/>
 						<p id="messageCP" style="color:red"></p>
 						<!-- Adresse -->
 						<label for="adresse"/> Adresse : <span name="obligatoire">*</span></label>
