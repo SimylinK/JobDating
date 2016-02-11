@@ -218,8 +218,12 @@ class Routeur {
     }
 
     if (isset($_POST['inscription'])) {
-      $date = getdate();
-      if (($_POST['inscription'] == "etudiant") && (($date['mday'] > 30 && $date['mon'] >2) || ($date['mday'] < 21 && $date['mon'] < 4))) {
+      $dateNow = new DateTime("now");
+      $dateLimitEnt = new DateTime("2016-03-04");
+      $dateDebutEtu = new DateTime("2016-03-05");
+      $dateLimitEtu = new DateTime("2016-03-19");
+
+      if (($_POST['inscription'] == "etudiant") && ($dateNow >= $dateDebutEtu && $dateNow <= $dateLimitEtu)) {
         if ($this->dao->ajoutEtudiant()) {
         	$this->ctrlConfirmationInscription->genereVueConfirmationInscription();
         	return;
@@ -230,7 +234,7 @@ class Routeur {
       		return;
         }
       }
-      if (($_POST['inscription'] == "entreprise") && ($date['mday'] > 21 && $date['mon'] >2)) {
+      if (($_POST['inscription'] == "entreprise") && ($dateNow <= $dateLimitEnt)) {
         if($this->dao->ajoutEntreprise()) {
         	$this->ctrlConfirmationInscription->genereVueConfirmationInscription();
         	return;
