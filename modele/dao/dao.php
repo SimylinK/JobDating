@@ -78,6 +78,7 @@ class Dao
   # editTypeCreneauEntreprise($id,$new)
   # editNbStandsEntreprise($id,$new)
   # editNbRepasEntreprise($id,$new)
+  # editNbRecruteursEntreprise($id, $new)
   # editMdpEntreprise($id,$new,$old)
   # editNomEtudiant($id,$new)
   # editPrenomEtudiant($id,$new)
@@ -365,7 +366,7 @@ class Dao
     $nbStands = $_POST['NbStand'];
     $nbRecruteurs = $_POST['NbRecruteurs'];
     $this->connexion();
-    $statement = $this->connexion->prepare('INSERT INTO temp_entreprise (nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbRecruteurs,nbPlaces,nbStands,nbRepas,
+    $statement = $this->connexion->prepare('INSERT INTO temp_entreprise (nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbRecruteurs,nbPlaces,nbRepas,nbStands,
         mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) VALUES ("'.$nomEnt.'","'.$mdpEnt.'","'.$typeCreneau.'","'.$formationsRecherchees.'"
       ,'.$nbRecruteurs.','.$nbPlaces.','.$nbStands.','.$nbRepas.',"'.$mailEnt.'","'.$nomContact.'","'.$prenomContact.'","'.$numTelEnt.'","'.$codePostal.'","'.$villeEnt.'","'.$adresseEnt.'");');
       $statement->execute();
@@ -423,7 +424,7 @@ class Dao
 
     public function validerEntreprise($id) {
       $this->connexion();
-      $statement = $this->connexion->prepare('INSERT INTO entreprise(nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbRecruteurs,nbPlaces,nbStands,nbRepas,
+      $statement = $this->connexion->prepare('INSERT INTO entreprise(nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbRecruteurs,nbPlaces,nbRepas,nbStands,
         mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) SELECT nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbRecruteurs,nbPlaces,nbRepas,nbStands,
         mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt FROM temp_entreprise WHERE IDEnt = '.$id.';');
         $statement->execute();
@@ -457,7 +458,7 @@ class Dao
 
       public function gelerEntreprise($id) {
         $this->connexion();
-        $statement = $this->connexion->prepare('INSERT INTO temp_entreprise(nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbRecruteurs,nbPlaces,nbStands,nbRepas,
+        $statement = $this->connexion->prepare('INSERT INTO temp_entreprise(nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbRecruteurs,nbPlaces,nbRepas,nbStands,
         mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) SELECT nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbRecruteurs,nbPlaces,nbRepas,nbStands,
         mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt FROM entreprise WHERE IDEnt = '.$id.';');
           $statement->execute();
@@ -1086,6 +1087,15 @@ class Dao
         $this->deconnexion();
         return;
       }
+      public function editNbRecruteursEntreprise($id, $new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs=".$new." WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+
+
       public function editMdpEntreprise($id,$new,$old) {
         $this->connexion();
         $statement = $this->connexion->prepare('SELECT mailEnt FROM entreprise WHERE IDEnt ='.$id.';');

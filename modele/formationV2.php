@@ -7,7 +7,7 @@ class Formation {
   private $IDent;
   private $form = array();
   private $nbForm;
-  private $nbPers;
+  private $nbSessions;
   private $periode;
 
   private $nbCreneauxMatin;
@@ -18,12 +18,12 @@ class Formation {
 
   private $ArrayForm = array();
 
-  function __construct($IDentreprise, $formation, $nbPersonne, $periode, $nbCreneauxMatin, $nbCreneauxAprem)
+  function __construct($IDentreprise, $formation, $nbSessions, $periode, $nbCreneauxMatin, $nbCreneauxAprem)
   {
     $this -> IDent = $IDentreprise;
     $this -> form = explode(",",$formation);
     $this -> nbForm = sizeof($this -> form);
-    $this -> nbPers = $nbPersonne;
+    $this -> nbSessions = $nbSessions;
     $this -> periode = $periode;
     $this -> nbCreneauxMatin = $nbCreneauxMatin;
     $this -> nbCreneauxAprem = $nbCreneauxAprem;
@@ -72,45 +72,47 @@ class Formation {
     #############################
     #if($this -> periode == "journee") {
       // une personne pour une formation
-      if($this -> nbForm == 1 && $this -> nbPers == 1){
+      if($this -> nbForm == 1 && $this -> nbSessions == 1){
         #$dao -> ajoutFormation($this -> form[0], $this -> IDent, $crenAmD, $crenPmF);
         $this -> ArrayForm[] = array($this -> form[0], $this -> IDent, "", $crenAmD, $crenPmF);
       }
-      // k*nbForm = k*nbPers
-      else if($this -> nbForm == $this -> nbPers){
+      // k*nbForm = k*nbSessions
+      else if($this -> nbForm == $this -> nbSessions){
         foreach ($this -> form as $value) {
           #$dao -> ajoutFormation($value, $this -> IDent, $crenAmD, $crenPmF);
           $this -> ArrayForm[] = array($value, $this -> IDent, "", $crenAmD, $crenPmF);
         }
       }
-      // si nbForm = 2*nbPers
-      else if(($this -> nbForm / $this -> nbPers) == 2){
+      // si nbForm = 2*nbSessions
+      else if(($this -> nbForm / $this -> nbSessions) == 2){
         $cpt = 0;
-        for ($i=0; $i < $this -> nbPers; $i++) {
+        echo "test";
+        $this -> autreCas();
+        /*for ($i=0; $i < $this -> nbSessions; $i++) {
           #$dao -> ajoutFormation($this -> form[$cpt], $this -> IDent, $crenAmD, $crenAmF);
           $this -> ArrayForm[] = array($this -> form[$cpt], $this -> IDent, "", $crenAmD, $crenAmF);
           #$dao -> ajoutFormation($this -> form[$cpt+1], $this -> IDent, $crenPmD, $crenPmF);
           $this -> ArrayForm[] = array($this -> form[$cpt+1], $this -> IDent, "", $crenPmD, $crenPmF);
           $cpt += 2;
-        }
+        }*/
       }
-      //si nbForm - 1 = nbPers
-      else if(($this -> nbForm - 1) == $this -> nbPers){
-        for ($i=0; $i < $this -> nbPers; $i++) {
+      //si nbForm - 1 = nbSessions
+      else if(($this -> nbForm - 1) == $this -> nbSessions){
+        for ($i=0; $i < $this -> nbSessions; $i++) {
           #$dao -> ajoutFormation($this -> form[0], $this -> IDent, $crenAmD, $crenAmF);
           $this -> ArrayForm[] = array($this -> form[0], $this -> IDent, "", $crenAmD, $crenAmF);
           #$dao -> ajoutFormation($this -> form[$i+1], $this -> IDent, $crenPmD, $crenPmF);
           $this -> ArrayForm[] = array($this -> form[$i+1], $this -> IDent, "", $crenPmD, $crenPmF);
         }
       }
-      // si nbForm = 2*nbPers + k personne
-      else if($this -> nbForm > $this -> nbPers){
+      // si nbForm = 2*nbSessions + k personne
+      else if($this -> nbForm > $this -> nbSessions){
         $this -> autreCas();
       }
-      // si nbPers > nbForm
-      else if(($this -> nbPers > $this -> nbForm)){
-        $cpt = $this -> nbPers;
-        for ($i=0; $i < ceil($this -> nbPers/$this -> nbForm); $i++) {
+      // si nbSessions > nbForm
+      else if(($this -> nbSessions > $this -> nbForm)){
+        $cpt = $this -> nbSessions;
+        for ($i=0; $i < ceil($this -> nbSessions/$this -> nbForm); $i++) {
           foreach ($this -> form as $value) {
             if($cpt > 0){
               #$dao -> ajoutFormation($value, $this -> IDent, $crenAmD, $crenPmF);
@@ -157,7 +159,7 @@ class Formation {
       break;
     }
 
-    $crenForm = floor(($nbCreneaux/$this -> nbForm)*$this -> nbPers);
+    $crenForm = floor(($nbCreneaux/$this -> nbForm)*$this -> nbSessions);
     $crenRestant = $nbCreneaux;
     $crenDebut = $crenOrigin;
 
@@ -278,7 +280,7 @@ class Formation {
         $dao->deconnexion();
 
         foreach ($listeEnt as $entr) {
-          $formation = new formation($entr["IDEnt"], $entr["formationsRecherchees"], $entr["nbPlaces"], $entr["typeCreneau"], $tabConfig["nbCreneauxMatin"], $tabConfig["nbCreneauxAprem"]);
+          $formation = new formation($entr["IDEnt"], $entr["formationsRecherchees"], $entr["nbStands"], $entr["typeCreneau"], $tabConfig["nbCreneauxMatin"], $tabConfig["nbCreneauxAprem"]);
           $formation -> createForm();
         }
       }

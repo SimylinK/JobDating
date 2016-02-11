@@ -170,7 +170,7 @@ public function afficherFormulaireEtu(){
 							$dao = new Dao();
 							$listeFormations = $dao->getListeFormations();
 							foreach ($listeFormations as $formation) {
-								echo '<option value="'.$formation->getInitiales().'"> '.utf8_decode($formation->getDescription()).'</option>
+								echo '<option value="'.$formation->getInitiales().'"> '.$formation->getDescription().'</option>
 								<br/>';
 							}
 

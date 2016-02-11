@@ -913,6 +913,9 @@ public function afficherComptes() {
 	public function afficherFormations(){
 		$util = new UtilitairePageHtml();
 		echo $util->genereBandeauApresConnexion();
+		$dao = new Dao();
+		$config = $dao -> getConfiguration();
+
 	?>
 	<!DOCTYPE html>
 	<html>
@@ -928,7 +931,9 @@ public function afficherComptes() {
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Une pause à midi est prévue pour les entretiens qui se déroulent toute la journée.
 	</div>
 		<?php
-		$dao = new Dao();
+		echo "<b>&nbsp;&nbsp;&nbsp;&nbsp;Un entretien dure ".$config['dureeCreneau']." minutes.</b>";
+
+
 		$id = $_SESSION['idUser'];
 
 		$listeFormation = $dao -> getFormationsAffichage($id);

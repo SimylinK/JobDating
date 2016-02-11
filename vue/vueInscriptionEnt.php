@@ -64,7 +64,7 @@ class VueInscriptionEnt{
 								}
 							}
 							foreach ($listeDepartements as $departement) {
-								echo '<span>Département '.$departement.' :</span>
+								echo '<span><b>Département '.$departement.' :</b></span>
 										<br/>';
 								foreach ($listeFormations as $formation) {
 									if($formation->getDepartement() == $departement) {
@@ -302,7 +302,6 @@ class VueInscriptionEnt{
 				document.getElementById("nb_stand").style.visibility = "visible";
 				document.getElementById("nb_stand").style.display = "block";
 				document.getElementById("nb_stand").value = 1;
-				document.getElementById("NbStand").value = 1;
 			}
 			else {
 				document.getElementById("nb_stand").style.visibility = "hidden";
