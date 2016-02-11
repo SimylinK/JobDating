@@ -126,9 +126,6 @@ class Routeur {
       if ($_POST['nbRepasSociete'] >= 0) {
         $this->dao->editNbRepasEntreprise(($_SESSION['idUser']), $_POST['nbRepasSociete']);
       }
-      if ($_POST['nbRecruteursSociete'] >= 0) {
-        $this->dao->editNbRecruteursEntreprise(($_SESSION['idUser']), $_POST['nbRecruteursSociete']);
-      }
       $this->ctrlMenu->afficherMenu(3);
       return;
     }
@@ -219,7 +216,7 @@ class Routeur {
 
     if (isset($_POST['inscription'])) {
       $date = getdate();
-      if ($_POST['inscription'] == "etudiant" && ($date['mday'] > 30 && $date['mon'] >2) || ($date['mday'] < 21 && $date['mon'] < 4)) {
+      if (($_POST['inscription'] == "etudiant") && (($date['mday'] > 29 && $date['mon'] >2) || ($date['mday'] < 21 && $date['mon'] < 4))) {
         if ($this->dao->ajoutEtudiant()) {
         	$this->ctrlConfirmationInscription->genereVueConfirmationInscription();
         	return;
@@ -230,7 +227,7 @@ class Routeur {
       		return;
         }
       }
-      if ($_POST['inscription'] == "entreprise" && $date['mday'] > 21 && $date['mon'] >2) {
+      if (($_POST['inscription'] == "entreprise") && ($date['mday'] < 22 && $date['mon'] <4)) {
         if($this->dao->ajoutEntreprise()) {
         	$this->ctrlConfirmationInscription->genereVueConfirmationInscription();
         	return;

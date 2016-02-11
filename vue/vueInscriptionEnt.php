@@ -90,7 +90,7 @@ class VueInscriptionEnt{
 						<!-- Code Postal -->
 						<label for="codePostal"/> Code Postal : <span name="obligatoire">*</span></label>
 						<br/>
-						<input type="text" maxlength="5" name="codePostal" id="cp"onblur="verifCodePostal(this, 'messageCP')" required autocomplete:"off"/>
+						<input type="text" name="codePostal" id="cp"onblur="verifCodePostal(this, 'messageCP')" required autocomplete:"off"/>
 						<p id="messageCP" style="color:red"></p>
 						<!-- Adresse -->
 						<label for="adresse"/> Adresse : <span name="obligatoire">*</span></label>
@@ -155,7 +155,7 @@ class VueInscriptionEnt{
 						<!-- Telephone -->
 						<label for="tel"/> Numéro de téléphone (sans espace. Ex : 0610203040) : <span name="obligatoire">*</span></label>
 						<br/>
-						<input type="text" maxlength="10" name="tel" onblur="verifTelephone(this, 'messageTel')" required/>
+						<input type="text" name="tel" onblur="verifTelephone(this, 'messageTel')" required/>
 						<p id="messageTel" style="color:red"></p>
 						<!--  Adresse email-->
 						<label for="email"/> Email (il sera utilité pour l'authentification sur le site) : <span name="obligatoire">*</span></label>
@@ -302,6 +302,7 @@ class VueInscriptionEnt{
 				document.getElementById("nb_stand").style.visibility = "visible";
 				document.getElementById("nb_stand").style.display = "block";
 				document.getElementById("nb_stand").value = 1;
+				document.getElementById("NbStand").value = 1;
 			}
 			else {
 				document.getElementById("nb_stand").style.visibility = "hidden";
