@@ -155,7 +155,7 @@ class VueInscriptionEnt{
 						<!-- Telephone -->
 						<label for="tel"/> Numéro de téléphone (sans espace. Ex : 0610203040) : <span name="obligatoire">*</span></label>
 						<br/>
-						<input type="text" name="tel" onblur="verifTelephone(this, 'messageTel')" required/>
+						<input type="text" maxlength="10" name="tel" onblur="verifTelephone(this, 'messageTel')" required/>
 						<p id="messageTel" style="color:red"></p>
 						<!--  Adresse email-->
 						<label for="email"/> Email (il sera utilité pour l'authentification sur le site) : <span name="obligatoire">*</span></label>
