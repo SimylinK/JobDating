@@ -98,12 +98,14 @@ class Formation {
       }
       //si nbForm - 1 = nbSessions
       else if(($this -> nbForm - 1) == $this -> nbSessions){
+        $this -> autreCas();
+        /*
         for ($i=0; $i < $this -> nbSessions; $i++) {
           #$dao -> ajoutFormation($this -> form[0], $this -> IDent, $crenAmD, $crenAmF);
           $this -> ArrayForm[] = array($this -> form[0], $this -> IDent, "", $crenAmD, $crenAmF);
           #$dao -> ajoutFormation($this -> form[$i+1], $this -> IDent, $crenPmD, $crenPmF);
           $this -> ArrayForm[] = array($this -> form[$i+1], $this -> IDent, "", $crenPmD, $crenPmF);
-        }
+        }*/
       }
       // si nbForm = 2*nbSessions + k personne
       else if($this -> nbForm > $this -> nbSessions){
@@ -198,7 +200,7 @@ class Formation {
         <br/>
         <table id="tabFormation">
           <tr>
-            <td colspan=4 id="titre"><b> Formations <b></td>
+            <td colspan=4 id="titre"> Formation </td>
           </tr>
           <tr>
             <td colspan= 1> Nom de la formation </td>
