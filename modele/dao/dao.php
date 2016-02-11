@@ -1027,10 +1027,12 @@ class Dao
         return;
       }
       public function editMailEntreprise($id,$new) {
-        $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET mailEnt='".$new."' WHERE IDEnt = ".$id.";");
-        $statement->execute();
-        $this->deconnexion();
+        if (!$this->estInscrit($new)) {
+          $this->connexion();
+          $statement = $this->connexion->prepare("UPDATE entreprise SET mailEnt='".$new."' WHERE IDEnt = ".$id.";");
+          $statement->execute();
+          $this->deconnexion();
+        }
         return;
       }
       public function editTelephoneEntreprise($id,$new) {
@@ -1120,10 +1122,12 @@ class Dao
         return;
       }
       public function editMailEtudiant($id,$new) {
-        $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE etudiant SET mailEtu='".$new."' WHERE IDEtu = ".$id.";");
-        $statement->execute();
-        $this->deconnexion();
+        if (!$this->estInscrit($new)) {
+          $this->connexion();
+          $statement = $this->connexion->prepare("UPDATE etudiant SET mailEtu='".$new."' WHERE IDEtu = ".$id.";");
+          $statement->execute();
+          $this->deconnexion();
+        }
         return;
       }
       public function editTelephoneEtudiant($id,$new) {

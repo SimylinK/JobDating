@@ -22,23 +22,38 @@ public function genereVueOubliMdp(){
 <div id="login">
 	<div id="mail_new_mdp">
 			<?php
-				if (isset($_GET['envoi'])) {
-					echo '<div style="width: 40%; margin-left: 28%; padding: 32px; font-size: 20px">La demande a bien été envoyée.</div>';
-				}
-				else {
 					echo '
 					<script>
-					funtion checkMail(this) {
-						
+					function checkMail(element) {
+						if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(element).value)
+							{
+								element.style.borderColor = "none";
+							}
+						else {
+							element.style.borderColor = "red";
+						}
 					}
-					</script>
+					VerifSubmit = function()
+					{
+						html = html.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+						if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(document.getElementById("mail").value))
+							{
+								alert("L\'adresse email n\'est pas correcte !");
+								return true;
+							}
+						else {
+							alert("L\'adresse email n\'est pas correcte !");
+							return false;
+						}
+					}
+				</script>
 
 
-					<form method="POST" action="index.php?oubliMdp=1&envoi=ok">
+					<form method="POST" action="index.php" onsubmit="return VerifSubmit()"> 
 				<table style="width: 60%">
 					<tr style="width:50%">
 						<td style="text-align: right"><label>E-mail utilisé : </label></td>
-						<td>&nbsp;<input type="text" name="mail_new_mdp" onchange="checkMail(this);" required/><br/></td>
+						<td>&nbsp;<input type="text" name="mail_new_mdp" id="mail" onchange="checkMail(this);" required/><br/></td>
 					</tr>
 					<tr>
 						<th colspan="2">Un nouveau mot de passe vous sera envoyé à cette adresse par un administateur.</th>
@@ -48,7 +63,6 @@ public function genereVueOubliMdp(){
 					</tr>
 				</table>
 			</form>';
-				}
 			?>
 			
 			
