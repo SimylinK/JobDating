@@ -365,6 +365,9 @@ class Dao
     $adresseEnt = $_POST['adresse'];
     $nbStands = $_POST['NbStand'];
     $nbRecruteurs = $_POST['NbRecruteurs'];
+    if ($nbRecruteurs < $nbStands) {
+      $nbStands = $nbRecruteurs;
+    }
     $this->connexion();
     $statement = $this->connexion->prepare('INSERT INTO temp_entreprise (nomEnt,mdpEnt,typeCreneau,formationsRecherchees,nbRecruteurs,nbPlaces,nbStands,nbRepas,
         mailEnt,nomContact,prenomContact,numTelEnt,codePostal,villeEnt,adresseEnt) VALUES ("'.$nomEnt.'","'.$mdpEnt.'","'.$typeCreneau.'","'.$formationsRecherchees.'"
@@ -987,7 +990,7 @@ class Dao
         */
       public function editNomEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET nomEnt='".$new."' WHERE IDEnt = ".$id.";");
+        $statement = $this->connexion->prepare("UPDATE entreprise SET nomEnt='".strtoupper($new)."' WHERE IDEnt = ".$id.";");
         $statement->execute();
         $this->deconnexion();
         return;
@@ -1043,13 +1046,6 @@ class Dao
         $this->deconnexion();
         return;
       }
-      public function editNbRecruteurs($id,$new) {
-        $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
-        $statement->execute();
-        $this->deconnexion();
-        return;
-      }
       public function editFormationsRechercheesEntreprise($id,$new) {
         $this->connexion();
         if (substr($new, -1) == ",") {
@@ -1066,6 +1062,13 @@ class Dao
         $this->connexion();
         $statement = $this->connexion->prepare("UPDATE entreprise SET typeCreneau='".$new."' WHERE IDEnt = ".$id.";");
         $statement->execute();
+        $statement = $this->connexion->prepare("SELECT * FROM entreprise WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $recup = $statement->fetch();
+        if ($recup['nbStands'] > $recup['nbRecruteurs']) {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
+          $statement->execute();
+        }
         $this->deconnexion();
         $classFormation = "Formation";
         $classFormation::updateFormation($id);
@@ -1089,8 +1092,15 @@ class Dao
       }
       public function editNbRecruteursEntreprise($id, $new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs=".$new." WHERE IDEnt = ".$id.";");
+        $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
         $statement->execute();
+        $statement = $this->connexion->prepare("SELECT * FROM entreprise WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $recup = $statement->fetch();
+        if ($recup['nbStands'] > $recup['nbRecruteurs']) {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands='".$new."' WHERE IDEnt = ".$id.";");
+          $statement->execute();
+        }
         $this->deconnexion();
         return;
       }
