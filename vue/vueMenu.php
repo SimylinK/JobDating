@@ -926,6 +926,8 @@ public function afficherComptes() {
 	</head>
 	<body>
 	<div id="main">
+		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées les formations possibles de l'entreprise. Celle-ci pourra les modifier en respectant les contraintes de son compte.
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Une pause à midi est prévue pour les entretiens qui se déroulent toute la journée.
 		<?php
 		echo "<br/><br/><b>&nbsp;&nbsp;&nbsp;&nbsp;Un entretien dure ".$config['dureeCreneau']." minutes.</b></div>";
@@ -1016,7 +1018,7 @@ public function afficherComptes() {
 	<br/><br/>
 	<span class="categorie_profil">Téléphone :</span> '.$profil->getNumTelContact().'
 	<br/><br/>
-	<span class="categorie_profil">Recherche :</span> '.$profil->getFormationsRecherchees().' pour '.$profil->getNbPlaces().' recruteur(s) disponible(s).
+	<span class="categorie_profil">Recherche :</span> '.$profil->getFormationsRecherchees().' avec '.$profil->getNbRecruteurs().' recruteur(s).
 	<br/><br/>
 	<span class="categorie_profil">Nombre de sessions en parallèle :</span> '.$profil->getNbStands().'
 	<br/><br/>
@@ -1247,7 +1249,7 @@ public function afficherComptes() {
 								}
 							}
 							foreach ($listeDepartements as $departement) {
-								echo '<span><b>Département '.$departement.' :</b></span>
+								echo '<span>Département '.$departement.' :</span>
 										<br/>';
 								foreach ($listeFormations as $formation) {
 									if($formation->getDepartement() == $departement) {
@@ -1255,14 +1257,12 @@ public function afficherComptes() {
 										if (in_array($formation->getInitiales(), $formationsRecherchees)) {
 											echo 'checked';
 										}
-										echo '><a id="lienFormation" href="'. $formation->getLien() .'" target="_blank">'.$formation->getDescription().' </a></option>
+										echo '> '.$formation->getDescription().'</option>
 										<br/>';
 										$compteur = $compteur + 1;
 									}
 								}
 							}
-
-
 
 	 		echo '<TD> 	<input type="submit" name="modification_entreprise_formations" value="confirmer"/> </TD>
 		</TABLE>
