@@ -15,4 +15,13 @@ Mdp : jobdating
 Login admin : JobMeetAdmin
 Mdp admin : OnqUJa4m2
 */
+
+/*
+	TODO
+	Formation cas
+	nbFormations % nbSessions != 0
+	nbSessions % nbFormations != 0
+
+	Indiquer / bloquer dans les formulaires
+*/
 ?>
