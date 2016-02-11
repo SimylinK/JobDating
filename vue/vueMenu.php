@@ -929,9 +929,8 @@ public function afficherComptes() {
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées les formations possibles de l'entreprise. Celle-ci pourra les modifier en respectant les contraintes de son compte.
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Une pause à midi est prévue pour les entretiens qui se déroulent toute la journée.
-	</div>
 		<?php
-		echo "<b>&nbsp;&nbsp;&nbsp;&nbsp;Un entretien dure ".$config['dureeCreneau']." minutes.</b>";
+		echo "<br/><br/><b>&nbsp;&nbsp;&nbsp;&nbsp;Un entretien dure ".$config['dureeCreneau']." minutes.</b></div>";
 
 
 		$id = $_SESSION['idUser'];
