@@ -33,7 +33,8 @@ public function genereVueAuthentification(){
 						<td><input type="password" name="password"/<br/></td>
 					</tr>
 					<tr>
-						<th colspan="3"><br/><input type="submit" name="submit_login" value="Connexion"></td>
+						<td><a href="index.php?oubliMdp=1">Mot de passe oublié ?</a></td>
+						<th colspan="2"><br/><input type="submit" name="submit_login" value="Connexion"></td>
 					</tr>
 				</table>
 			</form>
@@ -44,7 +45,6 @@ public function genereVueAuthentification(){
 			<br/>
 			<table style="width: 80%; margin: auto; text-align: center;">
 				<tr>
-					<td><a href="index.php?oubliMdp=1">Mot de passe oublié ?</a></td>
 					<td>
 					<?php
 						$date = getdate();
