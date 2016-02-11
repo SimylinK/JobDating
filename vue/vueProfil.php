@@ -83,9 +83,8 @@ public function afficherProfil($type,$profil){
 		<br/><br/>
 		<span class="categorie_profil">Recherche :</span> '.$profil->getFormationsRecherchees().' pour '.$profil->getNbPlaces().' place(s) disponible(s).
 		<br/><br/>
-		<span class="categorie_profil">Nombre de sessions en parallèle :</span> '.$profil->getNbStands().'
+		<span class="categorie_profil">Nombre de stands en simultané :</span> '.$profil->getNbStands().'
 		<br/><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;Une pause à midi est prévue pour les entretiens qui se déroulent toute la journée.
 		';
     $dao = new Dao();
     $id = $profil->getID();

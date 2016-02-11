@@ -1017,6 +1017,14 @@ public function afficherComptes() {
 	<span class="categorie_profil">Recherche :</span> '.$profil->getFormationsRecherchees().' pour '.$profil->getNbPlaces().' recruteur(s) disponible(s).
 	<br/><br/>
 	<span class="categorie_profil">Nombre de sessions en parallèle :</span> '.$profil->getNbStands().'
+<<<<<<< HEAD
+=======
+=======
+	<span class="categorie_profil">Nombre de stands en simultané :</span> '.$profil->getNbRecruteurs().'
+	<br/><br/>
+	<span class="categorie_profil">Nombre de stands en simultané :</span> '.$profil->getNbStands().'
+>>>>>>> fda640bd9da5f786efc0e6b5a2d994f3e8811a46
+>>>>>>> d3463736754db4dbdc2698db4a60a338406144cc
 	<br/><br/>
 	<span class="categorie_profil">Nombre de repas prévus :</span> '.$profil->getNbRepas().'
 	';
