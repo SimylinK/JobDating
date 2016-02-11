@@ -766,7 +766,7 @@ class Dao
             $statement->execute();
             $tabResult = $statement->fetch();
             $this->deconnexion();
-            return $tabResult['idEnt'];
+            return $tabResult['IDEnt'];
           } catch (TableAccesException $e) {
             print($e -> getMessage());
           }
