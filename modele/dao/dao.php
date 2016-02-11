@@ -78,6 +78,7 @@ class Dao
   # editTypeCreneauEntreprise($id,$new)
   # editNbStandsEntreprise($id,$new)
   # editNbRepasEntreprise($id,$new)
+  # editNbRecruteursEntreprise($id, $new)
   # editMdpEntreprise($id,$new,$old)
   # editNomEtudiant($id,$new)
   # editPrenomEtudiant($id,$new)
@@ -1084,6 +1085,15 @@ class Dao
         $this->deconnexion();
         return;
       }
+      public function editNbRecruteursEntreprise($id, $new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs=".$new." WHERE IDEnt = ".$id.";");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+
+
       public function editMdpEntreprise($id,$new,$old) {
         $this->connexion();
         $statement = $this->connexion->prepare('SELECT mailEnt FROM entreprise WHERE IDEnt ='.$id.';');

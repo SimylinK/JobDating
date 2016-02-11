@@ -126,6 +126,9 @@ class Routeur {
       if ($_POST['nbRepasSociete'] >= 0) {
         $this->dao->editNbRepasEntreprise(($_SESSION['idUser']), $_POST['nbRepasSociete']);
       }
+      if ($_POST['nbRecruteursSociete'] >= 0) {
+        $this->dao->editNbRecruteursEntreprise(($_SESSION['idUser']), $_POST['nbRecruteursSociete']);
+      }
       $this->ctrlMenu->afficherMenu(3);
       return;
     }
