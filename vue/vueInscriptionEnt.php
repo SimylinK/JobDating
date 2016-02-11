@@ -28,7 +28,7 @@ class VueInscriptionEnt{
 					<h1> Rencontres Alternance </h1>
 					<span> Le 1 avril 2016, l'IUT de Nantes vous propose de rencontrer nos futurs étudiants en alternance (DUT, Licences Professionnelles et DCG).
 						Si vous êtes intéressés, nous organiserons les entretiens sur inscription : vous avez donc l'assurance de rencontrer des candidats motivés et correspondant au profil que vous recherchez.
-						<br><b>Attention, aucune modification ne pourra être apportée après le 28 mars.</b>
+						<br><b>Attention, aucune modification ne pourra être apportée après le 4 mars.</b>
 					</span>
 					<p name="obligatoire">
 						Tous les champs suivis d'un * sont obligatoires
@@ -117,13 +117,18 @@ class VueInscriptionEnt{
 							<option value="journee">Journée</option>
 						</select>
 						<br/><br/>
-						<!-- Nombre stand -->
-						<label for="NbStand"/> Pouvez-vous indiquer combien d'étudiants vous pourrez faire passer simultanément en entretien ? <span name="obligatoire">*</span></br>
-						<p style="font-size:70%">Le nombre d'étudiants est à penser en fonction du nombre de recruteurs de votre société qui viennent à la Rencontre Alternance.</br></p>
-						<p style="font-size:70% ; color:green">Par exemple : si 3 recruteurs viennent ; il y aura soit : un entretien par recruteurs donc un étudiant chacun OU un entretien regroupant les 3 recruteurs pour voir un seul étudiant en tout OU un entretien avec deux recruteurs et un second avec le recruteur restant.</p></label>
+						<!-- Nombre de recruteurs -->
+						<label for="NbRecruteurs"/> Combien de recruteurs serez-vous ? <span name="obligatoire">*</span></br>
 						<br/>
-						<input type="number" name="NbStand" value="1" min="1" max="10" required/>
+						<input type="number" name="NbRecruteurs" id="NbRecruteurs" value="1" min="1" max="20" onchange="activerNbSession()" required/>
 						<br/><br/>
+						<!-- Nombre stand -->
+						<span id="nb_stand"  style="visibility:hidden; display: none;">
+							<label for="NbStand"/> Si vous êtes plusieurs recruteurs, combien de sessions de recrutements souhaitez-vous organiser en parallèle ? <span name="obligatoire">*</span></br>
+							<br/>
+							<input type="number" name="NbStand" id="NbStand" value="1" min="1" max="10"  required/>
+							<br/><br/>
+						</span>
 						<!-- Déjeuner ?-->
 						<input type="checkbox" name="dejeuner" value="dejeuner_ok" id="checkbox_repas" onclick="activer()"/><span> Cochez la case si vous souhaitez déjeuner sur place. </span></label>
 						<br/><br/>
@@ -274,7 +279,7 @@ class VueInscriptionEnt{
 		}
 
 		/*Fonction qui fait apparaitre le label et le champ correspondant pour indiquer le nombre de repas
-		* initialise la valeur de départ à 0*/
+		* initialise la valeur de départ à 1*/
 		function activer(){
 			check = document.getElementById("checkbox_repas").checked;
 			if (check == true) {
@@ -286,6 +291,22 @@ class VueInscriptionEnt{
 				document.getElementById("labrepas").style.visibility = "hidden";
 				document.getElementById("nb_repas").style.display = "none";
 				document.getElementById("messageNbRepas").innerHTML = "";
+			}
+		}
+
+		/*Fonction qui fait apparaitre le label et le champ correspondant pour indiquer le nombre de sessions en parallèle
+		* initialise la valeur de départ à 1*/
+		function activerNbSession(){
+			value = document.getElementById("NbRecruteurs").value;
+			if (value > 1) {
+				document.getElementById("nb_stand").style.visibility = "visible";
+				document.getElementById("nb_stand").style.display = "block";
+				document.getElementById("nb_stand").value = 1;
+			}
+			else {
+				document.getElementById("nb_stand").style.visibility = "hidden";
+				document.getElementById("nb_stand").style.display = "none";
+				document.getElementById("NbStand").value = 1;
 			}
 		}
 

@@ -925,6 +925,7 @@ public function afficherComptes() {
 	<div id="main">
 		<br/>&nbsp;&nbsp;&nbsp;&nbsp;Bonjour,
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Ici seront affichées les formations possibles de l'entreprise. Celle-ci pourra les modifier en respectant les contraintes de son compte.
+		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Une pause à midi est prévue pour les entretiens qui se déroulent toute la journée.
 	</div>
 		<?php
 		$dao = new Dao();
@@ -1015,7 +1016,7 @@ public function afficherComptes() {
 	<br/><br/>
 	<span class="categorie_profil">Recherche :</span> '.$profil->getFormationsRecherchees().' pour '.$profil->getNbPlaces().' recruteur(s) disponible(s).
 	<br/><br/>
-	<span class="categorie_profil">Nombre de stands en simultané :</span> '.$profil->getNbStands().'
+	<span class="categorie_profil">Nombre de sessions en parallèle :</span> '.$profil->getNbStands().'
 	<br/><br/>
 	<span class="categorie_profil">Nombre de repas prévus :</span> '.$profil->getNbRepas().'
 	';
@@ -1213,6 +1214,10 @@ public function afficherComptes() {
 					}
 				echo '</select>
 				<br/><br/>
+				<label for="nbRecruteursSociete"/> Nombre d\'entretiens en simultanés
+				<br/>
+				<input required type="number" name="nbRecruteursSociete" min="1" max="10" value="'.$profil->getNbStands().'" >
+				<br/><br/>
 				<label for="nbStandsSociete"/> Nombre d\'entretiens en simultanés
 				<br/>
 				<input required type="number" name="nbStandsSociete" min="1" max="10" value="'.$profil->getNbStands().'" >
@@ -1229,7 +1234,7 @@ public function afficherComptes() {
 		<TABLE id="tabModifEnt">
 	  	<CAPTION> Formations recherchées </CAPTION>
 	  	<TR>
-	 			<TD> ';		
+	 			<TD> ';
 	 						$compteur = 0;
 	 						$formationsRecherchees = explode(",",$profil->getFormationsRecherchees());
 							$listeFormations = $dao->getListeFormations();

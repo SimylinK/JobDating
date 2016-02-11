@@ -38,6 +38,10 @@ public function genereVueAuthentification(){
 				</table>
 			</form>
 
+			<p> Le 1 avril 2016, l'IUT de Nantes vous propose de rencontrer nos futurs étudiants en alternance (DUT, Licences Professionnelles et DCG).
+				Si vous êtes intéressés, nous organiserons les entretiens sur inscription : vous avez donc l'assurance de rencontrer des candidats motivés et correspondant au profil que vous recherchez.
+			</p>
+			<br/>
 			<table style="width: 80%; margin: auto; text-align: center;">
 				<tr>
 					<td><a href="index.php?oubliMdp=1">Mot de passe oublié ?</a></td>
