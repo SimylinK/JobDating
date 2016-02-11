@@ -6,6 +6,7 @@ class Entreprise {
 	private $mdpEnt;
 	private $typeCreneau;
 	private $formationsRecherchees;
+	private $nbRecruteurs;
 	private $nbPlaces;
 	private $nbRepas;
 	private $mailEnt;
@@ -31,6 +32,9 @@ class Entreprise {
 	}
 	public function getFormationsRecherchees() {
 		return $this->formationsRecherchees;
+	}
+	public function getNbRecruteurs() {
+		return $this->nbRecruteurs;
 	}
 	public function getNbPlaces() {
 		return $this->nbPlaces;
