@@ -219,7 +219,7 @@ class Routeur {
 
     if (isset($_POST['inscription'])) {
       $date = getdate();
-      if ($_POST['inscription'] == "etudiant" && ($date['mday'] > 30 && $date['mon'] >2) || ($date['mday'] < 21 && $date['mon'] < 4)) {
+      if (($_POST['inscription'] == "etudiant") && (($date['mday'] > 30 && $date['mon'] >2) || ($date['mday'] < 21 && $date['mon'] < 4))) {
         if ($this->dao->ajoutEtudiant()) {
         	$this->ctrlConfirmationInscription->genereVueConfirmationInscription();
         	return;
@@ -230,7 +230,7 @@ class Routeur {
       		return;
         }
       }
-      if ($_POST['inscription'] == "entreprise" && $date['mday'] > 21 && $date['mon'] >2) {
+      if (($_POST['inscription'] == "entreprise") && ($date['mday'] > 21 && $date['mon'] >2)) {
         if($this->dao->ajoutEntreprise()) {
         	$this->ctrlConfirmationInscription->genereVueConfirmationInscription();
         	return;
