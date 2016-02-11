@@ -44,8 +44,8 @@ public function genereVueAuthentification(){
 					<td>
 					<?php
 						$date = getdate();
-						if ($date['mday'] > 30 && $date['mon'] >2) {
-							echo 'Inscription étudiant (bloquée)';
+						if (($date['mday'] > 30 && $date['mon'] >2) || ($date['mday'] < 21 && $date['mon'] < 4)){
+							//echo 'Inscription étudiant (bloquée)';
 						}
 						else {
 							echo '<a href="index.php?inscriptionEtu=1">Inscription étudiant</a>';
@@ -54,8 +54,8 @@ public function genereVueAuthentification(){
 					<br/><br/>
 					<?php
 						$date = getdate();
-						if ($date['mday'] > 17 && $date['mon'] >2) {
-							echo 'Inscription entreprise (bloquée)';
+						if ($date['mday'] > 21 && $date['mon'] >2) {
+							//echo 'Inscription entreprise (bloquée)';
 						}
 						else {
 							echo '<a href="index.php?inscriptionEnt=1">Inscription entreprise</a></td>';

@@ -26,11 +26,19 @@ public function genereVueOubliMdp(){
 					echo '<div style="width: 40%; margin-left: 28%; padding: 32px; font-size: 20px">La demande a bien été envoyée.</div>';
 				}
 				else {
-					echo '<form method="POST" action="index.php?oubliMdp=1&envoi=ok">
+					echo '
+					<script>
+					funtion checkMail(this) {
+						
+					}
+					</script>
+
+
+					<form method="POST" action="index.php?oubliMdp=1&envoi=ok">
 				<table style="width: 60%">
 					<tr style="width:50%">
 						<td style="text-align: right"><label>E-mail utilisé : </label></td>
-						<td>&nbsp;<input type="text" name="mail_new_mdp" required/><br/></td>
+						<td>&nbsp;<input type="text" name="mail_new_mdp" onchange="checkMail(this);" required/><br/></td>
 					</tr>
 					<tr>
 						<th colspan="2">Un nouveau mot de passe vous sera envoyé à cette adresse par un administateur.</th>
