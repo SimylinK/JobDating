@@ -150,7 +150,7 @@ public function afficherPlanningEnt(){
 				$tabForm = $dao -> getFormationsEntreprise($ent -> getID());
 			foreach ($tabForm as $form) {
 				echo '<tr id="entreprise">
-				<td><a href="index.php?profil='.$ent->getID().'&type=tmpEnt">'.$ent->getNomEnt().'</a>
+				<td><a href="index.php?profil='.$ent->getID().'&type=Ent">'.$ent->getNomEnt().'</a>
 				</td>
 				<td>'
 				.$form['typeFormation'].
@@ -422,6 +422,7 @@ public function afficherComptes() {
 		$dateDebutInscriptionEtu = $tabConfig['dateDebutInscriptionEtu'];
 		$dateDebutInscriptionEnt = $tabConfig['dateDebutInscriptionEnt'];
 		$dateFinInscription = $tabConfig['dateFinInscription'];
+		$dateFinInscriptionEnt = $tabConfig['dateFinInscriptionEnt'];
 		$dateDebutVuePlanning = $tabConfig['dateDebutVuePlanning'];
 	?>
 	<!DOCTYPE html>
@@ -442,10 +443,10 @@ public function afficherComptes() {
 			<br/><br/>Les emplois du temps débuteront l\'après-midi à : '.$heureDebutAprem.'.
 			<br/><br/>Il y aura '.$nbCreneauxMatin.' créneau(x) le matin et '.$nbCreneauxAprem.' l\'après-midi.
 			<br/><br/>Chaque créneau dure '.$dureeCreneau.' minutes.
-			<br/><br/>Les inscriptions entreprise débutent le '.$dateDebutInscriptionEnt.'.
+			<br/><br/>Les inscriptions entreprise débutent le '.$dateDebutInscriptionEnt.' et se terminent le '.$dateFinInscriptionEnt.'.
 			<br/><br/>Les inscriptions étudiant débutent le '.$dateDebutInscriptionEtu.'.
 			<br/><br/>Les inscriptions se terminent le '.$dateFinInscription.'.
-			<br/><br/>Les plannings seront visibles à partir du '.$dateDebutInscriptionEnt.'.
+			<br/><br/>Les plannings seront visibles à partir du '.$dateDebutVuePlanning.'.
 			';
 		?>
 
@@ -464,7 +465,9 @@ public function afficherComptes() {
 			<br/><br/>
 			<label>Début des inscriptions entreprises (format YYYY-MM-DD) : </label><input type="text" name="dateDebutInscriptionEnt"/>
 			<br/><br/>
-			<label>Deadline inscription entreprises / début inscriptions étudiants (format YYYY-MM-DD) : </label><input type="text" name="dateDebutInscriptionEtu"/>
+			<label>Deadline inscriptions entreprises (format YYYY-MM-DD) : </label><input type="text" name="dateFinInscriptionEnt"/>
+			<br/><br/>
+			<label>Début inscriptions étudiants (format YYYY-MM-DD) : </label><input type="text" name="dateDebutInscriptionEtu"/>
 			<br/><br/>
 			<label>Deadline inscriptions étudiants (format YYYY-MM-DD) : </label><input type="text" name="dateFinInscription"/>
 			<br/><br/>
@@ -1255,7 +1258,7 @@ public function afficherComptes() {
 	 						$compteur = 0;
 							$dateNow = new DateTime("now");
 							$tabConfig = $dao->getConfiguration();
-							$dateLimitEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
+							$dateLimitEnt = new DateTime($tabConfig['dateFinInscriptionEnt']);
 							$dateDebutEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEnt']);
 	 						$formationsRecherchees = explode(",",$profil->getFormationsRecherchees());
 							$listeFormations = $dao->getListeFormations();

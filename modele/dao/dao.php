@@ -90,6 +90,7 @@ class Dao
   # editDateDebutInscriptionEnt($new)
   # editDateDebutInscriptionEtu($new)
   # editDateFinInscription($new)
+  # editDateFinInscriptionEnt($new)
   # editDateDebutVuePlanning($new)
   # supprimerFormation($idEntreprise)
 
@@ -1018,42 +1019,84 @@ class Dao
         */
       public function editNomEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET nomEnt='".strtoupper($new)."' WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nomEnt='".strtoupper($new)."' WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET nomEnt='".strtoupper($new)."' WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
       }
       public function editVilleEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET villeEnt='".$new."' WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET villeEnt='".$new."' WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET villeEnt='".$new."' WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
       }
       public function editCPEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET codePostal=".$new." WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET codePostal=".$new." WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET codePostal=".$new." WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
       }
       public function editAdresseEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET adresseEnt='".$new."' WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET adresseEnt='".$new."' WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET adresseEnt='".$new."' WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
       }
       public function editNomContactEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET nomContact='".$new."' WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nomContact='".$new."' WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET nomContact='".$new."' WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
       }
       public function editPrenomContactEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET prenomContact='".$new."' WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET prenomContact='".$new."' WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET prenomContact='".$new."' WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
@@ -1061,7 +1104,14 @@ class Dao
       public function editMailEntreprise($id,$new) {
         if (!$this->estInscrit($new)) {
           $this->connexion();
-          $statement = $this->connexion->prepare("UPDATE entreprise SET mailEnt='".$new."' WHERE IDEnt = ".$id.";");
+          if (isset($_SESSION['type_modification'])) {
+            if ($_SESSION['type_modification'] == "tmpEnt") {
+              $statement = $this->connexion->prepare("UPDATE temp_entreprise SET mailEnt='".$new."' WHERE IDEnt = ".$id.";");
+            }
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET mailEnt='".$new."' WHERE IDEnt = ".$id.";");
+          }
           $statement->execute();
           $this->deconnexion();
         }
@@ -1069,7 +1119,14 @@ class Dao
       }
       public function editTelephoneEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET numTelEnt='".$new."' WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET numTelEnt='".$new."' WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET numTelEnt='".$new."' WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
@@ -1079,7 +1136,14 @@ class Dao
         if (substr($new, -1) == ",") {
           $new = substr($new,0, -1);
         }
-        $statement = $this->connexion->prepare("UPDATE entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         $classFormation = "Formation";
@@ -1088,13 +1152,27 @@ class Dao
       }
       public function editTypeCreneauEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET typeCreneau='".$new."' WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET typeCreneau='".$new."' WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET typeCreneau='".$new."' WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $statement = $this->connexion->prepare("SELECT * FROM entreprise WHERE IDEnt = ".$id.";");
         $statement->execute();
         $recup = $statement->fetch();
         if ($recup['nbStands'] > $recup['nbRecruteurs']) {
-          $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
+          if (isset($_SESSION['type_modification'])) {
+            if ($_SESSION['type_modification'] == "tmpEnt") {
+              $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
+            }
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
+          }
           $statement->execute();
         }
         $this->deconnexion();
@@ -1104,7 +1182,14 @@ class Dao
       }
       public function editNbStandsEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands=".$new." WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nbStands=".$new." WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands=".$new." WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         $classFormation = "Formation";
@@ -1113,20 +1198,48 @@ class Dao
       }
       public function editNbRepasEntreprise($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET nbRepas=".$new." WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nbRepas=".$new." WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET nbRepas=".$new." WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
       }
       public function editNbRecruteursEntreprise($id, $new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
-        $statement = $this->connexion->prepare("SELECT * FROM entreprise WHERE IDEnt = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("SELECT * FROM temp_entreprise WHERE IDEnt = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("SELECT * FROM entreprise WHERE IDEnt = ".$id.";");
+        }
         $statement->execute();
         $recup = $statement->fetch();
         if ($recup['nbStands'] > $recup['nbRecruteurs']) {
-          $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands='".$new."' WHERE IDEnt = ".$id.";");
+          if (isset($_SESSION['type_modification'])) {
+            if ($_SESSION['type_modification'] == "tmpEnt") {
+              $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nbStands='".$new."' WHERE IDEnt = ".$id.";");
+            }
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands='".$new."' WHERE IDEnt = ".$id.";");
+          }
           $statement->execute();
         }
         $this->deconnexion();
@@ -1136,11 +1249,28 @@ class Dao
 
       public function editMdpEntreprise($id,$new,$old) {
         $this->connexion();
-        $statement = $this->connexion->prepare('SELECT mailEnt FROM entreprise WHERE IDEnt ='.$id.';');
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare('SELECT mailEnt FROM temp_entreprise WHERE IDEnt ='.$id.';');
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare('SELECT mailEnt FROM entreprise WHERE IDEnt ='.$id.';');
+        }
         $statement->execute();
         $this->deconnexion();
         $result = $statement->fetch();
         $login = $result['mailEnt'];
+        if ($_SESSION['type_connexion'] == "admin") {
+          if (isset($_SESSION['type_modification'])) {
+            if ($_SESSION['type_modification'] == "tmpEnt") {
+              $statement = $this->connexion->prepare("UPDATE temp_entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");            }
+          }
+          else {
+              $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
+          }
+          return;
+        }
         if ($this -> verifieMotDePasse($login, $old)) {
           $this->connexion();
           $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
@@ -1240,6 +1370,14 @@ class Dao
       function editDateFinInscription($new) {
         $this->connexion();
         $statement = $this->connexion->prepare("UPDATE scriptconfig SET dateFinInscription = '".$new."' ;");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+
+      function editDateFinInscriptionEnt($new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE scriptconfig SET dateFinInscriptionEnt = '".$new."' ;");
         $statement->execute();
         $this->deconnexion();
         return;

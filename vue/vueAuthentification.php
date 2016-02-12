@@ -47,12 +47,13 @@ cette journée "Rencontres Alternance".</span> <!-- police sup, couleur #8A2908,
 					<td>
 					<?php
 					$dao = new Dao();
-					$dateNow = new DateTime("now");
+					//$dateNow = new DateTime("now");
+					$dateNow = new DateTime("2016-03-10");
 		      $tabConfig = $dao->getConfiguration();
 					$textDateDebutEtu = explode("-",$tabConfig['dateDebutInscriptionEtu']);
 					$textDateDebutEnt = explode("-",$tabConfig['dateDebutInscriptionEnt']);
 		      $dateDebutEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEnt']);
-		      $dateLimitEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
+		      $dateLimitEnt = new DateTime($tabConfig['dateFinInscriptionEnt']);
 		      $dateDebutEtu = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
 		      $dateLimitEtu = new DateTime((string)$tabConfig['dateFinInscription']);
 
@@ -60,10 +61,10 @@ cette journée "Rencontres Alternance".</span> <!-- police sup, couleur #8A2908,
 							echo '<span style="opacity: 0.5">Inscription étudiant terminée</span>';
 						}
 						elseif ($dateNow < $dateDebutEtu) {
-							echo '<span style="opacity: 0.5">Inscription étudiant à venir le '.$textDateDebutEtu[2].'/'.$textDateDebutEtu[1].'</span>';
+							echo '<span style="opacity: 0.5">Inscription étudiant à partir de '.$textDateDebutEtu[2].'/'.$textDateDebutEtu[1].'</span>';
 						}
 						else {
-							echo '<a href="index.php?inscriptionEtu=1">Inscription étudiant</a> <br/><br/> <b><span style="color: #8A2908; font-size: 12px;"> Venez échanger avec vos futurs employeurs !</span></b>'; // gras
+							echo '<b><span style="color: #8A2908; font-size: 12px;"> Venez échanger avec vos futurs employeurs !</span></b><br/><a href="index.php?inscriptionEtu=1">Inscription étudiant</a> '; // gras
 						}
 					?>
 					<br/><br/>
@@ -72,10 +73,10 @@ cette journée "Rencontres Alternance".</span> <!-- police sup, couleur #8A2908,
 							echo '<span style="opacity: 0.5">Inscription entreprise terminée</span>';
 						}
 						elseif ($dateNow < $dateDebutEnt) {
-							echo '<span style="opacity: 0.5">Inscription entreprise à venir le '.$textDateDebutEnt[2].'/'.$textDateDebutEnt[1].'</span>';
+							echo '<span style="opacity: 0.5">Inscription entreprise à partir de '.$textDateDebutEnt[2].'/'.$textDateDebutEnt[1].'</span>';
 						}
 						else {
-							echo '<a href="index.php?inscriptionEnt=1">Inscription entreprise</a> <br/><br/> <b><span style="color: #8A2908; font-size: 12px;">Venez à la rencontre de vos futurs collaborateurs en alternance !</span></b></td>'; // gras
+							echo '<b><span style="color: #8A2908; font-size: 12px;"> Venez à la rencontre de vos futurs collaborateurs en alternance !</span></b><br/><a href="index.php?inscriptionEnt=1">Inscription entreprise</a> '; // gras
 						}
 					?>
 				</tr>

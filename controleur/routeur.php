@@ -126,6 +126,9 @@ class Routeur {
       if ($_POST['dateDebutInscriptionEnt'] != "") {
         $this->dao->editDateDebutInscriptionEnt($_POST['dateDebutInscriptionEnt']);
       }
+      if ($_POST['dateFinInscriptionEnt'] != "") {
+        $this->dao->editDateFinInscriptionEnt($_POST['dateFinInscriptionEnt']);
+      }
       if ($_POST['dateDebutInscriptionEtu'] != "") {
         $this->dao->editDateDebutInscriptionEtu($_POST['dateDebutInscriptionEtu']);
       }
@@ -246,7 +249,7 @@ class Routeur {
       $dateNow = new DateTime("now");
       $tabConfig = $this->dao->getConfiguration();
       $dateDebutEnt = new DateTime($tabConfig['dateDebutInscriptionEnt']);
-      $dateLimitEnt = new DateTime($tabConfig['dateDebutInscriptionEtu']);
+      $dateLimitEnt = new DateTime($tabConfig['dateFinInscriptionEnt']);
       $dateDebutEtu = new DateTime($tabConfig['dateDebutInscriptionEtu']);
       $dateLimitEtu = new DateTime($tabConfig['dateFinInscription']);
 
@@ -430,7 +433,7 @@ class Routeur {
       $dateNow = new DateTime("now");
       $tabConfig = $this->dao->getConfiguration();
       $dateDebutEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEnt']);
-      $dateLimitEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
+      $dateLimitEnt = new DateTime($tabConfig['dateFinInscriptionEnt']);
       if ($dateNow < $dateLimitEnt && $dateNow >= $dateDebutEnt) {
         $this->ctrlInscriptionEnt->inscriptionEnt();
         return;
