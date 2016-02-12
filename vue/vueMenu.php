@@ -150,9 +150,8 @@ public function afficherPlanningEnt(){
 				$tabForm = $dao -> getFormationsEntreprise($ent -> getID());
 			foreach ($tabForm as $form) {
 				echo '<tr id="entreprise">
-				<td>'
-				.$ent -> getnomEnt().
-				'</td>
+				<td><a href="index.php?profil='.$entTemp->getID().'&type=tmpEnt">'.$entTemp->getNomEnt().'</a>
+				</td>
 				<td>'
 				.$form['typeFormation'].
 				'</td>';
