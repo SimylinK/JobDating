@@ -205,8 +205,15 @@ class Routeur {
       return;
     }
     if (isset($_POST['modification_entreprise_motdepasse'])) {
-      if ($_POST['mdpActuel'] != "" && $_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
-        && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
+      if ($_SESSION['type_connexion'] == "admin") {
+        if ($_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != "" && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
+            $this->dao->editMdpEntreprise(($_SESSION['idUser']), $_POST['mdpNouveau1'], "");
+        }
+        $this->ctrlMenu->afficherMenu(2);
+        return;
+      }
+      elseif (($_POST['mdpActuel'] != "" && $_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
+        && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2'])) {
           $this->dao->editMdpEntreprise(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
       }
       $this->ctrlMenu->afficherMenu(2);

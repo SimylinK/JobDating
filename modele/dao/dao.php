@@ -630,20 +630,34 @@ class Dao
           $statement = $this->connexion->prepare("UPDATE scriptconfig SET nbCreneauxMatin=".$new.";");
           $statement->execute();
           $this->deconnexion();
-          $classFormation = "Formation";
-          $classFormation::generateFormation();
-          return;
+          if (isset($_SESSION['type_modification'])) {
+            if ($_SESSION['type_modification'] == "tmpEnt") {
+              return;
+            }
+            else {
+              $classFormation = "Formation";
+              $classFormation::updateFormation($id);
+              return;
+          }
         }
+      }
 
         public function editNbCreneauxAprem($new) {
           $this->connexion();
           $statement = $this->connexion->prepare("UPDATE scriptconfig SET nbCreneauxAprem=".$new.";");
           $statement->execute();
           $this->deconnexion();
-          $classFormation = "Formation";
-          $classFormation::generateFormation();
-          return;
+          if (isset($_SESSION['type_modification'])) {
+            if ($_SESSION['type_modification'] == "tmpEnt") {
+              return;
+            }
+            else {
+              $classFormation = "Formation";
+              $classFormation::updateFormation($id);
+              return;
+          }
         }
+      }
 
         public function editDureeCreneau($new) {
           $this->connexion();
@@ -1023,6 +1037,9 @@ class Dao
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nomEnt='".strtoupper($new)."' WHERE IDEnt = ".$id.";");
           }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET nomEnt='".strtoupper($new)."' WHERE IDEnt = ".$id.";");
+          }
         }
         else {
           $statement = $this->connexion->prepare("UPDATE entreprise SET nomEnt='".strtoupper($new)."' WHERE IDEnt = ".$id.";");
@@ -1036,6 +1053,9 @@ class Dao
         if (isset($_SESSION['type_modification'])) {
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET villeEnt='".$new."' WHERE IDEnt = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET villeEnt='".$new."' WHERE IDEnt = ".$id.";");
           }
         }
         else {
@@ -1051,6 +1071,9 @@ class Dao
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET codePostal=".$new." WHERE IDEnt = ".$id.";");
           }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET codePostal=".$new." WHERE IDEnt = ".$id.";");
+          }
         }
         else {
           $statement = $this->connexion->prepare("UPDATE entreprise SET codePostal=".$new." WHERE IDEnt = ".$id.";");
@@ -1064,6 +1087,9 @@ class Dao
         if (isset($_SESSION['type_modification'])) {
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET adresseEnt='".$new."' WHERE IDEnt = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET adresseEnt='".$new."' WHERE IDEnt = ".$id.";");
           }
         }
         else {
@@ -1079,6 +1105,9 @@ class Dao
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nomContact='".$new."' WHERE IDEnt = ".$id.";");
           }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET nomContact='".$new."' WHERE IDEnt = ".$id.";");
+          }
         }
         else {
           $statement = $this->connexion->prepare("UPDATE entreprise SET nomContact='".$new."' WHERE IDEnt = ".$id.";");
@@ -1092,6 +1121,9 @@ class Dao
         if (isset($_SESSION['type_modification'])) {
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET prenomContact='".$new."' WHERE IDEnt = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET prenomContact='".$new."' WHERE IDEnt = ".$id.";");
           }
         }
         else {
@@ -1108,6 +1140,9 @@ class Dao
             if ($_SESSION['type_modification'] == "tmpEnt") {
               $statement = $this->connexion->prepare("UPDATE temp_entreprise SET mailEnt='".$new."' WHERE IDEnt = ".$id.";");
             }
+            else {
+              $statement = $this->connexion->prepare("UPDATE entreprise SET mailEnt='".$new."' WHERE IDEnt = ".$id.";");
+            }
           }
           else {
             $statement = $this->connexion->prepare("UPDATE entreprise SET mailEnt='".$new."' WHERE IDEnt = ".$id.";");
@@ -1122,6 +1157,9 @@ class Dao
         if (isset($_SESSION['type_modification'])) {
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET numTelEnt='".$new."' WHERE IDEnt = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET numTelEnt='".$new."' WHERE IDEnt = ".$id.";");
           }
         }
         else {
@@ -1140,21 +1178,35 @@ class Dao
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
           }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
+          }
         }
         else {
           $statement = $this->connexion->prepare("UPDATE entreprise SET formationsRecherchees='".$new."' WHERE IDEnt = ".$id.";");
         }
         $statement->execute();
         $this->deconnexion();
-        $classFormation = "Formation";
-        $classFormation::updateFormation($id);
-        return;
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            return;
+          }
+          else {
+            $classFormation = "Formation";
+            $classFormation::updateFormation($id);
+            return;
+        }
       }
+    }
+
       public function editTypeCreneauEntreprise($id,$new) {
         $this->connexion();
         if (isset($_SESSION['type_modification'])) {
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET typeCreneau='".$new."' WHERE IDEnt = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET typeCreneau='".$new."' WHERE IDEnt = ".$id.";");
           }
         }
         else {
@@ -1176,15 +1228,26 @@ class Dao
           $statement->execute();
         }
         $this->deconnexion();
-        $classFormation = "Formation";
-        $classFormation::updateFormation($id);
-        return;
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            return;
+          }
+          else {
+            $classFormation = "Formation";
+            $classFormation::updateFormation($id);
+            return;
+        }
       }
+    }
+
       public function editNbStandsEntreprise($id,$new) {
         $this->connexion();
         if (isset($_SESSION['type_modification'])) {
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nbStands=".$new." WHERE IDEnt = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands=".$new." WHERE IDEnt = ".$id.";");
           }
         }
         else {
@@ -1192,15 +1255,26 @@ class Dao
         }
         $statement->execute();
         $this->deconnexion();
-        $classFormation = "Formation";
-        $classFormation::updateFormation($id);
-        return;
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            return;
+          }
+          else {
+            $classFormation = "Formation";
+            $classFormation::updateFormation($id);
+            return;
+        }
       }
+    }
+
       public function editNbRepasEntreprise($id,$new) {
         $this->connexion();
         if (isset($_SESSION['type_modification'])) {
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nbRepas=".$new." WHERE IDEnt = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET nbRepas=".$new." WHERE IDEnt = ".$id.";");
           }
         }
         else {
@@ -1216,6 +1290,9 @@ class Dao
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
           }
+          else {
+            $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
+          }
         }
         else {
           $statement = $this->connexion->prepare("UPDATE entreprise SET nbRecruteurs='".$new."' WHERE IDEnt = ".$id.";");
@@ -1223,6 +1300,9 @@ class Dao
         $statement->execute();
         if (isset($_SESSION['type_modification'])) {
           if ($_SESSION['type_modification'] == "tmpEnt") {
+            $statement = $this->connexion->prepare("SELECT * FROM temp_entreprise WHERE IDEnt = ".$id.";");
+          }
+          else {
             $statement = $this->connexion->prepare("SELECT * FROM temp_entreprise WHERE IDEnt = ".$id.";");
           }
         }
@@ -1236,6 +1316,9 @@ class Dao
             if ($_SESSION['type_modification'] == "tmpEnt") {
               $statement = $this->connexion->prepare("UPDATE temp_entreprise SET nbStands='".$new."' WHERE IDEnt = ".$id.";");
             }
+            else {
+              $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands='".$new."' WHERE IDEnt = ".$id.";");
+            }
           }
           else {
             $statement = $this->connexion->prepare("UPDATE entreprise SET nbStands='".$new."' WHERE IDEnt = ".$id.";");
@@ -1248,39 +1331,65 @@ class Dao
 
 
       public function editMdpEntreprise($id,$new,$old) {
-        $this->connexion();
-        if (isset($_SESSION['type_modification'])) {
-          if ($_SESSION['type_modification'] == "tmpEnt") {
-            $statement = $this->connexion->prepare('SELECT mailEnt FROM temp_entreprise WHERE IDEnt ='.$id.';');
-          }
-        }
-        else {
-          $statement = $this->connexion->prepare('SELECT mailEnt FROM entreprise WHERE IDEnt ='.$id.';');
-        }
-        $statement->execute();
-        $this->deconnexion();
-        $result = $statement->fetch();
-        $login = $result['mailEnt'];
         if ($_SESSION['type_connexion'] == "admin") {
-          if (isset($_SESSION['type_modification'])) {
-            if ($_SESSION['type_modification'] == "tmpEnt") {
-              $statement = $this->connexion->prepare("UPDATE temp_entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");            }
+          //TODO
+          if ($_SESSION['type_modification'] == "tmpEnt") {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT mailEnt FROM temp_entreprise WHERE IDEnt ='.$id.';');
+            $statement->execute();
+            $result = $statement->fetch();
+            $login = $result['mailEnt'];
+            $statement = $this->connexion->prepare("UPDATE temp_entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
+            if ($this -> verifieMotDePasse($login, $old)) {
+              $this->connexion();
+              $statement = $this->connexion->prepare("UPDATE temp_entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
+              $statement->execute();
+              $this->deconnexion();
+              return;
+            }
+            else {
+              echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
+              return;
+            }
           }
           else {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT mailEnt FROM entreprise WHERE IDEnt ='.$id.';');
+            $statement->execute();
+            $result = $statement->fetch();
+            $login = $result['mailEnt'];
+            $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
+            if ($this -> verifieMotDePasse($login, $old)) {
+              $this->connexion();
               $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
+              $statement->execute();
+              $this->deconnexion();
+              return;
+            }
+            else {
+              echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
+              return;
+            }
           }
-          return;
-        }
-        if ($this -> verifieMotDePasse($login, $old)) {
-          $this->connexion();
-          $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
-          $statement->execute();
-          $this->deconnexion();
-          return;
         }
         else {
-          echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
-          return;
+          $this->connexion();
+          $statement = $this->connexion->prepare('SELECT mailEnt FROM entreprise WHERE IDEnt ='.$id.';');
+          $statement->execute();
+          $result = $statement->fetch();
+          $login = $result['mailEnt'];
+          $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
+          if ($this -> verifieMotDePasse($login, $old)) {
+            $this->connexion();
+            $statement = $this->connexion->prepare("UPDATE entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
+            $statement->execute();
+            $this->deconnexion();
+            return;
+          }
+          else {
+            echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
+            return;
+          }
         }
       }
 

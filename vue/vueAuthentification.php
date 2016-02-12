@@ -47,8 +47,7 @@ cette journée "Rencontres Alternance".</span> <!-- police sup, couleur #8A2908,
 					<td>
 					<?php
 					$dao = new Dao();
-					//$dateNow = new DateTime("now");
-					$dateNow = new DateTime("2016-03-10");
+					$dateNow = new DateTime("now");
 		      $tabConfig = $dao->getConfiguration();
 					$textDateDebutEtu = explode("-",$tabConfig['dateDebutInscriptionEtu']);
 					$textDateDebutEnt = explode("-",$tabConfig['dateDebutInscriptionEnt']);

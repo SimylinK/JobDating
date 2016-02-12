@@ -92,7 +92,6 @@ public function afficherProfil($type,$profil){
     if ($_SESSION['type_connexion'] == "admin") {
 			$_SESSION['idUser'] = $id;
 			$_SESSION['type_modification'] = $_GET['type'];
-			var_dump($_SESSION['idUser']);
 			?>
 			<script>
 	      //On surligne les cases non valides
@@ -296,7 +295,7 @@ public function afficherProfil($type,$profil){
 					<br/><br/>
 					<label for="nbRepasSociete"/> Nombre de repas prévus
 					<br/>
-					<input required type="number" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, \'messageNbRepas\', 3)">
+					<input required type="number" min="0" max="10" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, \'messageNbRepas\', 3)">
 		 			<p id="messageNbRepas" style="color:red"></p>
 		 			<TD> 	<input type="submit" name="modification_entreprise_organisation" value="confirmer"/> </TD>
 			</TABLE>
@@ -392,8 +391,6 @@ public function afficherProfil($type,$profil){
 		  	<CAPTION> Modifier le mot de passe </CAPTION>
 		  	<TR>
 		 			<TD>
-					<input type="password" name="mdpActuel" onblur="verifString(this, \'messageMdpAncien\', 20)">
-					<p id="messageMdpAncien" style="color:red"></p>
 					<label for="mdpNouveau1"/> Nouveau mot de passe
 					<br/>
 					<input required type="password" name="mdpNouveau1" id="passw">

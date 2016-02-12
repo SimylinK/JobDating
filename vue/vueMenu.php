@@ -1246,7 +1246,7 @@ public function afficherComptes() {
 				<br/><br/>
 				<label for="nbRepasSociete"/> Nombre de repas prévus
 				<br/>
-				<input required type="number" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, \'messageNbRepas\', 3)">
+				<input required type="number" min="0" max="10" name="nbRepasSociete" value="'.$profil->getNbRepas().'" onblur="verifNombre(this, \'messageNbRepas\', 3)">
 	 			<p id="messageNbRepas" style="color:red"></p>
 	 			<TD> 	<input type="submit" name="modification_entreprise_organisation" value="confirmer"/> </TD>
 		</TABLE>
