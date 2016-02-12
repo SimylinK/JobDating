@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Jeu 11 Février 2016 à 09:14
+-- Généré le :  Ven 12 Février 2016 à 10:12
 -- Version du serveur :  5.5.41-0+wheezy1
 -- Version de PHP :  5.4.36-0+deb7u3
 
@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
   `mdpEnt` varchar(255) NOT NULL,
   `typeCreneau` varchar(255) NOT NULL,
   `formationsRecherchees` varchar(255) NOT NULL,
+  `nbRecruteurs` int(11) NOT NULL,
   `nbPlaces` int(11) NOT NULL,
   `nbStands` int(11) NOT NULL,
   `nbRepas` int(11) NOT NULL,
@@ -97,19 +98,20 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
   `codePostal` int(11) NOT NULL,
   `villeEnt` varchar(255) NOT NULL,
   `adresseEnt` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `entreprise`
 --
 
-INSERT INTO `entreprise` (`IDEnt`, `nomEnt`, `mdpEnt`, `typeCreneau`, `formationsRecherchees`, `nbPlaces`, `nbStands`, `nbRepas`, `mailEnt`, `nomContact`, `prenomContact`, `numTelEnt`, `codePostal`, `villeEnt`, `adresseEnt`) VALUES
-(57, 'TRALORNA', '$1$iU4.Dz..$UEhBUQmy87DY/BKE2N83q/', 'apres_midi', 'DUT SGM', 2, 3, 2, 'tralorna.pluto@mail.com', 'Pluto', 'Benjamin', '0648651144', 44000, 'Nantes', '3 rue des girouettes'),
-(58, 'GIGAPANNEL', '$1$i60.D52.$LLjQ9ljy7DT02zVOd51VW0', 'journee', 'DUT INFO,DUT SGM', 1, 1, 1, 'gigapannel.trollingo@mail.com', 'Trollingo', 'Marcel', '0685479612', 44000, 'Nantes', '8 rue des lézards'),
-(60, 'SUPRAMATHS', '$1$ks0.de5.$bnlfJ.GL.lefyerCNqDuY1', 'journee', 'DCG', 2, 1, 1, 'supramaths.boudin@mail.com', 'Michel', 'Boudin', '0645784521', 44000, 'Nantes', '8 rue Manchot'),
-(61, 'INFORMATHIX', '$1$Wz0.nx4.$Lr81Af3DHBh8nGoH5F5Ux/', 'matin', 'DUT INFO', 1, 3, 1, 'informathix.barbarian@mail.com', 'Barbarian', 'Conan', '0645129814', 44000, 'Nantes', '2 rue Maréchal Joffre'),
-(63, 'CAPGEMINI3', '$6$VOcP4LqP4asC$YqFs1SzHHF3NFmdbhtn/RPjOolKqYq2eXgdq3EpmD6mDVl0dsTvh8o54DMx.4/0H.tP81sKKNa9eHmQTLqRRj/', 'apres_midi', 'DUT INFO,DUT GMP', 1, 2, 1, 'nassim.hadjrabia@wanadoo.fr', 'Rabia', 'nassim', '0650021455', 44000, 'Nantes', '3 rue  du pacique'),
-(66, 'SUPERWEB', '$1$4S4.5V/.$hbnvocwXerqHEdQ7IIum7/', 'apres_midi', 'LP IDEB,LP I2P,LP SIL,LP FICA,DCG', 4, 8, 1, 'superweb.bourgeon@mail.com', 'Bourgeon', 'François', '0642589421', 44000, 'Nantes', '3 rue du colibri');
+INSERT INTO `entreprise` (`IDEnt`, `nomEnt`, `mdpEnt`, `typeCreneau`, `formationsRecherchees`, `nbRecruteurs`, `nbPlaces`, `nbStands`, `nbRepas`, `mailEnt`, `nomContact`, `prenomContact`, `numTelEnt`, `codePostal`, `villeEnt`, `adresseEnt`) VALUES
+(57, 'TRALORNA', '$1$iU4.Dz..$UEhBUQmy87DY/BKE2N83q/', 'apres_midi', 'DUT SGM', 0, 2, 3, 2, 'tralorna.pluto@mail.com', 'Pluto', 'Benjamin', '0648651144', 44000, 'Nantes', '3 rue des girouettes'),
+(58, 'GIGAPANNEL', '$1$i60.D52.$LLjQ9ljy7DT02zVOd51VW0', 'journee', 'DUT INFO,DUT SGM', 0, 1, 1, 1, 'gigapannel.trollingo@mail.com', 'Trollingo', 'Marcel', '0685479612', 44000, 'Nantes', '8 rue des lézards'),
+(60, 'SUPRAMATHS', '$1$ks0.de5.$bnlfJ.GL.lefyerCNqDuY1', 'journee', 'DCG', 0, 2, 1, 1, 'supramaths.boudin@mail.com', 'Michel', 'Boudin', '0645784521', 44000, 'Nantes', '8 rue Manchot'),
+(61, 'INFORMATHIX', '$1$Wz0.nx4.$Lr81Af3DHBh8nGoH5F5Ux/', 'matin', 'DUT INFO', 0, 1, 3, 1, 'informathix.barbarian@mail.com', 'Barbarian', 'Conan', '0645129814', 44000, 'Nantes', '2 rue Maréchal Joffre'),
+(63, 'CAPGEMINI3', '$6$VOcP4LqP4asC$YqFs1SzHHF3NFmdbhtn/RPjOolKqYq2eXgdq3EpmD6mDVl0dsTvh8o54DMx.4/0H.tP81sKKNa9eHmQTLqRRj/', 'apres_midi', 'DUT INFO,DUT GMP', 0, 1, 2, 1, 'nassim.hadjrabia@wanadoo.fr', 'Rabia', 'nassim', '0650021455', 44000, 'Nantes', '3 rue  du pacique'),
+(66, 'SUPERWEB', '$1$4S4.5V/.$hbnvocwXerqHEdQ7IIum7/', 'apres_midi', 'DCG,DUT GEII,LP IDEB,LP SEICOM,DUT QLIO-1,LP LOGIQUAL', 6, 4, 3, 1, 'superweb.bourgeon@mail.com', 'Bourgeon', 'François', '0642589421', 44000, 'Nantes', '3 rue du colibri'),
+(77, 'TEST', '$6$HiH6y1yEeJIw$anfTbcLIK92TG0VTTEmDh4r6MSc60YO9qG6nHE.KqwveFdn5bhq7BEzC/dcrfwxnxWMbEfMjv.kqMqJge0tDb1', 'matin', 'DCG,LP IDEB', 2, 1, 2, 0, 'test@mail.com', 'test', 'test', '6576421200', 45210, 'Nantes', 'gsrfse');
 
 -- --------------------------------------------------------
 
@@ -126,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
   `numtelEtu` varchar(10) NOT NULL,
   `formationEtu` text NOT NULL,
   `listechoixEtu` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1 COMMENT='Table qui contient tous les étudiants';
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1 COMMENT='Table qui contient tous les étudiants';
 
 --
 -- Contenu de la table `etudiant`
@@ -164,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `formation` (
   `creneauDebut` int(11) NOT NULL,
   `creneauFin` int(11) NOT NULL,
   `descriptionFormation` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=794 DEFAULT CHARSET=latin1 COMMENT='Table qui associe une formation avec une entreprise qui la propose';
+) ENGINE=InnoDB AUTO_INCREMENT=1318 DEFAULT CHARSET=latin1 COMMENT='Table qui associe une formation avec une entreprise qui la propose';
 
 --
 -- Contenu de la table `formation`
@@ -180,14 +182,14 @@ INSERT INTO `formation` (`IDformation`, `typeFormation`, `entPropose`, `creneauD
 (740, 'DUT INFO', 61, 1, 6, ''),
 (741, 'DUT INFO', 63, 7, 6, ''),
 (742, 'DUT GMP', 63, 7, 14, ''),
-(786, 'LP IDEB', 66, 7, 14, ''),
-(787, 'LP I2P', 66, 7, 14, ''),
-(788, 'LP SIL', 66, 7, 14, ''),
-(789, 'LP FICA', 66, 7, 14, ''),
-(790, 'DCG', 66, 7, 14, ''),
-(791, 'LP IDEB', 66, 7, 14, ''),
-(792, 'LP I2P', 66, 7, 14, ''),
-(793, 'LP SIL', 66, 7, 14, '');
+(959, 'DCG', 77, 1, 6, ''),
+(960, 'LP IDEB', 77, 1, 6, ''),
+(1312, 'DCG', 66, 7, 10, ''),
+(1313, 'DUT GEII', 66, 11, 14, ''),
+(1314, 'LP IDEB', 66, 7, 10, ''),
+(1315, 'LP SEICOM', 66, 11, 14, ''),
+(1316, 'DUT QLIO-1', 66, 7, 10, ''),
+(1317, 'LP LOGIQUAL', 66, 11, 14, '');
 
 -- --------------------------------------------------------
 
@@ -294,6 +296,7 @@ CREATE TABLE IF NOT EXISTS `temp_entreprise` (
   `mdpEnt` varchar(255) NOT NULL,
   `typeCreneau` varchar(255) NOT NULL,
   `formationsRecherchees` varchar(255) NOT NULL,
+  `nbRecruteurs` int(11) NOT NULL,
   `nbPlaces` int(11) NOT NULL,
   `nbStands` int(11) NOT NULL,
   `nbRepas` int(11) NOT NULL,
@@ -304,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `temp_entreprise` (
   `codePostal` int(11) NOT NULL,
   `villeEnt` varchar(255) NOT NULL,
   `adresseEnt` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -321,14 +324,13 @@ CREATE TABLE IF NOT EXISTS `temp_etudiant` (
   `numtelEtu` varchar(10) NOT NULL,
   `formationEtu` varchar(255) NOT NULL,
   `listechoixEtu` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 COMMENT='Table qui contient tous les étudiants';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 COMMENT='Table qui contient tous les étudiants';
 
 --
 -- Contenu de la table `temp_etudiant`
 --
 
 INSERT INTO `temp_etudiant` (`IDEtu`, `nomEtu`, `prenomEtu`, `mailEtu`, `mdpEtu`, `numtelEtu`, `formationEtu`, `listechoixEtu`) VALUES
-(13, 'Choquet', 'Lucas', 'lucas.choquet@etu.univ-nantes.fr', '$6$c34nKdv2nT.X$ozhAd9o.Gsw5Ulwy6sM.FOrWZUFi.qWugrABbwPXxhwF6icuM65xLusLseZKkKSUw3svhuWV0mrmeAOkSaMaW1', '0645392030', 'DUT INFO', '63,58,61'),
 (14, 'Buisson', 'Florient', 'f.buisson@mail.com', '$1$g25.pT2.$HLz5AB5UJyDwZMMz8n0QM.', '0642157411', 'DCG', '57,60');
 
 --
@@ -402,17 +404,17 @@ ALTER TABLE `demandesmdp`
 -- AUTO_INCREMENT pour la table `entreprise`
 --
 ALTER TABLE `entreprise`
-  MODIFY `IDEnt` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=67;
+  MODIFY `IDEnt` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=78;
 --
 -- AUTO_INCREMENT pour la table `etudiant`
 --
 ALTER TABLE `etudiant`
-  MODIFY `IDEtu` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=46;
+  MODIFY `IDEtu` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=52;
 --
 -- AUTO_INCREMENT pour la table `formation`
 --
 ALTER TABLE `formation`
-  MODIFY `IDformation` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=794;
+  MODIFY `IDformation` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1318;
 --
 -- AUTO_INCREMENT pour la table `nouveauxcomptes`
 --
@@ -422,12 +424,12 @@ ALTER TABLE `nouveauxcomptes`
 -- AUTO_INCREMENT pour la table `temp_entreprise`
 --
 ALTER TABLE `temp_entreprise`
-  MODIFY `IDEnt` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=75;
+  MODIFY `IDEnt` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=98;
 --
 -- AUTO_INCREMENT pour la table `temp_etudiant`
 --
 ALTER TABLE `temp_etudiant`
-  MODIFY `IDEtu` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `IDEtu` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- Contraintes pour les tables exportées
 --
