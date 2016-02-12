@@ -239,10 +239,10 @@ class Routeur {
     }
     if (isset($_POST['modification_etudiant_motdepasse'])) {
       if ($_SESSION['type_connexion'] == "admin") {
-          if ($_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
-          && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
+          if ($_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != "" && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
             $this->dao->editMdpEtudiant(($_SESSION['idUser']), $_POST['mdpNouveau1'], "");
           }
+      }
       if ($_POST['mdpActuel'] != "" && $_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
         && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
           $this->dao->editMdpEtudiant(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
