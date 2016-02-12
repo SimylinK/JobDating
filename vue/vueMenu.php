@@ -1252,39 +1252,47 @@ public function afficherComptes() {
 
 		<form action="index.php" method="post">
 		<TABLE id="tabModifEnt">
-	  	<CAPTION> Formations recherchées </CAPTION>
-	  	<TR>
-	 			<TD> ';
+	  	';
 	 						$compteur = 0;
+							$dateNow = new DateTime("now");
+							$tabConfig = $dao->getConfiguration();
+							$dateLimitEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
+							$dateDebutEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEnt']);
 	 						$formationsRecherchees = explode(",",$profil->getFormationsRecherchees());
 							$listeFormations = $dao->getListeFormations();
 							$listeDepartements = array();
-							foreach ($listeFormations as $formation) {
-								if(!in_array($formation->getDepartement(), $listeDepartements)) {
-									array_push($listeDepartements, $formation->getDepartement());
-								}
-							}
-							foreach ($listeDepartements as $departement) {
-								echo '<span>Département '.$departement.' :</span>
-										<br/>';
+							if ($dateNow < $dateLimitEnt && $dateNow >= $dateDebutEnt) {
+								echo '<CAPTION> Formations recherchées </CAPTION>
+						  	<TR>
+						 			<TD> ';
 								foreach ($listeFormations as $formation) {
-									if($formation->getDepartement() == $departement) {
-										echo '<input type="checkbox" name="formation['.$compteur.']" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)" ';
-										if (in_array($formation->getInitiales(), $formationsRecherchees)) {
-											echo 'checked';
-										}
-										echo '> '.$formation->getDescription().'</option>
-										<br/>';
-										$compteur = $compteur + 1;
+									if(!in_array($formation->getDepartement(), $listeDepartements)) {
+										array_push($listeDepartements, $formation->getDepartement());
 									}
 								}
+								foreach ($listeDepartements as $departement) {
+									echo '<span><b>Département '.$departement.' :</b></span>
+											<br/>';
+									foreach ($listeFormations as $formation) {
+										if($formation->getDepartement() == $departement) {
+											echo '<input type="checkbox" name="formation['.$compteur.']" value="'.$formation->getInitiales().'" onClick="EnableSubmit(this)" ';
+											if (in_array($formation->getInitiales(), $formationsRecherchees)) {
+												echo 'checked ';
+											}
+											echo '><a id="lienFormation" href="'. $formation->getLien() .'" target="_blank">'.$formation->getDescription().' </a></option>
+											<br/>';
+											$compteur = $compteur + 1;
+										}
+									}
+								}
+
+		 		echo '<TD> 	<input type="submit" name="modification_entreprise_formations" value="confirmer"/> </TD>
+			</TABLE>
+			</form></br>';
 							}
 
-	 		echo '<TD> 	<input type="submit" name="modification_entreprise_formations" value="confirmer"/> </TD>
-		</TABLE>
-		</form></br>
 
-		<form action="index.php" method="post" >
+		echo '<form action="index.php" method="post" >
 		<TABLE id="tabModifEnt">
 	  	<CAPTION> Informations sur la société </CAPTION>
 	  	<TR>

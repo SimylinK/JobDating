@@ -38,12 +38,25 @@ class Routeur {
 
     if (isset($_POST['submit_login'])) {
       $this->dao->connexion();
-      if($this->dao->verifieMotDePasse($_POST['identifiant'],$_POST['password'])) {
-         $_SESSION['type_connexion'] = $this->dao->getTypeUtilisateur($_POST['identifiant']);
-         $_SESSION['idUser'] = $this->dao->getId($_POST['identifiant'],$_SESSION['type_connexion']);
-         $this->ctrlMenu->afficherMenu(1);
-         return;
+      if ($this->dao->estValide($_POST['identifiant'])) {
+        if($this->dao->verifieMotDePasse($_POST['identifiant'],$_POST['password'])) {
+           $_SESSION['type_connexion'] = $this->dao->getTypeUtilisateur($_POST['identifiant']);
+           $_SESSION['idUser'] = $this->dao->getId($_POST['identifiant'],$_SESSION['type_connexion']);
+           $this->ctrlMenu->afficherMenu(1);
+           return;
+        }
+        else {
+          $_SESSION['fail'] = "La connexion au compte a échouée. Veuillez vérifier votre mot de passe et identifiant.";
+          $this->ctrlLost->genererLost();
+          return;
+        }
       }
+      else {
+        $_SESSION['fail'] = "Le compte n'a pas encore été activé par l'administrateur.";
+        $this->ctrlLost->genererLost();
+        return;
+      }
+
     }
 
     if(isset($_POST['startGeneration'])){
@@ -141,7 +154,7 @@ class Routeur {
       if ($_POST['nbRecruteursSociete'] >= 0) {
         $this->dao->editNbRecruteursEntreprise(($_SESSION['idUser']), $_POST['nbRecruteursSociete']);
       }
-      $this->ctrlMenu->afficherMenu(3);
+      $this->ctrlMenu->afficherMenu(2);
       return;
     }
     if (isset($_POST['modification_entreprise_formations'])) {
@@ -153,7 +166,7 @@ class Routeur {
         }
         $this->dao->editFormationsRechercheesEntreprise(($_SESSION['idUser']), $stringFormations);
       }
-      $this->ctrlMenu->afficherMenu(3);
+      $this->ctrlMenu->afficherMenu(2);
       return;
     }
     if (isset($_POST['modification_entreprise_informations'])) {
@@ -169,7 +182,7 @@ class Routeur {
       if ($_POST['adresseSociete'] != "") {
         $this->dao->editAdresseEntreprise(($_SESSION['idUser']), $_POST['adresseSociete']);
       }
-      $this->ctrlMenu->afficherMenu(3);
+      $this->ctrlMenu->afficherMenu(2);
       return;
     }
     if (isset($_POST['modification_entreprise_contact'])) {
@@ -185,7 +198,7 @@ class Routeur {
       if ($_POST['numTelSociete'] != 0) {
         $this->dao->editTelephoneEntreprise(($_SESSION['idUser']), $_POST['numTelSociete']);
       }
-      $this->ctrlMenu->afficherMenu(3);
+      $this->ctrlMenu->afficherMenu(2);
       return;
     }
     if (isset($_POST['modification_entreprise_motdepasse'])) {
@@ -193,7 +206,7 @@ class Routeur {
         && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
           $this->dao->editMdpEntreprise(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
       }
-      $this->ctrlMenu->afficherMenu(3);
+      $this->ctrlMenu->afficherMenu(2);
       return;
     }
 
@@ -234,7 +247,7 @@ class Routeur {
       $tabConfig = $this->dao->getConfiguration();
       $dateDebutEnt = new DateTime($tabConfig['dateDebutInscriptionEnt']);
       $dateLimitEnt = new DateTime($tabConfig['dateDebutInscriptionEtu']);
-      $dateDebutEtu = new DateTime($tabConfig['dateFinInscriptionEtu']);
+      $dateDebutEtu = new DateTime($tabConfig['dateDebutInscriptionEtu']);
       $dateLimitEtu = new DateTime($tabConfig['dateFinInscription']);
 
       if (($_POST['inscription'] == "etudiant") && ($dateNow >= $dateDebutEtu && $dateNow <= $dateLimitEtu)) {
@@ -403,23 +416,29 @@ class Routeur {
   	}
 
   	if (isset($_GET['inscriptionEtu'])) {
-      $date = getdate();
-      if (($date['mday'] < 31 && $date['mon'] <4) && ($date['mday'] > 20 && $date['mon'] > 2)) {
+      $dateNow = new DateTime("now");
+      $tabConfig = $this->dao->getConfiguration();
+      $dateDebutEtu = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
+      $dateLimitEtu = new DateTime((string)$tabConfig['dateFinInscription']);
+      if ($dateNow < $dateLimitEtu || $dateNow >= $dateDebutEtu) {
         $this->ctrlInscriptionEtu->inscriptionEtu();
         return;
       }
   	}
 
   	if (isset($_GET['inscriptionEnt'])) {
-      $date = getdate();
-      if ($date['mday'] < 22 && $date['mon'] < 4) {
+      $dateNow = new DateTime("now");
+      $tabConfig = $this->dao->getConfiguration();
+      $dateDebutEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEnt']);
+      $dateLimitEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
+      if ($dateNow < $dateLimitEnt && $dateNow >= $dateDebutEnt) {
         $this->ctrlInscriptionEnt->inscriptionEnt();
         return;
       }
   	}
 
     if (isset($_GET['choix']) && isset($_SESSION['type_connexion']) && isset($_GET['menu'])) {
-      if ($_SESSION['type_connexion'] == "entreprise" && ($_GET['menu'] > 3 || $_GET['menu'] < 1)) {
+      if ($_SESSION['type_connexion'] == "entreprise" && ($_GET['menu'] > 2 || $_GET['menu'] < 1)) {
          $_SESSION['fail'] = "Êtes-vous perdu(e) ? Il semblerait qu'un imprévu<br/>soit arrivé. Refaites donc votre choix pour retrouver<br/>vos marques.";
          $this->ctrlLost->genererLost();
          return;
@@ -470,7 +489,7 @@ class Routeur {
             return;
       }
       else {
-        $_SESSION['fail'] = "Cet email n'existe pas dans notre base de données ou n'a pas été validé. Si vous désirez être informé de l'état de cette validation, veuillez contacter l'administrateur.";
+        $_SESSION['fail'] = "Cet email n'existe pas.";
         $this->ctrlLost->genererLost();
         return;
       }
@@ -498,7 +517,7 @@ class Routeur {
         $this->ctrlLost->genererLost();
         return;
   	}
-    
+
     $this->ctrlAuthentification->authentification();
 
     return;

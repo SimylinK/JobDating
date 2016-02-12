@@ -1,6 +1,6 @@
 <?php
 
-    
+
 require_once 'util/utilitairePageHtml.php';
 
 class VueInscriptionEtu{
@@ -154,7 +154,7 @@ public function afficherFormulaireEtu(){
 				<label for="tel"/> Téléphone (portable de préférence, sans espace. Ex : 0610203040) <span name="obligatoire">*</span>
 				<p id="messageTel" style="color:red"></p>
 				<br/>
-				<input type="text" name="tel" onblur="verifTelephone(this, 'messageTel')" required/>
+				<input type="text" name="tel" maxlength="10" onblur="verifTelephone(this, 'messageTel')" required/>
 				<br/><br/>
 				<!-- Engagement -->
 				<label for="engagement"/> Obligatoire <span name="obligatoire">*</span>

@@ -27,7 +27,7 @@ class ControleurMenu{
  	}
  	if ($pos == 2) {
  		if ($_SESSION['type_connexion'] == "entreprise") {
- 			$this->vue->afficherFormations();
+ 			$this->vue->afficherCompteEnt();
  		}
  		if ($_SESSION['type_connexion'] == "etudiant") {
  			$this->vue->afficherChoix();
@@ -37,9 +37,6 @@ class ControleurMenu{
  		}
  	}
  	if ($pos == 3) {
- 		if ($_SESSION['type_connexion'] == "entreprise") {
- 			$this->vue->afficherCompteEnt();
- 		}
  		if ($_SESSION['type_connexion'] == "etudiant") {
  			$this->vue->afficherEntreprises();
  		}

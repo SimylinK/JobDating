@@ -39,10 +39,9 @@ public function genereVueAuthentification(){
 				</table>
 			</form>
 
-			<p> Le 1 avril 2016, l'IUT de Nantes vous propose de rencontrer nos futurs étudiants en alternance (DUT, Licences Professionnelles et DCG).
-				Si vous êtes intéressés, nous organiserons les entretiens sur inscription : vous avez donc l'assurance de rencontrer des candidats motivés et correspondant au profil que vous recherchez.
-			</p>
-			<br/>
+			<p> <span style="font-size:16px; color: #8A2908; font-weight: bold;">Entreprises, étudiants, nous vous proposons d'échanger à l'occasion de
+cette journée "Rencontres Alternance".</span> <!-- police sup, couleur #8A2908, gras-->
+			<br/><br/>
 			<table style="width: 80%; margin: auto; text-align: center;">
 				<tr>
 					<td>
@@ -50,31 +49,50 @@ public function genereVueAuthentification(){
 					$dao = new Dao();
 					$dateNow = new DateTime("now");
 		      $tabConfig = $dao->getConfiguration();
+					$textDateDebutEtu = explode("-",$tabConfig['dateDebutInscriptionEtu']);
+					$textDateDebutEnt = explode("-",$tabConfig['dateDebutInscriptionEnt']);
 		      $dateDebutEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEnt']);
 		      $dateLimitEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
 		      $dateDebutEtu = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
 		      $dateLimitEtu = new DateTime((string)$tabConfig['dateFinInscription']);
 
-						if ($dateNow < $dateDebutEtu || $dateNow >= $dateLimitEtu){
-							echo '<span style="opacity: 0.5">Inscription étudiant</span>';
+						if ($dateNow >= $dateLimitEtu){
+							echo '<span style="opacity: 0.5">Inscription étudiant terminée</span>';
+						}
+						elseif ($dateNow < $dateDebutEtu) {
+							echo '<span style="opacity: 0.5">Inscription étudiant à venir le '.$textDateDebutEtu[2].'/'.$textDateDebutEtu[1].'</span>';
 						}
 						else {
-							echo '<a href="index.php?inscriptionEtu=1">Inscription étudiant</a>';
+							echo '<a href="index.php?inscriptionEtu=1">Inscription étudiant</a> <br/><br/> <b><span style="color: #8A2908; font-size: 12px;"> Venez échanger avec vos futurs employeurs !</span></b>'; // gras
 						}
 					?>
 					<br/><br/>
 					<?php
-						if ($dateNow >= $dateLimitEnt || $dateNow < $dateDebutEnt) {
-							echo '<span style="opacity: 0.5">Inscription entreprise</span>';
+						if ($dateNow >= $dateLimitEnt) {
+							echo '<span style="opacity: 0.5">Inscription entreprise terminée</span>';
+						}
+						elseif ($dateNow < $dateDebutEnt) {
+							echo '<span style="opacity: 0.5">Inscription entreprise à venir le '.$textDateDebutEnt[2].'/'.$textDateDebutEnt[1].'</span>';
 						}
 						else {
-							echo '<a href="index.php?inscriptionEnt=1">Inscription entreprise</a></td>';
+							echo '<a href="index.php?inscriptionEnt=1">Inscription entreprise</a> <br/><br/> <b><span style="color: #8A2908; font-size: 12px;">Venez à la rencontre de vos futurs collaborateurs en alternance !</span></b></td>'; // gras
 						}
 					?>
 				</tr>
 			</table>
-			<br/><br/><br/>
+			<span style="font-size: 14px;"><br/><br/><br/><!-- couleur #8A2908 -->
+			Nous restons à votre disposition pour toutes informations
+			complémentaires :
+			<br/><br/>
+			- Tifenn Corbel - Relations entreprises : 02 28 09 20 74 - 02 40 30 60
+87 - 06 86 11 02 85
+			<br/><br/>
+			- Sylvie Gaborit -  Formation continue et apprentissage : 02 40 30 60 62
+			- 02 28 09 22 09</span>
 	</div>
+	<br/><br/>
+	<a style="font-size: 14px;" href="mailto:Tifenn.Corbel@univ-nantes.fr">Contacter l'administrateur</a>
+	<br/><br/><br/>
 	<?php
 
 	echo $util->generePied();

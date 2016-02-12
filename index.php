@@ -14,14 +14,11 @@ Utilisateur : info2-2015-jobda
 Mdp : jobdating
 Login admin : JobMeetAdmin
 Mdp admin : OnqUJa4m2
-*/
 
-/*
-	TODO
-	Formation cas
-	nbFormations % nbSessions != 0
-	nbSessions % nbFormations != 0
-
-	Indiquer / bloquer dans les formulaires
+TODO
+Admin -> ajouter possibilité d'édition
+	-> pour mdp, envoi en brut
+Si édition de formation -> vérifier les choix des étudiants
+Penser à trier le DAO (plusieurs fichiers de DAO comme daoEtudiant, daoEntreprise...)
 */
 ?>

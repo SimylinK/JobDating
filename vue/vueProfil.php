@@ -89,9 +89,11 @@ public function afficherProfil($type,$profil){
     $dao = new Dao();
     $id = $profil->getID();
 
-    $listeFormation = $dao -> getFormationsAffichage($id);
-    $formation = "Formation";
-    $formation::afficherForm($listeFormation);
+    if ($_SESSION['type_connexion'] == "admin") {
+			$listeFormation = $dao -> getFormationsAffichage($id);
+	    $formation = "Formation";
+	    $formation::afficherForm($listeFormation);
+		}
 	}
 
 ?>

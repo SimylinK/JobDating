@@ -43,11 +43,6 @@ private function itemsBandeauApresConnexion(){
         </a>
         <a href="index.php?choix=ok&menu=2">
         <div class="onglet_ent">
-            Formations
-        </div>
-        </a>
-        <a href="index.php?choix=ok&menu=3">
-        <div class="onglet_ent">
             Compte
         </div>
         </a>

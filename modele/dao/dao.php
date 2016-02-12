@@ -204,6 +204,30 @@ class Dao
     }
   }
 
+  public function estValide($login) {
+    $typeUser = $this->getTypeUtilisateur($login);
+    if ($typeUser == "etudiant") {
+      $typeMail = "mailEtu";
+    }
+    elseif ($typeUser == "entreprise") {
+      $typeMail = "mailEnt";
+    }
+    elseif ($typeUser == "admin") {
+      return true;
+    }
+    else {
+      return false;
+    }
+    $this->connexion();
+    $statement = $this->connexion->prepare('SELECT * FROM '.$typeUser.' WHERE '.$typeMail.'="'.$login.'";');
+    $statement->execute();
+    $tabResult = $statement->fetch();
+    if (isset($tabResult['IDEnt']) || isset($tabResult['IDEtu'])) {
+      return true;
+    }
+    return false;
+  }
+
   public function estInscrit($login) {
     $this->connexion();
     $statement = $this->connexion->prepare('SELECT * FROM etudiant WHERE mailEtu="'.$login.'";');
