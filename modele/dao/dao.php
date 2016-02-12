@@ -1340,17 +1340,11 @@ class Dao
             $result = $statement->fetch();
             $login = $result['mailEnt'];
             $statement = $this->connexion->prepare("UPDATE temp_entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
-            if ($this -> verifieMotDePasse($login, $old)) {
               $this->connexion();
               $statement = $this->connexion->prepare("UPDATE temp_entreprise SET mdpEnt='".crypt($new)."' WHERE IDEnt = ".$id.";");
               $statement->execute();
               $this->deconnexion();
               return;
-            }
-            else {
-              echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
-              return;
-            }
           }
           else {
             $this->connexion();
