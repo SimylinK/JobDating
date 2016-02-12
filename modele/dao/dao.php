@@ -87,6 +87,10 @@ class Dao
   # editFormationEtudiant($id,$new)
   # editChoixEtudiant($id,$new)
   # editMdpEtudiant($id,$new,$old)
+  # editDateDebutInscriptionEnt($new)
+  # editDateDebutInscriptionEtu($new)
+  # editDateFinInscription($new)
+  # editDateDebutVuePlanning($new)
   # supprimerFormation($idEntreprise)
 
 
@@ -1191,6 +1195,38 @@ class Dao
           echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
           return;
         }
+      }
+
+      function editDateDebutInscriptionEnt($new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE scriptconfig SET dateDebutInscriptionEnt = '".$new."' ;");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+
+      function editDateDebutInscriptionEtu($new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE scriptconfig SET dateDebutInscriptionEtu = '".$new."' ;");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+
+      function editDateFinInscription($new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE scriptconfig SET dateFinInscription = '".$new."' ;");
+        $statement->execute();
+        $this->deconnexion();
+        return;
+      }
+
+      function editDateDebutVuePlanning($new) {
+        $this->connexion();
+        $statement = $this->connexion->prepare("UPDATE scriptconfig SET dateDebutVuePlanning = '".$new."' ;");
+        $statement->execute();
+        $this->deconnexion();
+        return;
       }
 
       public function supprimerFormation($idEntreprise){

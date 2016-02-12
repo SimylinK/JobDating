@@ -420,6 +420,10 @@ public function afficherComptes() {
 		$nbCreneauxMatin = $tabConfig['nbCreneauxMatin'];
 		$nbCreneauxAprem = $tabConfig['nbCreneauxAprem'];
 		$dureeCreneau = $tabConfig['dureeCreneau'];
+		$dateDebutInscriptionEtu = $tabConfig['dateDebutInscriptionEtu'];
+		$dateDebutInscriptionEnt = $tabConfig['dateDebutInscriptionEnt'];
+		$dateFinInscription = $tabConfig['dateFinInscription'];
+		$dateDebutVuePlanning = $tabConfig['dateDebutVuePlanning'];
 	?>
 	<!DOCTYPE html>
 	<html>
@@ -439,6 +443,10 @@ public function afficherComptes() {
 			<br/><br/>Les emplois du temps débuteront l\'après-midi à : '.$heureDebutAprem.'.
 			<br/><br/>Il y aura '.$nbCreneauxMatin.' créneau(x) le matin et '.$nbCreneauxAprem.' l\'après-midi.
 			<br/><br/>Chaque créneau dure '.$dureeCreneau.' minutes.
+			<br/><br/>Les inscriptions entreprise débutent le '.$dateDebutInscriptionEnt.'.
+			<br/><br/>Les inscriptions étudiant débutent le '.$dateDebutInscriptionEtu.'.
+			<br/><br/>Les inscriptions se terminent le '.$dateFinInscription.'.
+			<br/><br/>Les plannings seront visibles à partir du '.$dateDebutInscriptionEnt.'.
 			';
 		?>
 
@@ -454,6 +462,14 @@ public function afficherComptes() {
 			<label>Nombre de créneaux dans l'après-midi : </label><input type="text" name="nbCreneauxAprem"/>
 			<br/><br/>
 			<label>Durée en minutes d'un créneau : </label><input type="text" name="dureeCreneau"/>
+			<br/><br/>
+			<label>Début des inscriptions entreprises (format YYYY-MM-DD) : </label><input type="text" name="dateDebutInscriptionEnt"/>
+			<br/><br/>
+			<label>Deadline inscription entreprises / début inscriptions étudiants (format YYYY-MM-DD) : </label><input type="text" name="dateDebutInscriptionEtu"/>
+			<br/><br/>
+			<label>Deadline inscriptions étudiants (format YYYY-MM-DD) : </label><input type="text" name="dateFinInscription"/>
+			<br/><br/>
+			<label>Date visibilité du planning (format YYYY-MM-DD): </label><input type="text" name="dateDebutVuePlanning"/>
 			<br/><br/>
 			<input type="submit" name="changementConfig" value="Confirmer"/>
 		</form>

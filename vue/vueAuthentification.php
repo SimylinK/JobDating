@@ -1,6 +1,6 @@
 <?php
 
-
+require_once __DIR__."/../modele/dao/dao.php";
 require_once 'util/utilitairePageHtml.php';
 
 class VueAuthentification{
@@ -47,12 +47,16 @@ public function genereVueAuthentification(){
 				<tr>
 					<td>
 					<?php
-					$date = new DateTime("now");
-						$dateLimiteEnt = new DateTime("2016-03-04");
-						$dateDebutEtu = new DateTime("2016-03-05");
-						$dateLimiteEtu = new DateTime("2016-03-19");
-						if ($date <= $dateDebutEtu || $date >= $dateLimiteEtu){
-							echo 'Inscription étudiant (bloquée jusqu\'au 05/03/2016)';
+					$dao = new Dao();
+					$dateNow = new DateTime("now");
+		      $tabConfig = $dao->getConfiguration();
+		      $dateDebutEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEnt']);
+		      $dateLimitEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
+		      $dateDebutEtu = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
+		      $dateLimitEtu = new DateTime((string)$tabConfig['dateFinInscription']);
+
+						if ($dateNow < $dateDebutEtu || $dateNow >= $dateLimitEtu){
+							echo '<span style="opacity: 0.5">Inscription étudiant</span>';
 						}
 						else {
 							echo '<a href="index.php?inscriptionEtu=1">Inscription étudiant</a>';
@@ -60,8 +64,8 @@ public function genereVueAuthentification(){
 					?>
 					<br/><br/>
 					<?php
-						if ($date >= $dateLimiteEnt) {
-							echo 'Inscription entreprise (bloquée depuis le 04/03/2016)';
+						if ($dateNow >= $dateLimitEnt || $dateNow < $dateDebutEnt) {
+							echo '<span style="opacity: 0.5">Inscription entreprise</span>';
 						}
 						else {
 							echo '<a href="index.php?inscriptionEnt=1">Inscription entreprise</a></td>';
@@ -69,7 +73,7 @@ public function genereVueAuthentification(){
 					?>
 				</tr>
 			</table>
-
+			<br/><br/><br/>
 	</div>
 	<?php
 

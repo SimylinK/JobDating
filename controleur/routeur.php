@@ -110,6 +110,18 @@ class Routeur {
       if ($_POST['dureeCreneau'] != "") {
         $this->dao->editDureeCreneau($_POST['dureeCreneau']);
       }
+      if ($_POST['dateDebutInscriptionEnt'] != "") {
+        $this->dao->editDateDebutInscriptionEnt($_POST['dateDebutInscriptionEnt']);
+      }
+      if ($_POST['dateDebutInscriptionEtu'] != "") {
+        $this->dao->editDateDebutInscriptionEtu($_POST['dateDebutInscriptionEtu']);
+      }
+      if ($_POST['dateFinInscription'] != "") {
+        $this->dao->editDateFinInscription($_POST['dateFinInscription']);
+      }
+      if ($_POST['dateDebutVuePlanning'] != "") {
+        $this->dao->editDateDebutVuePlanning($_POST['dateDebutVuePlanning']);
+      }
       $this->ctrlMenu->afficherMenu(3);
       return;
     }
@@ -219,9 +231,11 @@ class Routeur {
 
     if (isset($_POST['inscription'])) {
       $dateNow = new DateTime("now");
-      $dateLimitEnt = new DateTime("2016-03-04");
-      $dateDebutEtu = new DateTime("2016-03-05");
-      $dateLimitEtu = new DateTime("2016-03-19");
+      $tabConfig = $this->dao->getConfiguration();
+      $dateDebutEnt = new DateTime($tabConfig['dateDebutInscriptionEnt']);
+      $dateLimitEnt = new DateTime($tabConfig['dateDebutInscriptionEtu']);
+      $dateDebutEtu = new DateTime($tabConfig['dateFinInscriptionEtu']);
+      $dateLimitEtu = new DateTime($tabConfig['dateFinInscription']);
 
       if (($_POST['inscription'] == "etudiant") && ($dateNow >= $dateDebutEtu && $dateNow <= $dateLimitEtu)) {
         if ($this->dao->ajoutEtudiant()) {
@@ -234,7 +248,7 @@ class Routeur {
       		return;
         }
       }
-      if (($_POST['inscription'] == "entreprise") && ($dateNow <= $dateLimitEnt)) {
+      if (($_POST['inscription'] == "entreprise") && ($dateNow <= $dateLimitEnt && $dateNow >= $dateDebutEnt)) {
         if($this->dao->ajoutEntreprise()) {
         	$this->ctrlConfirmationInscription->genereVueConfirmationInscription();
         	return;
@@ -484,9 +498,10 @@ class Routeur {
         $this->ctrlLost->genererLost();
         return;
   	}
-
-
+    
     $this->ctrlAuthentification->authentification();
+
+    return;
   }
 
 }
