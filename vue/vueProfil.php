@@ -51,6 +51,192 @@ public function afficherProfil($type,$profil){
 		<br/><br/><span class="categorie_profil">Formation :</span> '.$profil->getFormationEtu().'
 
 		';
+
+
+		if ($_SESSION['type_connexion'] == "admin") {
+			$_SESSION['idUser'] = $id;
+			$_SESSION['type_modification'] = $_GET['type'];
+			?>
+			<script>
+	      //On surligne les cases non valides
+	      function surligne(champ, erreur) {
+	      if(erreur)
+	        champ.style.backgroundColor = "#fba";
+	      else
+	        champ.style.backgroundColor = "";
+	      }
+
+	      function verifString(champ, txt, longMax) {
+	        if(champ.value.length > longMax) {
+	          surligne(champ, true);
+	          document.getElementById(txt).innerHTML = longMax + " caractères maximum autorisé";
+	          return true;
+	        } else {
+	          surligne(champ, false);
+	          document.getElementById(txt).innerHTML = "";
+	          return false;
+	        }
+	      }
+
+	      function verifNombre(champ, txt, longMax) {
+	        if(champ.value.length > longMax || (!/^\d+$/.test(champ.value) && champ.value.length != 0)) {
+	          surligne(champ, true);
+	          document.getElementById(txt).innerHTML = "Un nombre de taille maximum " + longMax + " est attendu";
+	          return true;
+	        } else {
+	          surligne(champ, false);
+	          document.getElementById(txt).innerHTML = "";
+	          return false;
+	        }
+	      }
+
+	      function verifTelephone(champ, txt) {
+	        if(champ.value.length != 10 || !/^\d+$/.test(champ.value)) {
+	          surligne(champ, true);
+	          document.getElementById(txt).innerHTML = "Format invalide";
+	          return true;
+	        } else {
+	          surligne(champ, false);
+	          document.getElementById(txt).innerHTML = "";
+	          return false;
+	        }
+	      }
+
+
+	      function verifEmail(champ, txt){
+	        var reg = new RegExp("^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$", "i");
+	        if(!reg.test(champ.value)) {
+	          surligne(champ, true);
+	          document.getElementById(txt).innerHTML = "L\'e-mail n\'est pas valide.";
+	          return true;
+	        } else {
+	          surligne(champ, false);
+	          document.getElementById(txt).innerHTML = "";
+	          return false;
+	        }
+	      }
+
+	      function verifMdp(txt){
+	        var passw = document.getElementById("passw");
+					var passwBis = document.getElementById("passwBis");
+	        if (passw.value != passwBis.value) {
+	          surligne(passw, true);
+	          surligne(passwBis, true);
+	          document.getElementById(txt).innerHTML = "Les 2 valeurs sont différentes";
+	          return true;
+	        } else if (passw.value.length > 20 || passw.value.length < 5) {
+	          surligne(passw, true);
+	          surligne(passwBis, true);
+	          document.getElementById(txt).innerHTML = "Le mot de passe doit faire 5 à 20 caractères";
+	          return true;
+	        } else {
+	          surligne(passw, false);
+	          surligne(passwBis, false);
+	          document.getElementById(txt).innerHTML = "";
+	          return false;
+	        }
+	      }
+	      </script>
+
+
+				<script type="text/javascript">
+					EnableSubmit = function(val)
+					{
+					    var sbmt = document.getElementById("submit");
+
+					    if (val.checked == true)
+					    {
+					        sbmt.disabled = false;
+					    }
+					    else
+					    {
+					        sbmt.disabled = true;
+					    }
+					}
+				</script>
+				<script>
+				VerifSubmit = function()
+					{
+					html = html.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+					var passw = document.getElementById("passw");
+					var passwBis = document.getElementById("passwBis");
+						if (passw.value != passwBis.value) {
+								alert("Les mots de passe ne coïncident pas.");
+						        return false;
+						}
+						if (/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(document.getElementById("mail").value))
+						  {
+						    return true;
+						  }
+						  else {
+						  	alert("L\'adresse email n'est pas correcte !");
+						 	return false;
+						  }
+					}
+				</script>
+			<?php
+			echo'
+
+			<!--Les scripts pour vérifier chaque case-->
+
+			<br></br></br></br>
+			----------------------------------------------------<br/><br/>
+
+			<h2>Pour effectuer des changements : </h2>
+
+			<style>
+			#tabModifEnt tr td{
+	    padding: 15px;
+	    border: 1px solid navy;
+			}
+			</style>
+
+			<form action="index.php" method="post" onSubmit="return VerifSubmit();">
+			<TABLE id="tabModifEnt">
+		  	<CAPTION> Identité </CAPTION>
+		  	<TR>
+		 			<TD> <label for="nomEtu"/> Nom
+					<br/>
+					<input required type="text" name="nomEtu" value="'.$profil->getNomEtu().'" onblur="verifString(this, \'messageNomEtu\', 20)">
+					<p id="messageNomEtu" style="color:red"></p>
+					<br/><br/>
+					<label for="prenomEtu"/> Prénom
+					<br/>
+					<input required type="text" name="prenomEtu" value="'.$profil->getPrenomEtu().'" onblur="verifString(this, \'messagePrenomEtu\', 20)">
+					<p id="messagePrenomEtu" style="color:red"></p>
+					<br/><br/>
+					<label for="email"/> Adresse e-mail
+					<br/>
+					<input required type="text" name="email" value="'.$profil->getMailEtu().'" onblur="verifEmail(this, \'messageEmail\')">
+		 			<p id="messageEmail" style="color:red"></p>
+					<br/><br/>
+					<label for="numTelEtu"/> Téléphone
+					<br/>
+		 			<input required type="text" name="numTelEtu" value="'.$profil->getNumTelEtu().'" onblur="verifTelephone(this, \'messageTel\')"> </TD>
+		 			<p id="messageTel" style="color:red"></p>
+		 			<TD> 	<input type="submit" name="modification_etudiant_identite" value="confirmer"/> </TD>
+			</TABLE>
+			</form>
+
+			<form action="index.php" method="post" >
+			<TABLE id="tabModifEnt">
+		  	<CAPTION> Modifier le mot de passe </CAPTION>
+		  	<TR>
+		 			<TD>
+					<br/>
+					<label for="mdpNouveau1"/> Nouveau mot de passe
+					<br/>
+					<input required type="password" name="mdpNouveau1" id="passw">
+					<br/><br/>
+					<label for="mdpNouveau2"/> Confirmez
+					<br/>
+					<input required type="password" name="mdpNouveau2" onblur="verifMdp(\'messageMdp\')" id="passwBis"> </TD>
+					<p id="messageMdp" style="color:red"></p>
+		 			<TD> 	<input type="submit" name="modification_etudiant_motdepasse" value="confirmer"/> </TD>
+			</TABLE>
+			</form>
+			<br/><br/><br/>';
+		}
 	}
 	if ($type=="entreprise") {
 		$dispo = "";

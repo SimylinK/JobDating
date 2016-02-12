@@ -1332,7 +1332,6 @@ class Dao
 
       public function editMdpEntreprise($id,$new,$old) {
         if ($_SESSION['type_connexion'] == "admin") {
-          //TODO
           if ($_SESSION['type_modification'] == "tmpEnt") {
             $this->connexion();
             $statement = $this->connexion->prepare('SELECT mailEnt FROM temp_entreprise WHERE IDEnt ='.$id.';');
@@ -1390,14 +1389,34 @@ class Dao
 
       public function editNomEtudiant($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE etudiant SET nomEtu='".$new."' WHERE IDEtu = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEtu") {
+            $statement = $this->connexion->prepare("UPDATE temp_etudiant SET nomEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE etudiant SET nomEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE etudiant SET nomEtu='".$new."' WHERE IDEtu = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
       }
       public function editPrenomEtudiant($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE etudiant SET prenomEtu='".$new."' WHERE IDEtu = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEtu") {
+            $statement = $this->connexion->prepare("UPDATE temp_etudiant SET prenomEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE etudiant SET prenomEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE etudiant SET prenomEtu='".$new."' WHERE IDEtu = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
@@ -1405,7 +1424,17 @@ class Dao
       public function editMailEtudiant($id,$new) {
         if (!$this->estInscrit($new)) {
           $this->connexion();
-          $statement = $this->connexion->prepare("UPDATE etudiant SET mailEtu='".$new."' WHERE IDEtu = ".$id.";");
+          if (isset($_SESSION['type_modification'])) {
+            if ($_SESSION['type_modification'] == "tmpEtu") {
+              $statement = $this->connexion->prepare("UPDATE temp_etudiant SET mailEtu='".$new."' WHERE IDEtu = ".$id.";");
+            }
+            else {
+              $statement = $this->connexion->prepare("UPDATE etudiant SET mailEtu='".$new."' WHERE IDEtu = ".$id.";");
+            }
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE etudiant SET mailEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
           $statement->execute();
           $this->deconnexion();
         }
@@ -1413,14 +1442,34 @@ class Dao
       }
       public function editTelephoneEtudiant($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE etudiant SET numtelEtu='".$new."' WHERE IDEtu = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEtu") {
+            $statement = $this->connexion->prepare("UPDATE temp_etudiant SET numtelEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE etudiant SET numtelEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE etudiant SET numtelEtu='".$new."' WHERE IDEtu = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
       }
       public function editFormationEtudiant($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE etudiant SET formationEtu='".$new."' WHERE IDEtu = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEtu") {
+            $statement = $this->connexion->prepare("UPDATE temp_etudiant SET formationEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE etudiant SET formationEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE etudiant SET formationEtu='".$new."' WHERE IDEtu = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
@@ -1428,29 +1477,75 @@ class Dao
 
       public function editChoixEtudiant($id,$new) {
         $this->connexion();
-        $statement = $this->connexion->prepare("UPDATE etudiant SET listechoixEtu='".$new."' WHERE IDEtu = ".$id.";");
+        if (isset($_SESSION['type_modification'])) {
+          if ($_SESSION['type_modification'] == "tmpEtu") {
+            $statement = $this->connexion->prepare("UPDATE temp_etudiant SET listechoixEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+          else {
+            $statement = $this->connexion->prepare("UPDATE etudiant SET listechoixEtu='".$new."' WHERE IDEtu = ".$id.";");
+          }
+        }
+        else {
+          $statement = $this->connexion->prepare("UPDATE etudiant SET listechoixEtu='".$new."' WHERE IDEtu = ".$id.";");
+        }
         $statement->execute();
         $this->deconnexion();
         return;
       }
 
       public function editMdpEtudiant($id,$new,$old) {
-        $this->connexion();
-        $statement = $this->connexion->prepare('SELECT mailEtu FROM etudiant WHERE IDEtu ='.$id.';');
-        $statement->execute();
-        $this->deconnexion();
-        $result = $statement->fetch();
-        $login = $result['mailEtu'];
-        if ($this -> verifieMotDePasse($login, $old)) {
-          $this->connexion();
-          $statement = $this->connexion->prepare("UPDATE etudiant SET mdpEtu='".crypt($new)."' WHERE IDEtu = ".$id.";");
-          $statement->execute();
-          $this->deconnexion();
-          return;
+        if ($_SESSION['type_connexion'] == "admin") {
+          if ($_SESSION['type_modification'] == "tmpEtu") {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT mailEtu FROM temp_etudiant WHERE IDEtu ='.$id.';');
+            $statement->execute();
+            $result = $statement->fetch();
+            $login = $result['mailEtu'];
+            $statement = $this->connexion->prepare("UPDATE temp_etudiant SET mdpEtu='".crypt($new)."' WHERE IDEtu = ".$id.";");
+              $this->connexion();
+              $statement = $this->connexion->prepare("UPDATE temp_etudiant SET mdpEtu='".crypt($new)."' WHERE IDEtu = ".$id.";");
+              $statement->execute();
+              $this->deconnexion();
+              return;
+          }
+          else {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT mailEtu FROM etudiant WHERE IDEtu ='.$id.';');
+            $statement->execute();
+            $result = $statement->fetch();
+            $login = $result['mailEtu'];
+            $statement = $this->connexion->prepare("UPDATE etudiant SET mdpEtu='".crypt($new)."' WHERE IDEtu = ".$id.";");
+            if ($this -> verifieMotDePasse($login, $old)) {
+              $this->connexion();
+              $statement = $this->connexion->prepare("UPDATE etudiant SET mdpEtu='".crypt($new)."' WHERE IDEtu = ".$id.";");
+              $statement->execute();
+              $this->deconnexion();
+              return;
+            }
+            else {
+              echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
+              return;
+            }
+          }
         }
         else {
-          echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
-          return;
+          $$this->connexion();
+          $statement = $this->connexion->prepare('SELECT mailEtu FROM etudiant WHERE IDEtu ='.$id.';');
+          $statement->execute();
+          $result = $statement->fetch();
+          $login = $result['mailEtu'];
+          $statement = $this->connexion->prepare("UPDATE etudiant SET mdpEtu='".crypt($new)."' WHERE IDEtu = ".$id.";");
+          if ($this -> verifieMotDePasse($login, $old)) {
+            $this->connexion();
+            $statement = $this->connexion->prepare("UPDATE etudiant SET mdpEtu='".crypt($new)."' WHERE IDEtu = ".$id.";");
+            $statement->execute();
+            $this->deconnexion();
+            return;
+          }
+          else {
+            echo '<script>alert("Attention votre mot de passe ne correspond pas : le changement n\'est pas pris en compte.");</script>';
+            return;
+          }
         }
       }
 
