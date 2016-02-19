@@ -51,6 +51,76 @@ public function afficherPlanningEnt(){
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés la troisième semaine du mois de mars.
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
+	<!--tableau entretients des entreprises par formations
+		Il reste a faire en sorte que l'entreprise concernée voit les lignes qui la concerne et pas les autres entreprises--> 		
+			<table id="tableEntFormation">
+				<tr>
+				<td colspan= 1> Formation </td>
+				<?php
+				echo'<td colspan= '.$tabConfig["nbCreneauxMatin"].'> Matin </td>';
+				echo'<td colspan= 1> Pause midi </td>';
+				echo'<td colspan= '.$tabConfig["nbCreneauxAprem"].'> Après-midi </td>';
+				?>
+			</tr>
+			<?php
+
+			echo'<tr>';
+			
+			echo'<td> </td>';
+
+			//Les horaires
+			$duree = $tabConfig["dureeCreneau"];
+			$heureString = $tabConfig["heureDebutMatin"];
+			$heureString = explode(':', $heureString);
+			$heure = $heureString[0];
+			$min = $heureString[1];
+			for($i = 0; $i <= $nbCreneaux; $i++) {
+				if ($i == $pauseMidi) {
+					echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					$heureString = $tabConfig["heureDebutAprem"];
+					$heureString = explode(':', $heureString);
+					$heure = $heureString[0];
+					$min = $heureString[1];
+				} else {
+					echo'<td>' . $heure . ' : ';
+					if ($min == 0)
+						echo '00';
+					else
+						echo $min;
+					echo'</td>';
+					$min += $duree;
+					if($min == 60) {
+						$min = 0;
+						$heure++;
+					}
+				}
+			}
+			echo'</tr>';
+			foreach ($tabEnt as $ent) {
+				$tabForm = $dao -> getFormationsEntreprise($ent -> getID());
+			foreach ($tabForm as $form) {
+				echo '<tr>';
+				echo '<td>'
+				.$form['typeFormation'].
+				'</td>';
+				;
+				for($i = 0; $i < $nbCreneaux; $i++) {
+					if ($i == $pauseMidi) {
+						echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					}
+					echo '
+					<td>'
+					.
+					$dao -> getNomEtudiant($dao -> getCreneau($i, $form['IDformation'])).
+					'</td> ';
+				}
+			}
+			echo '</tr>';
+		}
+
+			?>
+			</table>
+			</html>
 		<?php
 
 	}
