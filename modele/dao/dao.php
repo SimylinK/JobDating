@@ -94,7 +94,7 @@ class Dao
   # editDateDebutVuePlanning($new)
   # supprimerFormation($idEntreprise)
 
-
+//'mysql:host=localhost;charset=UTF8;dbname=info2-2015-jobdating',"info2-2015-jobda","jobdating"
 
   // 	permet d'ouvrir une connexion avec le sgbd
 
@@ -104,7 +104,7 @@ class Dao
     try
     {
       //connection
-      $this->connexion = new PDO('mysql:host=localhost;charset=UTF8;dbname=info2-2015-jobdating',"info2-2015-jobda","jobdating");	//on se connecte au sgbd
+      $this->connexion = new PDO('mysql:host=localhost;charset=UTF8;dbname=jobdating',"root","");	//on se connecte au sgbd
       $this->connexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);	//on active la gestion des erreurs et d'exceptions
     }
     catch(PDOException $e)
@@ -879,6 +879,109 @@ class Dao
             print($e -> getMessage());
           }
         }
+
+
+
+
+        /*Fonction qui renvoie IDFormation d'un creneau*/
+        public function getFormationCreneau($numeroCreneau, $idEtudiant)  {
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT idFormation FROM creneau WHERE numeroCreneau = "'.$numeroCreneau.'" AND idEtudiant = "'.$idEtudiant.'";');
+            $statement->execute();
+
+            if ($tabResult = $statement->fetch()) {
+              $ret = $tabResult['idFormation'];
+
+            } else {
+              $ret = False;
+            }
+            $this->deconnexion();
+            //var_dump($ret);
+            return $ret;
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
+
+        /*Fonction qui permet de récupérer l'ID de l'entreprise à partir de l'ID de la formation*/
+        public function getIDEntIDform($idform) {
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT entPropose FROM formation WHERE IDformation = "'.$idform.'";');
+            $statement->execute();
+            if ($tabResult = $statement->fetch()) {
+              $ret = $tabResult['entPropose'];
+            } else {
+              $ret = False;
+            }
+            $this->deconnexion();
+            return $ret;
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
+
+        /*Fonction qui renvoie l'ID de toutes les formations*/
+        public function getIDFormationsEntreprise($entreprise)  {
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT IDformation FROM formation where entPropose = "'.$entreprise.'";');
+            $statement->execute();
+            $tabResult = $statement->fetchAll();
+            $this->deconnexion();
+            return $tabResult;
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
+
+        /*Fonction qui renvoie le type de formation + l'ID formation à partir de l'ID formation */
+        public function getIDTypeFormation($idform)  {
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT IDformation, typeFormation FROM formation where IDformation = "'.$idform.'";');
+            $statement->execute();
+            $tabResult = $statement->fetchAll();
+            $this->deconnexion();
+            return $tabResult;
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
+
+        /*Fonction qui permet de récupérer toutes les formations*/
+        public function getAllFormations() {
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT IDformation, typeFormation FROM formation;');
+            $statement->execute();
+            $tabResult = $statement->fetchAll();
+            $this->deconnexion();
+            return $tabResult;
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
+
+        public function getNomEntreprise($idEnt)  {
+          try {
+            $this->connexion();
+            $statement = $this->connexion->prepare('SELECT nomEnt FROM entreprise WHERE IDEnt = "'.$idEnt.'";');
+            $statement->execute();
+            $this->deconnexion();
+            if ($result = $statement->fetch()) {
+              return $result['nomEnt'];
+            } else {
+              return "-----------";
+            }
+          } catch (TableAccesException $e) {
+            print($e -> getMessage());
+          }
+        }
+
+
+
 
         //Pour la table formation
         public function ajoutFormation($typeFormation, $entPropose, $creneauDebut, $creneauFin) {
