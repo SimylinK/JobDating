@@ -28,15 +28,145 @@ public function afficherPlanningEtu(){
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés la troisième semaine du mois de mars.
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
-		<?php
 
-		$dao = new dao();
-		$dao->connexion();
-		$id = $_SESSION['idUser'];
-		$tabprofil = $dao->getEtu($id);
-		$profil = $tabprofil[0];
-		print $dao->getFormationEtudiant($id);
-		$dao->deconnexion();
+		<table id="tableEtuRencontre">
+				<tr>
+				<td colspan= 1> Formation </td>
+				<?php
+					$dao = new Dao();
+	   				$tabConfig = $dao -> getConfiguration();
+
+					$dao = new dao();
+					$id = $_SESSION['idUser'];
+					$tabprofil = $dao->getEtu($id);
+					$profil = $tabprofil[0];
+
+					$nbCreneaux = $tabConfig["nbCreneauxAprem"] + $tabConfig["nbCreneauxMatin"];
+					$pauseMidi = $tabConfig["nbCreneauxMatin"];
+
+				echo'<td colspan= '.$tabConfig["nbCreneauxMatin"].'> Matin </td>';
+				echo'<td colspan= 1> Pause midi </td>';
+				echo'<td colspan= '.$tabConfig["nbCreneauxAprem"].'> Après-midi </td>';
+				?>
+			</tr>
+			<?php
+
+			echo'<tr>';
+			
+			echo'<td> </td>';
+
+			//Les horaires
+			$duree = $tabConfig["dureeCreneau"];
+			$heureString = $tabConfig["heureDebutMatin"];
+			$heureString = explode(':', $heureString);
+			$heure = $heureString[0];
+			$min = $heureString[1];
+			for($i = 0; $i <= $nbCreneaux; $i++) {
+				if ($i == $pauseMidi) {
+					echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					$heureString = $tabConfig["heureDebutAprem"];
+					$heureString = explode(':', $heureString);
+					$heure = $heureString[0];
+					$min = $heureString[1];
+				} else {
+					echo'<td>' . $heure . ' : ';
+					if ($min == 0)
+						echo '00';
+					else
+						echo $min;
+					echo'</td>';
+					$min += $duree;
+					if($min == 60) {
+						$min = 0;
+						$heure++;
+					}
+				}
+			}
+			echo'</tr>';
+				$tabForm = $dao -> getFormationsEntreprise($id);
+			foreach ($tabForm as $form) {
+					echo '<tr>';
+					echo '<td>'.$form['typeFormation'].'</td>';
+				for($i = 0; $i < $nbCreneaux; $i++) {
+					if ($i == $pauseMidi) {
+						echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					}
+					echo '<td>'.$dao -> getNomEtudiant($dao -> getCreneau($i, $form['IDformation'])).'</td> ';
+				}
+			}
+			echo '</tr>';
+		
+
+			?>
+			</table>
+			</html>
+		<?php
+	---------------------------- A CONTINUER
+
+		<table id="tabPlanningEtu">
+
+					<?php
+					$tabEtu = $dao -> getAllEtudiants();
+					$tmp = $nbCreneaux + 3; //Nombres de créneaux + colonne entreprise, formation et pause midi
+					?>
+			<tr>
+				<td colspan= 1> Etudiant </td>
+				<?php
+				echo'<td colspan= '.$tabConfig["nbCreneauxMatin"].'> Matin </td>';
+				echo'<td colspan= 1> Pause midi </td>';
+				echo'<td colspan= '.$tabConfig["nbCreneauxAprem"].'> Après-midi </td>';
+				?>
+			</tr>
+
+			<?php
+			echo'<tr>';
+			echo'<td> </td>';
+			
+
+			//Les horaires
+			$duree = $tabConfig["dureeCreneau"];
+			$heureString = $tabConfig["heureDebutMatin"];
+			$heureString = explode(':', $heureString);
+			$heure = $heureString[0];
+			$min = $heureString[1];
+			for($i = 0; $i <= $nbCreneaux; $i++) {
+				if ($i == $pauseMidi) {
+					echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					$heureString = $tabConfig["heureDebutAprem"];
+					$heureString = explode(':', $heureString);
+					$heure = $heureString[0];
+					$min = $heureString[1];
+				} else {
+					echo'<td>' . $heure . ' : ';
+					if ($min == 0)
+						echo '00';
+					else
+						echo $min;
+					echo'</td>';
+					$min += $duree;
+					if($min == 60) {
+						$min = 0;
+						$heure++;
+					}
+				}
+			}
+			echo'</tr>';
+			foreach ($tabEtu as $etu) {				
+					echo '<tr id="etudiant">
+					<td><a href="index.php?profil='.$etu->getID().'&type=Etu">'.$etu->getNomEtu().' '.$etu->getPrenomEtu().'</a></td>';
+					for($i = 0; $i < $nbCreneaux; $i++) {
+						
+						if ($i == $pauseMidi) {
+							echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+						}
+							echo '<td id="etudiant">'.$dao -> getNomEntreprise($dao -> getIDEntIDForm($dao->getFormationCreneau($i, $etu->getID()))).'</td> ';
+					}
+				echo '</tr>';
+			}
+			?>
+			</table>
+
+		<?php
 
 	}
 
@@ -59,6 +189,80 @@ public function afficherPlanningEnt(){
 		<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;Les emplois du temps relatifs à cet événement, le vôtre y compris, n'ont toujours pas été générés. Ceux-ci seront générés la troisième semaine du mois de mars.
 		L'administrateur vous en informera lorsque ceux-ci seront disponibles.
 	</div>
+
+	<!--tableau entretients des entreprises par formations
+		Il reste a faire en sorte que l'entreprise concernée voit les lignes qui la concerne et pas les autres entreprises--> 		
+			<table id="tableEntFormation">
+				<tr>
+				<td colspan= 1> Formation </td>
+				<?php
+					$dao = new Dao();
+	   				$tabConfig = $dao -> getConfiguration();
+
+					$dao = new dao();
+					$id = $_SESSION['idUser'];
+					$tabprofil = $dao->getEnt($id);
+					$profil = $tabprofil[0];
+
+					$nbCreneaux = $tabConfig["nbCreneauxAprem"] + $tabConfig["nbCreneauxMatin"];
+					$pauseMidi = $tabConfig["nbCreneauxMatin"];
+
+				echo'<td colspan= '.$tabConfig["nbCreneauxMatin"].'> Matin </td>';
+				echo'<td colspan= 1> Pause midi </td>';
+				echo'<td colspan= '.$tabConfig["nbCreneauxAprem"].'> Après-midi </td>';
+				?>
+			</tr>
+			<?php
+
+			echo'<tr>';
+			
+			echo'<td> </td>';
+
+			//Les horaires
+			$duree = $tabConfig["dureeCreneau"];
+			$heureString = $tabConfig["heureDebutMatin"];
+			$heureString = explode(':', $heureString);
+			$heure = $heureString[0];
+			$min = $heureString[1];
+			for($i = 0; $i <= $nbCreneaux; $i++) {
+				if ($i == $pauseMidi) {
+					echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					$heureString = $tabConfig["heureDebutAprem"];
+					$heureString = explode(':', $heureString);
+					$heure = $heureString[0];
+					$min = $heureString[1];
+				} else {
+					echo'<td>' . $heure . ' : ';
+					if ($min == 0)
+						echo '00';
+					else
+						echo $min;
+					echo'</td>';
+					$min += $duree;
+					if($min == 60) {
+						$min = 0;
+						$heure++;
+					}
+				}
+			}
+			echo'</tr>';
+				$tabForm = $dao -> getFormationsEntreprise($id);
+			foreach ($tabForm as $form) {
+					echo '<tr>';
+					echo '<td>'.$form['typeFormation'].'</td>';
+				for($i = 0; $i < $nbCreneaux; $i++) {
+					if ($i == $pauseMidi) {
+						echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
+					}
+					echo '<td>'.$dao -> getNomEtudiant($dao -> getCreneau($i, $form['IDformation'])).'</td> ';
+				}
+			}
+			echo '</tr>';
+		
+
+			?>
+			</table>
+			</html>
 		<?php
 
 	}
@@ -234,56 +438,18 @@ public function afficherPlanningEnt(){
 				}
 			}
 			echo'</tr>';
-			foreach ($tabEtu as $etu) {
-				
-				
+			foreach ($tabEtu as $etu) {				
 					echo '<tr id="etudiant">
 					<td><a href="index.php?profil='.$etu->getID().'&type=Etu">'.$etu->getNomEtu().' '.$etu->getPrenomEtu().'</a></td>';
-				//$tabForm = $dao -> getAllFormations();	
-				//foreach($tabForm as $form) {	
 					for($i = 0; $i < $nbCreneaux; $i++) {
 						
 						if ($i == $pauseMidi) {
 							echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 						}
-						//var_dump($dao->getIDTypeFormation($dao->getFormationCreneau($i,$etu->getID())) == $form);
-						//var_dump($form);
-						//var_dump($dao->getIDTypeFormation($dao->getFormationCreneau($i,$etu->getID())));
-						//var_dump($etu->getID());
-						//var_dump($dao->getFormationCreneau($i, $etu->getID()));
-						//var_dump($dao -> getIDEntIDForm($dao->getFormationCreneau($i, $etu->getID())));
-						//var_dump($dao -> getNomEntreprise($dao -> getIDEntIDForm($dao->getFormationCreneau($i, $etu->getID()))));
-						//if ($dao->getFormationCreneau($i, $etu->getID()) !== null) {
-							//var_dump($dao->getIDEntIDForm());
 							echo '<td id="etudiant">'.$dao -> getNomEntreprise($dao -> getIDEntIDForm($dao->getFormationCreneau($i, $etu->getID()))).'</td> ';
-						//}
-						//else {
-							//echo '<td> ----- </td>';
-						//}
 					}
-						//echo '</td> ';
-					//}
 				echo '</tr>';
-				//}
 			}
-
-			/*foreach ($tabEnt as $ent) {
-				$tabForm = $dao -> getFormationsEntreprise($ent -> getID());
-				foreach ($tabForm as $form) {
-					echo '<tr id="entreprise">
-					<td><a href="index.php?profil='.$ent->getID().'&type=Ent">'.$ent->getNomEnt().'</a>
-					</td>
-					<td>'.$form['typeFormation'].'</td>';
-					
-					for($i = 0; $i < $nbCreneaux; $i++) {
-						if ($i == $pauseMidi) {
-							echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
-						}
-						echo '<td>'.$dao -> getNomEtudiant($dao -> getCreneau($i, $form['IDformation'])).'</td> ';
-					}
-				}
-					echo '</tr>';
-			}*/
 			?>
 			</table>
 
