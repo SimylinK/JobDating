@@ -1,0 +1,321 @@
+body
+{
+    width: 760px;
+    margin: auto;
+    padding-bottom: 48px;
+
+    background-image: url('../img/fond.jpg');
+    background-repeat: repeat;
+}
+#date
+{
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+
+    margin: auto;
+    margin-top: -24%;
+    margin-left: -74%;
+
+    text-align: center;
+
+    color: white;
+}
+#menu
+{
+    font-size: 18px;
+    line-height: 32px;
+
+    display: block;
+
+    height: 32px;
+    margin-top: 130px;
+
+    text-align: center;
+
+    background-image: linear-gradient(white, #ced8f6);
+}
+#menu a
+{
+    text-decoration: none;
+
+    color: #0b4c5f;
+}
+.onglet
+{
+    display: inline-block;
+
+    width: 19.2%;
+}
+.onglet:hover
+{
+    background-image: linear-gradient(#ced8f6, white);
+}
+.onglet_ent
+{
+    display: inline-block;
+
+    min-width: 32.5%;
+
+    background-image: linear-gradient(white, #ced8f6);
+}
+.onglet_ent:hover
+{
+    background-image: linear-gradient(#ced8f6, white);
+}
+#haut_page
+{
+    width: 760px;
+    height: 238px;
+    margin: auto;
+    margin-top: 28px;
+}
+#login
+{
+    height: 200%;
+    margin-top: 130px;
+
+    background-image: url('../img/blue-stripe-bg.png');
+    background-repeat: repeat;
+}
+#login form
+{
+    padding: 5%;
+}
+#login form table
+{
+    margin: auto;
+}
+#corps
+{
+    margin-top: 130px;
+    padding: 5%;
+    padding-bottom: 72px;
+
+    background-image: url('../img/blue-stripe-bg.png');
+    background-repeat: repeat;
+}
+#mail_new_mdp
+{
+    height: 300px;
+
+    background-image: url('img/blue-stripe-bg.png');
+    background-repeat: repeat;
+}
+#mail_new_mdp form
+{
+    padding: 5%;
+}
+#mail_new_mdp form table
+{
+    margin: auto;
+}
+#main
+{
+    padding-bottom: 32px;
+
+    background-image: url('../img/blue-stripe-bg.png');
+    background-repeat: repeat;
+}
+#main a {
+  text-decoration: none;
+
+  color: black;
+}
+#main a:hover {
+  color: blue;
+}
+#tabEtudiants
+{
+    width: 98%;
+    margin: auto;
+
+    border-collapse: collapse;
+}
+#tabEtudiants tr td
+{
+    text-align: center;
+
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+}
+#tabEtudiants tr:nth-child(odd) {
+  background-color: #D8D8D8;
+}
+
+#tabEtudiants tr:nth-child(even){
+  background-color: #C0C0C0;
+}
+
+#tabEntreprises
+{
+    width: 98%;
+    margin: auto;
+
+    border-collapse: collapse;
+}
+#tabEntreprises tr td
+{
+    text-align: center;
+
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+}
+#tabEntreprises tr:nth-child(odd) {
+  background-color: #D8D8D8;
+}
+
+#tabEntreprises tr:nth-child(even){
+  background-color: #C0C0C0;
+}
+
+#tabStatistiques
+{
+    width: 66%;
+    margin: auto;
+
+    border-collapse: collapse;
+}
+#tabStatistiques tr td
+{
+    width: 50%;
+    padding: 8px;
+
+    text-align: left;
+}
+.categorie_profil
+{
+    font-weight: bold;
+
+    margin-left: .4%;
+
+    text-decoration: underline;
+}
+.titre_profil
+{
+    font-size: 26px;
+    font-weight: bold;
+
+    text-align: center;
+    text-decoration: underline;
+}
+#tabPlanningEnt
+{
+    position: relative;
+    left: -20%;
+    bottom: 10%;
+
+    border-collapse: collapse;
+
+    text-align: center;
+
+    border-width: 1 px;
+    border-style: solid;
+    background-color: #f2f2f2;
+}
+#tabPlanningEnt tr td
+{
+    border-collapse: collapse;
+
+    border-width: 1px;
+    border-style: solid;
+}
+#tabPlanningEnt #entreprise:nth-child(odd) {
+  background-color: #D8D8D8;
+}
+
+#tabPlanningEnt #entreprise:nth-child(even){
+  background-color: #C0C0C0;
+}
+
+#pause_midi {
+  background-color: gray;
+  background: linear-gradient(-45deg, #f2f2f2 25%, #7C7979 25%, #7C7979 50%, #f2f2f2 50%, #f2f2f2 75%, #7C7979 75%, #7C7979);
+  background-size:6px 6px;
+}
+#tabPlanningEnt #titre{
+  background-color: lightgray;
+  text-transform: uppercase;
+}
+#tabFormation
+{
+    position: relative;
+
+    border-collapse: collapse;
+
+    text-align: center;
+
+    border-width: 1 px;
+    border-style: solid;
+    background-color: #f2f2f2;
+}
+#tabFormation tr td
+{
+    border-collapse: collapse;
+
+    border-width: 1px;
+    border-style: solid;
+}
+#tabFormation #formation:nth-child(odd) {
+  background-color: #D8D8D8;
+}
+
+#tabFormation #formation:nth-child(even){
+  background-color: #C0C0C0;
+}
+#tabFormation #titre{
+  background-color: lightgray;
+  text-transform: uppercase;
+}
+[name='obligatoire']
+{
+    color: crimson;
+}
+#lienFormation {
+  text-decoration: none;
+
+  color: #4c4c4c;
+}
+#lienFormation:hover {
+  color: blue;
+}
+
+
+#Lost
+{
+    font-size: 24px;
+
+    margin: auto;
+
+    text-align: center;
+}
+#bas_page
+{
+    font-size: 14px;
+
+    position: fixed;
+    bottom: 0;
+
+    display: inline-block;
+
+    width: 760px;
+    height: 24px;
+    margin: auto;
+
+    text-align: center;
+
+    opacity: .5;
+    background-color: white;
+}
+#bas_page a
+{
+    text-decoration: none;
+
+    color: black;
+}
+#bas_page a:hover
+{
+    opacity: 1.0;
+}
