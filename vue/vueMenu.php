@@ -52,7 +52,7 @@ public function afficherPlanningEtu(){
 			<?php
 
 			echo'<tr>';
-			
+
 			echo'<td> </td>';
 
 			//Les horaires
@@ -95,13 +95,13 @@ public function afficherPlanningEtu(){
 				}
 			}
 			echo '</tr>';
-		
+
 
 			?>
 			</table>
 			</html>
-		<?php
-	---------------------------- A CONTINUER
+
+	//---------------------------- A CONTINUER
 
 		<table id="tabPlanningEtu">
 
@@ -121,7 +121,7 @@ public function afficherPlanningEtu(){
 			<?php
 			echo'<tr>';
 			echo'<td> </td>';
-			
+
 
 			//Les horaires
 			$duree = $tabConfig["dureeCreneau"];
@@ -151,11 +151,11 @@ public function afficherPlanningEtu(){
 				}
 			}
 			echo'</tr>';
-			foreach ($tabEtu as $etu) {				
+			foreach ($tabEtu as $etu) {
 					echo '<tr id="etudiant">
 					<td><a href="index.php?profil='.$etu->getID().'&type=Etu">'.$etu->getNomEtu().' '.$etu->getPrenomEtu().'</a></td>';
 					for($i = 0; $i < $nbCreneaux; $i++) {
-						
+
 						if ($i == $pauseMidi) {
 							echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 						}
@@ -191,7 +191,7 @@ public function afficherPlanningEnt(){
 	</div>
 
 	<!--tableau entretients des entreprises par formations
-		Il reste a faire en sorte que l'entreprise concernée voit les lignes qui la concerne et pas les autres entreprises--> 		
+		Il reste a faire en sorte que l'entreprise concernée voit les lignes qui la concerne et pas les autres entreprises-->
 			<table id="tableEntFormation">
 				<tr>
 				<td colspan= 1> Formation </td>
@@ -215,7 +215,7 @@ public function afficherPlanningEnt(){
 			<?php
 
 			echo'<tr>';
-			
+
 			echo'<td> </td>';
 
 			//Les horaires
@@ -258,7 +258,7 @@ public function afficherPlanningEnt(){
 				}
 			}
 			echo '</tr>';
-		
+
 
 			?>
 			</table>
@@ -365,7 +365,7 @@ public function afficherPlanningEnt(){
 					<td><a href="index.php?profil='.$ent->getID().'&type=Ent">'.$ent->getNomEnt().'</a>
 					</td>
 					<td>'.$form['typeFormation'].'</td>';
-					
+
 					for($i = 0; $i < $nbCreneaux; $i++) {
 						if ($i == $pauseMidi) {
 							echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
@@ -384,7 +384,7 @@ public function afficherPlanningEnt(){
 			<p>
 			</br>
 			</p>
-	    
+
 
 <!--Planning du point de vue des Etudiants-->
 			<table id="tabPlanningEtu">
@@ -408,7 +408,7 @@ public function afficherPlanningEnt(){
 			<?php
 			echo'<tr>';
 			echo'<td> </td>';
-			
+
 
 			//Les horaires
 			$duree = $tabConfig["dureeCreneau"];
@@ -438,11 +438,11 @@ public function afficherPlanningEnt(){
 				}
 			}
 			echo'</tr>';
-			foreach ($tabEtu as $etu) {				
+			foreach ($tabEtu as $etu) {
 					echo '<tr id="etudiant">
 					<td><a href="index.php?profil='.$etu->getID().'&type=Etu">'.$etu->getNomEtu().' '.$etu->getPrenomEtu().'</a></td>';
 					for($i = 0; $i < $nbCreneaux; $i++) {
-						
+
 						if ($i == $pauseMidi) {
 							echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 						}
@@ -455,7 +455,7 @@ public function afficherPlanningEnt(){
 
 
 			<!--tableau entretients des entreprises par formations
-		Il reste a faire en sorte que l'entreprise concernée voit les lignes qui la concerne et pas les autres entreprises--> 		
+		Il reste a faire en sorte que l'entreprise concernée voit les lignes qui la concerne et pas les autres entreprises-->
 			<table id="tableEntFormation">
 				<tr>
 				<td colspan= 1> Formation </td>
@@ -468,7 +468,7 @@ public function afficherPlanningEnt(){
 			<?php
 
 			echo'<tr>';
-			
+
 			echo'<td> </td>';
 
 			//Les horaires
@@ -525,7 +525,7 @@ public function afficherPlanningEnt(){
 			</table>
 
 	    <?php
-	    
+
 			echo $util->generePied();
 			?>
 		</body>
