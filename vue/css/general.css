@@ -256,6 +256,11 @@ body
     background-color: #f2f2f2;
 }
 
+#tabPlanningEtu #nameEtu{
+  text-transform: uppercase;
+  width: 40%;
+}
+
 #tabPlanningEtu tr td
 {
     border-collapse: collapse;
@@ -280,6 +285,8 @@ body
   background-color: lightgray;
   text-transform: uppercase;
 }
+
+
 
 #tableEntFormation
 {

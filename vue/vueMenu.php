@@ -16,7 +16,9 @@ public function afficherPlanningEtu(){
 	<!DOCTYPE html>
 	<html>
 	<head>
+		<script type="text/javascript" src="http://infoweb-ens/~jacquin-c/jquery-1.11.3.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<script type="text/javascript" src="../styleTableau.js"></script>
 		<title></title>
 		<meta charset="UTF-8">
 	</head>
@@ -100,8 +102,7 @@ public function afficherPlanningEtu(){
 			?>
 			</table>
 			</html>
-		<?php
-	---------------------------- A CONTINUER
+		
 
 		<table id="tabPlanningEtu">
 
@@ -177,8 +178,9 @@ public function afficherPlanningEnt(){
 	<!DOCTYPE html>
 	<html>
 	<head>
+		<script type="text/javascript" src="http://infoweb-ens/~jacquin-c/jquery-1.11.3.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
-		<title></title>
+		<script type="text/javascript" src="styleTableau.js"></script>
 		<meta charset="UTF-8">
 	</head>
 	<body>
@@ -274,7 +276,9 @@ public function afficherPlanningEnt(){
 		<!DOCTYPE html>
 		<html>
 		<head>
-			<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<script type="text/javascript" src="http://infoweb-ens/~jacquin-c/jquery-1.11.3.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<script type="text/javascript" src="styleTableau.js"></script>
 			<title></title>
 			<meta charset="UTF-8">
 		</head>
@@ -300,7 +304,9 @@ public function afficherPlanningEnt(){
 	    <!DOCTYPE html>
 	  	<html>
 	  	<head>
-	  		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+	  	<script type="text/javascript" src="http://infoweb-ens/~jacquin-c/jquery-1.11.3.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<script type="text/javascript" src="styleTableau.js"></script>
 	  		<title></title>
 	  		<meta charset="UTF-8">
 	  	</head>
@@ -397,7 +403,7 @@ public function afficherPlanningEnt(){
 					?>
 			</tr>
 			<tr>
-				<td colspan= 1> Etudiant </td>
+				<td colspan= 1 id="nameEtu"> Etudiant </td>
 				<?php
 				echo'<td colspan= '.$tabConfig["nbCreneauxMatin"].'> Matin </td>';
 				echo'<td colspan= 1> Pause midi </td>';
@@ -440,20 +446,20 @@ public function afficherPlanningEnt(){
 			echo'</tr>';
 			foreach ($tabEtu as $etu) {				
 					echo '<tr id="etudiant">
-					<td><a href="index.php?profil='.$etu->getID().'&type=Etu">'.$etu->getNomEtu().' '.$etu->getPrenomEtu().'</a></td>';
+					<td id="nomEtu"><a href="index.php?profil='.$etu->getID().'&type=Etu">'.$etu->getNomEtu().' '.$etu->getPrenomEtu().'</a></td>';
 					for($i = 0; $i < $nbCreneaux; $i++) {
 						
 						if ($i == $pauseMidi) {
 							echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 						}
-							echo '<td id="etudiant">'.$dao -> getNomEntreprise($dao -> getIDEntIDForm($dao->getFormationCreneau($i, $etu->getID()))).'</td> ';
+							echo '<td id="infoEtudiant">'.$dao -> getNomEntreprise($dao -> getIDEntIDForm($dao->getFormationCreneau($i, $etu->getID()))).'</td> ';
 					}
 				echo '</tr>';
 			}
 			?>
 			</table>
-
-
+</br>
+</br>
 			<!--tableau entretients des entreprises par formations
 		Il reste a faire en sorte que l'entreprise concernée voit les lignes qui la concerne et pas les autres entreprises--> 		
 			<table id="tableEntFormation">
