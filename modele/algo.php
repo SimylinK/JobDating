@@ -87,45 +87,48 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
   /
   */
   function placeEtudiant($etu, $l) {
-    if ($l == $this -> Max) {
-      $this -> Gauss = '1';
-    } else {
-      $c = 0;
-      $l1 = $this -> Choix[$etu-1][$l];//Choix de l'etudiant
+    $c = 0;
+    $l1 = $this -> Choix[$etu-1][$l];//Choix de l'etudiant
 
-      if (in_array($l1, $this->Entreprises)) {//On vérifie que l'entreprise existe
-        while($c < $this -> nbCreneaux && $this -> Gauss == '0'){
-          //On regarde pour 1 heure tous les créneaux de l'entreprise
-          $i = 1;
-          $nonPlace = True;
-          while($i <=  $this -> LiensEntrCren[$l1][0] && $nonPlace) {
-            $numCreneau = $this -> LiensEntrCren[$l1][$i];
+    if (in_array($l1, $this->Entreprises)) {//On vérifie que l'entreprise existe
+      $nonPlace = True;
+      while($c < $this -> nbCreneaux && $this -> Gauss == '0'){
+        //On regarde pour 1 heure tous les créneaux de l'entreprise
+        $i = 1;
 
-            if ($this -> bienPlace($etu, $numCreneau, $c, $l1)
-            && $this -> Echiquier[$numCreneau][$c] == $this -> CASE_VIDE) {
+        while($i <=  $this -> LiensEntrCren[$l1][0] && $nonPlace) {
+          $numCreneau = $this -> LiensEntrCren[$l1][$i];
 
-                if ($this -> Creneaux[$numCreneau][$c] != $this -> CASE_VIDE) {
-                  $this -> satisfait[$etu-1]++;
-                  $this -> Echiquier[$numCreneau][$c] = $etu;
-                  $this -> Creneaux[$numCreneau][$c] = $this -> CASE_VIDE;
+          if ($this -> bienPlace($etu, $numCreneau, $c, $l1)
+          && $this -> Echiquier[$numCreneau][$c] == $this -> CASE_VIDE) {
 
-                  $this -> placeEtudiant($etu, $l + 1);
-                  $this -> EntretiensEntrepriseEtudiant[$l1][$etu] = true;
-                  $nonPlace = False;
+              if ($this -> Creneaux[$numCreneau][$c] != $this -> CASE_VIDE) {
+                $this -> satisfait[$etu-1]++;
+                $this -> Echiquier[$numCreneau][$c] = $etu;
+                $this -> Creneaux[$numCreneau][$c] = $this -> CASE_VIDE;
 
-                  if ($this -> Gauss == '0') {
-                    $this -> Echiquier[$numCreneau][$c] = $this -> CASE_VIDE;
-                    $this -> satisfait[$etu-1]--;
-                    $this -> Creneaux[$numCreneau][$c] = 1;
-                    $nonPlace = True;
-                    $this -> EntretiensEntrepriseEtudiant[$l1][$etu] = false;
-                  }
+                //$this -> placeEtudiant($etu, $l + 1);
+                $this -> Gauss = '1';
+                $this -> EntretiensEntrepriseEtudiant[$l1][$etu] = true;
+                $nonPlace = False;
+
+                if ($this -> Gauss == '0') {
+                  $this -> Echiquier[$numCreneau][$c] = $this -> CASE_VIDE;
+                  $this -> satisfait[$etu-1]--;
+                  $this -> Creneaux[$numCreneau][$c] = 1;
+                  $nonPlace = True;
+                  $this -> EntretiensEntrepriseEtudiant[$l1][$etu] = false;
                 }
-
               }
-            $i++;
+
             }
-        $c++;
+          $i++;
+          }
+      $c++;
+      }
+      if ($nonPlace) {
+        if (sizeof($this -> Choix[$etu-1]) >= $l+2) {
+          $this -> placeETUDIANT($etu, $l+1);
         }
       }
     }
@@ -149,7 +152,7 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
     return True;
   }
 
-  
+
 
   function afficheEchiquier() { //Affichage en html, tableau
     $dao=new dao();

@@ -126,6 +126,9 @@ class Routeur {
       if ($_POST['dateDebutInscriptionEnt'] != "") {
         $this->dao->editDateDebutInscriptionEnt($_POST['dateDebutInscriptionEnt']);
       }
+      if ($_POST['dateFinInscriptionEnt'] != "") {
+        $this->dao->editDateFinInscriptionEnt($_POST['dateFinInscriptionEnt']);
+      }
       if ($_POST['dateDebutInscriptionEtu'] != "") {
         $this->dao->editDateDebutInscriptionEtu($_POST['dateDebutInscriptionEtu']);
       }
@@ -202,8 +205,15 @@ class Routeur {
       return;
     }
     if (isset($_POST['modification_entreprise_motdepasse'])) {
-      if ($_POST['mdpActuel'] != "" && $_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
-        && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
+      if ($_SESSION['type_connexion'] == "admin") {
+        if ($_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != "" && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
+            $this->dao->editMdpEntreprise(($_SESSION['idUser']), $_POST['mdpNouveau1'], "");
+        }
+        $this->ctrlMenu->afficherMenu(2);
+        return;
+      }
+      elseif (($_POST['mdpActuel'] != "" && $_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
+        && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2'])) {
           $this->dao->editMdpEntreprise(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
       }
       $this->ctrlMenu->afficherMenu(2);
@@ -228,6 +238,11 @@ class Routeur {
       return;
     }
     if (isset($_POST['modification_etudiant_motdepasse'])) {
+      if ($_SESSION['type_connexion'] == "admin") {
+          if ($_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != "" && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
+            $this->dao->editMdpEtudiant(($_SESSION['idUser']), $_POST['mdpNouveau1'], "");
+          }
+      }
       if ($_POST['mdpActuel'] != "" && $_POST['mdpNouveau1'] != "" && $_POST['mdpNouveau2'] != ""
         && $_POST['mdpNouveau1'] == $_POST['mdpNouveau2']) {
           $this->dao->editMdpEtudiant(($_SESSION['idUser']), $_POST['mdpNouveau1'], $_POST['mdpActuel']);
@@ -246,7 +261,7 @@ class Routeur {
       $dateNow = new DateTime("now");
       $tabConfig = $this->dao->getConfiguration();
       $dateDebutEnt = new DateTime($tabConfig['dateDebutInscriptionEnt']);
-      $dateLimitEnt = new DateTime($tabConfig['dateDebutInscriptionEtu']);
+      $dateLimitEnt = new DateTime($tabConfig['dateFinInscriptionEnt']);
       $dateDebutEtu = new DateTime($tabConfig['dateDebutInscriptionEtu']);
       $dateLimitEtu = new DateTime($tabConfig['dateFinInscription']);
 
@@ -430,7 +445,7 @@ class Routeur {
       $dateNow = new DateTime("now");
       $tabConfig = $this->dao->getConfiguration();
       $dateDebutEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEnt']);
-      $dateLimitEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
+      $dateLimitEnt = new DateTime($tabConfig['dateFinInscriptionEnt']);
       if ($dateNow < $dateLimitEnt && $dateNow >= $dateDebutEnt) {
         $this->ctrlInscriptionEnt->inscriptionEnt();
         return;

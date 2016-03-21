@@ -52,7 +52,7 @@ cette journée "Rencontres Alternance".</span> <!-- police sup, couleur #8A2908,
 					$textDateDebutEtu = explode("-",$tabConfig['dateDebutInscriptionEtu']);
 					$textDateDebutEnt = explode("-",$tabConfig['dateDebutInscriptionEnt']);
 		      $dateDebutEnt = new DateTime((string)$tabConfig['dateDebutInscriptionEnt']);
-		      $dateLimitEnt = new DateTime($tabConfig['dateFinInscriptionEnt']);
+		      $dateLimitEnt = new DateTime((string)$tabConfig['dateFinInscriptionEnt']);
 		      $dateDebutEtu = new DateTime((string)$tabConfig['dateDebutInscriptionEtu']);
 		      $dateLimitEtu = new DateTime((string)$tabConfig['dateFinInscription']);
 
