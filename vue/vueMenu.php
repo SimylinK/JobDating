@@ -112,10 +112,10 @@ public function afficherPlanningEtu(){
 			?>
 			</table>
 			</html>
-<<<<<<< HEAD
+
 		
 
-		<table id="tabPlanningEtu">
+		<!--<table id="tabPlanningEtu">
 
 					<?php
 					$tabEtu = $dao -> getAllEtudiants();
@@ -178,7 +178,7 @@ public function afficherPlanningEtu(){
 			?>
 =======
 >>>>>>> f131e9253b953287e21532a485505c471002efaa
-			</table>
+			</table>-->
 
 	<?php
 
@@ -566,7 +566,9 @@ public function afficherComptes() {
 	<!DOCTYPE html>
 	<html>
 	<head>
+		<script type="text/javascript" src="http://infoweb-ens/~jacquin-c/jquery-1.11.3.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="vue/css/general.css">
+		<script type="text/javascript" src="../styleTableau.js"></script> 
 		<title></title>
 		<meta charset="UTF-8">
 	</head>

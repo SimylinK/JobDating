@@ -62,13 +62,6 @@ class Dao
   # supprimerCreneau()
   # ajoutCreneau($numCreneau, $IDformation, $etudiant)
   # getCreneau($numeroCreneau, $idFormation)
-  # getCreneauEtu($id)
-  # getFormationCreneau($numeroCreneau, $idEtudiant)
-  # getIDEntIDform($idform)
-  # getIDFormationsEntreprise($entreprise)
-  # getIDTypeFormation($idform)
-  # getAllFormations()
-  # getNomEntreprise($idEnt)
   # ajoutFormation($typeFormation, $entPropose, $creneauDebut, $creneauFin)
   # getDetails()
   # getId($identifiant,$type)
@@ -101,8 +94,7 @@ class Dao
   # editDateDebutVuePlanning($new)
   # supprimerFormation($idEntreprise)
 
-// serveur iut : 'mysql:host=localhost;charset=UTF8;dbname=info2-2015-jobdating',"info2-2015-jobda","jobdating"
-// wamp server : 'mysql:host=localhost;charset=UTF8;dbname=jobdating','root',''
+//'mysql:host=localhost;charset=UTF8;dbname=info2-2015-jobdating',"info2-2015-jobda","jobdating"
 
   // 	permet d'ouvrir une connexion avec le sgbd
 
@@ -112,7 +104,7 @@ class Dao
     try
     {
       //connection
-      $this->connexion = new PDO('mysql:host=localhost;charset=UTF8;dbname=jobdating','root','');	//on se connecte au sgbd
+      $this->connexion = new PDO('mysql:host=localhost;charset=UTF8;dbname=info2-2015-jobdating',"info2-2015-jobda","jobdating");	//on se connecte au sgbd
       $this->connexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);	//on active la gestion des erreurs et d'exceptions
     }
     catch(PDOException $e)
@@ -891,29 +883,6 @@ class Dao
 
 
 
-        /*Fonction qui renvoie les creneaux d'un etudiant à partir de son ID*/
-        public function getCreneauEtu($id) {
-          try {
-            $this->connexion();
-            $statement = $this->connexion->prepare('SELECT numeroCreneau FROM creneau WHERE idEtudiant="'.$id.'"');
-            $statement->execute();
-            $tabResult = $statement->fetchAll();
-            $resultat = [];
-            $i = 0;
-            foreach ($tabResult as $row) {
-              $resultat[$i] = $row["numeroCreneau"];
-              $i += 1;
-            }
-            $this->deconnexion();
-            var_dump($tabResult);
-            var_dump($resultat);
-            return $resultat;
-          }
-          catch (TableAccesException $e){
-            print($e -> getMessage());
-          }
-        }
-
         /*Fonction qui renvoie IDFormation d'un creneau*/
         public function getFormationCreneau($numeroCreneau, $idEtudiant)  {
           try {
@@ -928,6 +897,7 @@ class Dao
               $ret = False;
             }
             $this->deconnexion();
+            //var_dump($ret);
             return $ret;
           } catch (TableAccesException $e) {
             print($e -> getMessage());
@@ -1075,76 +1045,77 @@ class Dao
           }
         }
 
-          public function generatePlanning(){
+        public function generatePlanning(){
+          $this -> supprimerCreneau();
+          $this -> connexion();
 
-            $this -> supprimerCreneau();
-            $this -> connexion();
+          $statement = $this->connexion->prepare("DELETE FROM creneau;");
+          $statement->execute();
 
-            $statement = $this->connexion->prepare("DELETE FROM creneau;");
-            $statement->execute();
-
-            $arrayNbCreneaux = $this -> getNbCreneaux();
-            $creneauMatin = $arrayNbCreneaux[0];
-            $creneauAprem = $arrayNbCreneaux[1];
-            $nbCreneaux = $creneauMatin + $creneauAprem;
+          $arrayNbCreneaux = $this -> getNbCreneaux();
+          $creneauMatin = $arrayNbCreneaux[0];
+          $creneauAprem = $arrayNbCreneaux[1];
+          $nbCreneaux = $creneauMatin + $creneauAprem;
 
 
-            $listeDepartement = array("LP IDEB", " LP SEICOM", "DUT GEII", "LP I2P", "LP EAS", "DUT GMP", "LP IMOC",
-  "LP D2M", "DUT SGM", "LP SIL", "DUT INFO", "LP FICA", "LP LOGIQUAL", "DUT QLIO en 2 ans", "DUT QLIO en 1 an", "DCG");
 
-            foreach ($listeDepartement as $departement) {
-              $Etudiants = array();
-              $Choix = array();
-              $Entreprises = array();
-              $Creneaux = array();
-              $LiensEntrCren = array();
-              $Formations = array();
+          $listeDepartement = array("LP IDEB", " LP SEICOM", "DUT GEII", "LP I2P", "LP EAS", "DUT GMP", "LP IMOC",
+"LP D2M", "DUT SGM", "LP SIL", "DUT INFO", "LP FICA", "LP LOGIQUAL", "DUT QLIO en 2 ans", "DUT QLIO en 1 an", "DCG");
 
-              $listeEtu = $this->getEtudiants($departement);
+          foreach ($listeDepartement as $departement) {
+            $Etudiants = array();
+            $Choix = array();
+            $Entreprises = array();
+            $Creneaux = array();
+            $LiensEntrCren = array();
+            $Formations = array();
 
-              //On s'occupe de $Etudiants
-              $cmp = 0;
-              foreach ($listeEtu as $etu){
-                $Etudiants[$cmp+1] = $etu["IDEtu"];
-                $Choix[] = explode ( "," , $etu["listeChoixEtu"]);
-                $cmp++;
+
+            $listeEtu = $this->getEtudiants($departement);
+
+            //On s'occupe de $Etudiants
+            $cmp = 0;
+            foreach ($listeEtu as $etu){
+              $Etudiants[$cmp+1] = $etu["IDEtu"];
+              $Choix[] = explode ( "," , $etu["listeChoixEtu"]);
+              $cmp++;
+            }
+
+            //On s'occupe de $Entreprises, $Creneaux et $LiensEntrCren
+            $listeEnt = $this -> getEntreprises();
+            foreach ($listeEnt as $ent){
+              $Entreprises[] = $ent["IDEnt"];
+            }
+            $listeFormation = $this -> getFormations($departement);
+
+            foreach ($Entreprises as $IDent) {
+              $LiensEntrCren[$IDent][0] = 0;
+            }
+
+            $cmp = 0;
+            foreach ($listeFormation as $form){
+              $tmp = array();
+
+              $Formations[] = $form["IDformation"];
+
+              $LiensEntrCren[$form["entPropose"]][0]++;
+              $LiensEntrCren[$form["entPropose"]][$LiensEntrCren[$form["entPropose"]][0]] = $cmp;
+
+              for ($i = 0; $i < $nbCreneaux; $i++) {
+                $tmp[] = 0;
               }
-
-              //On s'occupe de $Entreprises, $Creneaux et $LiensEntrCren
-              $listeEnt = $this -> getEntreprises();
-              foreach ($listeEnt as $ent){
-                $Entreprises[] = $ent["IDEnt"];
+              for ($i = $form["creneauDebut"]-1; $i <=$form["creneauFin"]; $i++) {
+                $tmp[$i] = 1;
               }
-              $listeFormation = $this -> getFormations($departement);
+              $Creneaux[] = $tmp;
+              $cmp++;
+            }
 
-              foreach ($Entreprises as $IDent) {
-                $LiensEntrCren[$IDent][0] = 0;
-              }
+            $jobMeeting = new jobMeeting($Etudiants, $Choix, $Entreprises, $Creneaux, $LiensEntrCren, $Formations,  $nbCreneaux);
+            $jobMeeting -> appli();
 
-              $cmp = 0;
-              foreach ($listeFormation as $form){
-                $tmp = array();
-
-                $Formations[$form["entPropose"]][$LiensEntrCren[$form["entPropose"]][0]] = $form["IDformation"];
-
-                $LiensEntrCren[$form["entPropose"]][0]++;
-                $LiensEntrCren[$form["entPropose"]][$LiensEntrCren[$form["entPropose"]][0]] = $cmp;
-
-                for ($i = 0; $i < $nbCreneaux; $i++) {
-                  $tmp[] = 0;
-                }
-                for ($i = $form["creneauDebut"]-1; $i <=$form["creneauFin"]-1; $i++) {
-                  $tmp[$i] = 1;
-                }
-                $Creneaux[] = $tmp;
-                $cmp++;
-              }
-
-              $jobMeeting = new jobMeeting($Etudiants, $Choix, $Entreprises, $Creneaux, $LiensEntrCren, $Formations,  $nbCreneaux);
-              $jobMeeting -> appli();
-
-          }
-            $this -> deconnexion();
+        }
+          $this -> deconnexion();
         }
 
 

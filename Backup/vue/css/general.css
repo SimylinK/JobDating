@@ -201,7 +201,6 @@ body
     text-align: center;
     text-decoration: underline;
 }
-
 #tabPlanningEnt
 {
     position: relative;
@@ -240,87 +239,6 @@ body
   background-color: lightgray;
   text-transform: uppercase;
 }
-
-#tabPlanningEtu
-{
-    position: relative;
-    left: -49%;
-    bottom: 10%;
-
-    border-collapse: collapse;
-
-    text-align: center;
-
-    border-width: 1 px;
-    border-style: solid;
-    background-color: #f2f2f2;
-}
-
-#tabPlanningEtu tr td
-{
-    border-collapse: collapse;
-
-    border-width: 1px;
-    border-style: solid;
-}
-#tabPlanningEtu #etudiant:nth-child(odd) {
-  background-color: #D8D8D8;
-}
-
-#tabPlanningEtu #etudiant:nth-child(even){
-  background-color: #C0C0C0;
-}
-
-#pause_midi {
-  background-color: gray;
-  background: linear-gradient(-45deg, #f2f2f2 25%, #7C7979 25%, #7C7979 50%, #f2f2f2 50%, #f2f2f2 75%, #7C7979 75%, #7C7979);
-  background-size:6px 6px;
-}
-#tabPlanningEtu #titre{
-  background-color: lightgray;
-  text-transform: uppercase;
-}
-
-#tableEntFormation
-{
-    position: relative;
-    left: -20%;
-    bottom: 10%;
-
-    border-collapse: collapse;
-
-    text-align: center;
-
-    border-width: 1 px;
-    border-style: solid;
-    background-color: #f2f2f2;
-}
-
-#tableEntFormation tr td
-{
-    border-collapse: collapse;
-
-    border-width: 1px;
-    border-style: solid;
-}
-#tableEntFormation #formation:nth-child(odd) {
-  background-color: #D8D8D8;
-}
-
-#tableEntFormation #formation:nth-child(even){
-  background-color: #C0C0C0;
-}
-
-#pause_midi {
-  background-color: gray;
-  background: linear-gradient(-45deg, #f2f2f2 25%, #7C7979 25%, #7C7979 50%, #f2f2f2 50%, #f2f2f2 75%, #7C7979 75%, #7C7979);
-  background-size:6px 6px;
-}
-#tableEntFormation #titre{
-  background-color: lightgray;
-  text-transform: uppercase;
-}
-
 #tabFormation
 {
     position: relative;

@@ -1,26 +1,23 @@
 <?php
 
+/**
+ * @author Jobdating
+ * @version 1.0
+ */
 class JobMeeting {
   var $CASE_VIDE = 0; //constante qui represente une case vide pour l'echiquiers
   var $Gauss = '0';
   var $nbChoixASatisfaire = 5;// au max est egal a la moitie des creneauxs
-  var $Echiquier = array();
-  var $Formations = array();
-
-  var $Etudiants = array('Bourreau  ',	'Cadeau     ',	'Nussbaum   ', 'STEPHAN    ', 'Didier     ','Ganivet    ',  'Chcouropat ','Blin       ', 'Gautier    ',
-    'Gonnord    ',	'Dubois     ',	'Grailard   ',	'Chappron   ',	'Cadorel    ',	'Creach     ');
-  var $Choix = array(array(1,5,2,7,3,4), array(6,5,7,3,4,1), array(6,3,5,1,4,7), array(6,1,5,3,4,7),
-array(1,5,6,3,4,7), array(1,4,7,3,6),  array(1,6,5,7,3,4), array(6,3,5,1,7,4), array(1,6,3,7,4,5),
-array(6,7,1,5,3,4), array(3,6,5,1,4,7), array(1,7,3,6,5,4),array(7,6,5,1,3,4),
-array(1,5,7,3,6,4), array(6,1,7,5,4,3));
+  var $Echiquier;
+  var $Formations;
+  var $Etudiants;
+  var $Choix;
 
 
-  var $Entreprises = array('Capgemini', 'Test', 'Immostore', 'Agena3000', 'Speachme', 'Moovtime', 'PanierLoc');
-  var $LiensEntrCren; /*= array(array(2,0,1), array(0), array(1,2), array(1,3), array(1,4), array(1,5), array(1,6));*/
-  var $Creneaux; /*= array(array(2,2,2,2,2,2,2,2,2,2), array(1,1,1,1,1,1,1,1,1,1),
-array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1));*/
-  var $nbCreneaux = 10;
-  var $nbStands = 0;
+  var $Entreprises;
+  var $LiensEntrCren;
+  var $Creneaux;
+  var $nbCreneaux;
 
   var $satisfait = array();
   var $Max = 0;// un choix pour chaque ETUDIANT
@@ -79,7 +76,6 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
     for($c = 0; $c < sizeof($this -> Etudiants); $c++) {
       $this -> satisfait[$c] = 0;
     }
-    $this -> nbStands = $taille;
   }
 
   /* Place la ETUDIANT sur la ligne l et les suivantes recursivement
@@ -131,25 +127,31 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
     }
   }
 
-  // Verifie qu'une ETUDIANT placee en (l,c) n'est pas en prise avec un des
+  // Verifie qu'une ETUDIANT placee en (l,c) n'est pas en prise avec une des
   // ETUDIANTs deja placees.
   function bienPlace($etu, $l, $c, $entreprise) {
-    //On vérifie que l'étudiant et libre, et qu'il a une pause avant ou après
-    for($i = 0; $i < $this -> nbStands; $i++) {
-      if(($c > 0 && $this -> Echiquier[$i][$c-1] == $etu)
-      || ($this -> Echiquier[$i][$c] == $etu)
-      || ($c < $this -> nbCreneaux-1 && $this -> Echiquier[$i][$c+1] == $etu)) {
+    for($i = 0; $i < $l; $i++) {
+      if($this -> Echiquier[$i][$c] == $etu // meme colonne  de 1 au choix de l'etudiant
+      || ($c > 0 && $this -> Echiquier[$i][$c-1] == $etu) //m�me colonne c-1
+      || ($c < 9 && $this -> Echiquier[$i][$c+1] == $etu)) { // m�me colonne c+1
         return False;
       }
     }
-
+    $i = $l + 1;
+    while ($i < sizeof($this->Entreprises)) {
+      if($this -> Echiquier[$i][$c] == $etu  // m�me colonne du choix de l'etudiant a la fin
+      || ($c > 0 && $this -> Echiquier[$i][$c-1] == $etu) // colonne c-1
+      || ($c < 9 && $this -> Echiquier[$i][$c+1] == $etu)) { // colonne c+1
+        return False;
+      }
+      $i++;
+    }
     if($this -> EntretiensEntrepriseEtudiant[$entreprise][$etu] == true)
       return false;
 
+
     return True;
   }
-
-  
 
   function afficheEchiquier() { //Affichage en html, tableau
     $dao=new dao();
@@ -162,7 +164,7 @@ array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,1), array(1,1,1,1,1,1,1,1,1,
 
           $Etu = $this -> Echiquier[$this -> LiensEntrCren[$IDent][$e]][$c];
           if ($Etu != 0) { // nom de l'etudiant
-            $dao -> ajoutCreneau($c, $this -> Formations[$IDent][$e-1], $this -> Etudiants[$Etu]);
+            $dao -> ajoutCreneau($c, $this -> Formations[$cmp], $this -> Etudiants[$Etu]);
           }
         }
         $cmp++;
