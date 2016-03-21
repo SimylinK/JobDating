@@ -236,6 +236,14 @@ public function afficherProfil($type,$profil){
 			</TABLE>
 			</form>
 			<br/><br/><br/>';
+			if ($_SESSION['type_connexion'] == "admin") {
+				echo 'Liste des choix :<br/><br/>';
+				$strChoix = $profil->getListeChoixEtu().explode(",");
+				foreach ($strChoix as $choix) {
+					$entreprise = $dao->getEnt();
+					echo $entreprise->getNomEnt()+"<br/>";
+				}
+			}
 		}
 	}
 	if ($type=="entreprise") {
