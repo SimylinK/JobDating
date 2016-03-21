@@ -101,7 +101,8 @@ class Dao
   # editDateDebutVuePlanning($new)
   # supprimerFormation($idEntreprise)
 
-//'mysql:host=localhost;charset=UTF8;dbname=info2-2015-jobdating',"info2-2015-jobda","jobdating"
+// serveur iut : 'mysql:host=localhost;charset=UTF8;dbname=info2-2015-jobdating',"info2-2015-jobda","jobdating"
+// wamp server : 'mysql:host=localhost;charset=UTF8;dbname=jobdating','root',''
 
   // 	permet d'ouvrir une connexion avec le sgbd
 
@@ -111,7 +112,7 @@ class Dao
     try
     {
       //connection
-      $this->connexion = new PDO('mysql:host=localhost;charset=UTF8;dbname=info2-2015-jobdating',"info2-2015-jobda","jobdating");	//on se connecte au sgbd
+      $this->connexion = new PDO('mysql:host=localhost;charset=UTF8;dbname=jobdating','root','');	//on se connecte au sgbd
       $this->connexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);	//on active la gestion des erreurs et d'exceptions
     }
     catch(PDOException $e)

@@ -39,6 +39,11 @@ public function afficherPlanningEtu(){
 					$id = $_SESSION['idUser'];
 					$tabprofil = $dao->getEtu($id);
 					$profil = $tabprofil[0];
+					
+					$planning[] = 0;
+					$chemin = "/csv/fichier_".$profil->getNomEtu()."_".$profil->getPrenomEtu().".csv";
+					$fichier_csv = fopen($chemin, "w+");
+					$delimiteur = ',';
 
 					$nbCreneaux = $tabConfig["nbCreneauxAprem"] + $tabConfig["nbCreneauxMatin"];
 					$pauseMidi = $tabConfig["nbCreneauxMatin"];
@@ -67,6 +72,7 @@ public function afficherPlanningEtu(){
 						$min = $heureString[1];
 					} else {
 						echo'<td>' . $heure . ' : ';
+
 						if ($min == 0)
 							echo '00';
 						else
@@ -74,20 +80,33 @@ public function afficherPlanningEtu(){
 						echo'</td>';
 						$min += $duree;
 						if($min == 60) {
-							$min = 0;
+							$min = "00";
 							$heure++;
 						}
 					}
-				}
+					$ligne1[] = $heure." : ".$min;
+					
+				}		
 			echo'</tr>';
 			echo '<tr>';
 				for($i = 0; $i < $nbCreneaux; $i++) {
 					if ($i == $pauseMidi) {
 						echo'<td id="pause_midi"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>';
 					}
-					echo '<td>'.$dao->getNomEntreprise($dao->getIDEntIDForm($dao->getFormationCreneau($i,$profil->getId()))).'</td> ';
+					$rdv = $dao->getNomEntreprise($dao->getIDEntIDForm($dao->getFormationCreneau($i,$profil->getId())));
+					echo '<td>'.$rdv.'</td> ';
+					$ligne2[] = $rdv;
 				}
 			echo '</tr>';
+
+			//var_dump($ligne2);
+
+			foreach($planning as $ligne){
+				// chaque ligne en cours de lecture est insérée dans le fichier
+				// les valeurs présentes dans chaque ligne seront séparées par $delimiteur
+				fputcsv($fichier_csv, $ligne, $delimiteur);
+			}
+			fclose($fichier_csv);
 			?>
 			</table>
 			</html>
